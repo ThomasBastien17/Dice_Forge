@@ -1,7 +1,9 @@
+@use '../../styles/variables' as v;
+
 .Header {
   width: 95%;
   margin: auto;
-  background-color: #322124;
+  background-color: v.$color-primary;
   display: flex;
   justify-content: space-between;
   padding: 1rem;
@@ -18,14 +20,14 @@
 
   &-title {
     margin: 0 1rem;
-    color: #fff;
+    color: v.$color;
   }
 
   &-link {
     margin-left: 2rem;
     align-items: center;
     text-decoration: none;
-    color: #fff;
+    color: v.$color;
   }
 
   &-block2 {

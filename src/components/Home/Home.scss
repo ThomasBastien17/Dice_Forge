@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .home {
   display: flex;
   flex-direction: column;
@@ -7,6 +9,5 @@
 
   &-container {
     margin: 2rem 0;
-    color: #322124;
   }
 }
