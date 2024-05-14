@@ -1,62 +1,58 @@
+import { Form, FormInput, Button } from 'semantic-ui-react';
 import './Signin.scss';
 
 function Signin() {
   return (
     <div className="signin">
-      <form className="signin-form">
-        <label htmlFor="user-avatar" className="signin-label">
-          Choisisez un avatar de profil
-        </label>
-        <input
-          type="file"
-          id="user-avatar"
-          name="user-avatar"
-          accept="image/png, image/jpeg"
+      <h1 className="signin-title">Inscription</h1>
+      <Form className="signin-form">
+        <FormInput
+          className="signin-input"
+          icon="user"
+          iconPosition="left"
+          label="Nom"
+          placeholder="Nom"
         />
-        <label htmlFor="lastname" className="signin-label">
-          Nom
-        </label>
-        <input
+        <FormInput
+          className="signin-input"
+          icon="user"
+          iconPosition="left"
+          label="Prénom"
           type="text"
-          id="lastname"
-          name="lastname"
-          placeholder="Entrez votre nom"
+          placeholder="Prénom"
         />
-        <label htmlFor="firsname" className="signin-label">
-          Prenom
-        </label>
-        <input
-          type="text"
-          id="firstname"
-          name="firstname"
-          placeholder="Entrez votre prenom"
-        />
-        <label htmlFor="email">Email:</label>
-        <input
+        <FormInput
+          className="signin-input"
+          icon="lock"
+          iconPosition="left"
+          label="Email"
           type="email"
-          id="email"
-          pattern=".+@example\.com"
-          size={30}
-          required
-          placeholder="Entrez votre Email : exemple@email.com"
+          placeholder="Email"
         />
-        <label htmlFor="pass">Mot de passe :</label>
-        <input
+        <FormInput
+          className="signin-input"
+          icon="lock"
+          iconPosition="left"
+          label="Mot de passe"
           type="password"
-          id="pass"
-          name="password"
-          required
-          placeholder="Votre mot de passe"
+          placeholder="Mot de passe"
         />
-        <label htmlFor="pass-confirm">Confirmation :</label>
-        <input
+        <FormInput
+          className="signin-input"
+          icon="lock"
+          iconPosition="left"
+          label="Confirmation"
           type="password"
-          id="pass-confirm"
-          name="password-confirm"
-          required
-          placeholder="confirmez votre mot de passe"
+          placeholder="Confirmation mot de passe"
         />
-      </form>
+
+        <Button
+          className="signin-btn"
+          content="Valider"
+          primary
+          type="submit"
+        />
+      </Form>
     </div>
   );
 }

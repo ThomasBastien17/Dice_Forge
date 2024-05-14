@@ -1,5 +1,34 @@
-.signing {
+
+.signin {
+  margin: auto;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  align-items: center;
+  height: 83%;
+  width: 95%;
+
+  &-title {
+    font-size: 4rem;
+    padding: 2rem;
+    color: #322124;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-input {
+    margin-bottom: 1rem;
+  }
+
+  &-btn {
+    background-color: #322124;
+    border: none;
+    border-radius: 0.5rem;
+    width: fit-content;
+    padding: 0.5rem;
+    color: #fff;
+  }
 }
