@@ -14,7 +14,7 @@ function Home() {
         className="Logo"
       />
       <Container text>
-        <Header as="h2">Aventurier...</Header>
+        <Header as="h2">Aventurier..</Header>
         <p>Bienvenue sur Dice Forge !</p>
         <p>
           Votre plateforme ultime pour la gestion de parties de jeux de rôles en
