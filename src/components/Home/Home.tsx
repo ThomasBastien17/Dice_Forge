@@ -50,7 +50,7 @@ function Home() {
           <p className="home-paragraph">L'aventure vous attend !</p>
         </Container>
       </div>
-      <Button icon labelPosition="right">
+      <Button icon labelPosition="right" color="red" type="submit">
         Créer une partie
         <Icon name="right arrow" />
       </Button>
