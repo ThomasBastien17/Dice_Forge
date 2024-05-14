@@ -1,24 +1,33 @@
+import { Button, Form, FormInput } from 'semantic-ui-react';
 import './Login.scss';
 
 function Login() {
   return (
     <div className="login">
-      <h1 className="login-title">Connexion</h1>
-      <form className="login-form">
-        <label>
-          <input className="login-input" type="email" placeholder="Email" />
-        </label>
-        <label>
-          <input
-            className="login-input"
-            type="password"
-            placeholder="Mot de passe"
-          />
-        </label>
-        <button className="login-btn" type="submit">
-          Valider
-        </button>
-      </form>
+      <h1 className="login-title">Inscription</h1>
+      <Form className="login-form">
+        <FormInput
+          className="login-input"
+          icon="at"
+          iconPosition="left"
+          placeholder="Email"
+        />
+        <FormInput
+          className="login-input"
+          icon="password"
+          iconPosition="left"
+          type="password"
+          placeholder="Mot de passe"
+        />
+
+        <Button
+          className="login-btn"
+          content="Se connecter"
+          primary
+          type="submit"
+          color="red"
+        />
+      </Form>
     </div>
   );
 }
