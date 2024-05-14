@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .login {
   display: flex;
   flex-direction: column;
@@ -9,8 +11,7 @@
   &-title {
     font-size: 4rem;
     padding: 2rem;
-    color: #322124;
-    margin-top: 6rem;
+    color: v.$color-primary;
   }
 
   &-form {

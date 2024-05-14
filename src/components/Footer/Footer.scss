@@ -1,9 +1,12 @@
+@use '../../styles/variables' as v;
+
 .Footer {
   width: 95%;
   margin: auto;
-  background-color: #322124;
+  background-color: v.$color-primary;
   display: flex;
   justify-content: center;
   padding: 1rem;
-  color: #fff;
+  color: v.$color;
+  font-style: italic;
 }

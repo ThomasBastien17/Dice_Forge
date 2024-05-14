@@ -1,3 +1,4 @@
+@use '../../styles/variables' as v;
 
 .signin {
   margin: auto;
@@ -10,7 +11,7 @@
   &-title {
     font-size: 4rem;
     padding: 2rem;
-    color: #322124;
+    color: v.$color-primary;
   }
 
   &-form {
@@ -21,14 +22,5 @@
 
   &-input {
     margin-bottom: 1rem;
-  }
-
-  &-btn {
-    background-color: #322124;
-    border: none;
-    border-radius: 0.5rem;
-    width: fit-content;
-    padding: 0.5rem;
-    color: #fff;
   }
 }
