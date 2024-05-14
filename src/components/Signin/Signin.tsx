@@ -46,7 +46,12 @@ function Signin() {
           placeholder="Confirmation mot de passe"
         />
 
-        <Button className="signin-btn" content="Valider" primary />
+        <Button
+          className="signin-btn"
+          content="Valider"
+          primary
+          type="submit"
+        />
       </Form>
     </div>
   );
