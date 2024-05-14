@@ -1,20 +1,11 @@
-.Logo {
-  margin: 1rem;
-  padding: 1rem;
-}
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  width: 95%;
 
-h2.ui.header {
-  margin: 1rem;
-  padding: 1rem;
-  text-align: center;
-}
-
-p {
-  text-align: center;
-  width: auto;
-  padding: 1rem;
-}
-
-.Button {
-  text-align: center;
+  &-container {
+    margin: 2rem 0;
+  }
 }

@@ -1,7 +1,7 @@
 @use '../../styles/variables' as v;
 
 .App {
-  height: 100vh;
+  height: max-content;
   background-image: url(../../../public/paper-1074131_1280.jpg);
   background-repeat: no-repeat;
   background-size: cover;
