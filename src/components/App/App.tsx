@@ -1,3 +1,7 @@
+
+import { Route, Routes } from 'react-router-dom';
+
+
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Signin from '../Signin/Signin';
@@ -8,11 +12,18 @@ function App() {
   return (
     <div className="App">
       <Header />
-
-      <Signin></Signin>
-      <Login />
+      <Routes>
+        <Route path="/">
+          <Home />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="signin">
+          <Signin />
+        </Route>
+      </Routes>
       <Footer />
-
     </div>
   );
 }
