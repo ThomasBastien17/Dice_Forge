@@ -1,27 +1,24 @@
+import { Label, Input } from 'semantic-ui-react';
 import './Signin.scss';
 
 function Signin() {
   return (
     <div className="signin">
+      <h1 className="signin-title">Inscription</h1>
       <form className="signin-form">
-        <label htmlFor="user-avatar" className="signin-label">
-          Choisisez un avatar de profil
-        </label>
-        <input
-          type="file"
-          id="user-avatar"
-          name="user-avatar"
-          accept="image/png, image/jpeg"
-        />
-        <label htmlFor="lastname" className="signin-label">
+        <Label as={Input} className="signin-label">
+          Avatar
+          <Input type="file" />
+        </Label>
+        <Label className="signin-label">
           Nom
-        </label>
-        <input
-          type="text"
-          id="lastname"
-          name="lastname"
-          placeholder="Entrez votre nom"
-        />
+          <Input
+            type="text"
+            id="lastname"
+            name="lastname"
+            placeholder="Entrez votre nom"
+          />
+        </Label>
         <label htmlFor="firsname" className="signin-label">
           Prenom
         </label>
@@ -31,7 +28,9 @@ function Signin() {
           name="firstname"
           placeholder="Entrez votre prenom"
         />
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email" className="signin-label">
+          Email:
+        </label>
         <input
           type="email"
           id="email"
@@ -40,7 +39,9 @@ function Signin() {
           required
           placeholder="Entrez votre Email : exemple@email.com"
         />
-        <label htmlFor="pass">Mot de passe :</label>
+        <label htmlFor="pass" className="signin-label">
+          Mot de passe :
+        </label>
         <input
           type="password"
           id="pass"
@@ -48,7 +49,9 @@ function Signin() {
           required
           placeholder="Votre mot de passe"
         />
-        <label htmlFor="pass-confirm">Confirmation :</label>
+        <label htmlFor="pass-confirm" className="signin-label">
+          Confirmation :
+        </label>
         <input
           type="password"
           id="pass-confirm"
