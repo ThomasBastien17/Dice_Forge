@@ -1,28 +1,28 @@
+import { Image, Container, Button, Icon } from 'semantic-ui-react';
 import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
-import { Image, Container, Header, Button, Icon } from 'semantic-ui-react';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function Home() {
   return (
     <div className="home">
+      <Header />
       <Image
         src="public/LogoDiceForge.jpg"
         size="large"
         className="home-logo"
-        rounded
       />
       <div className="home-container">
         <Container text textAlign="center">
-          <Header as="h2" size="huge">
-            Aventurier...
-          </Header>
+          <h2 className="home-title">Aventurier...</h2>
+
           <p className="home-paragraph">Bienvenue sur Dice Forge !</p>
           <p className="home-paragraph">
             Votre plateforme ultime pour la gestion de parties de jeux de rôles
-            en ligne ! <br />
-            Que vous soyez un maître du donjon expérimenté ou un aventurier
-            débutant, notre site offre tout ce dont vous avez besoin pour rendre
-            vos aventures encore plus épiques.
+            en ligne ! Que vous soyez un maître du donjon expérimenté ou un
+            aventurier débutant, notre site offre tout ce dont vous avez besoin
+            pour rendre vos aventures encore plus épiques.
           </p>
           <p className="home-paragraph">
             Plongez dans un univers de possibilités infinies, où chaque lancer
@@ -50,10 +50,17 @@ function Home() {
           <p className="home-paragraph">L'aventure vous attend !</p>
         </Container>
       </div>
-      <Button icon labelPosition="right" color="red" type="submit">
+      <Button
+        className="home-btn"
+        icon
+        labelPosition="right"
+        color="red"
+        type="submit"
+      >
         Créer une partie
         <Icon name="right arrow" />
       </Button>
+      <Footer />
     </div>
   );
 }

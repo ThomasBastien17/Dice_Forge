@@ -1,12 +1,12 @@
 @use '../../styles/variables' as v;
 
 .Header {
-  width: 95%;
-  margin: auto;
+  width: 100%;
   background-color: v.$color-primary;
   display: flex;
   justify-content: space-between;
   padding: 1rem;
+  margin-bottom: 1rem;
 
   &-block {
     display: flex;

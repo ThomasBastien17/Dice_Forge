@@ -4,14 +4,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 2rem auto;
-  width: 95%;
+  min-height: 100vh;
 
   &-container {
-    margin: 2rem 0;
+    margin: 2rem;
     background-color: rgba(181, 142, 98, 0.4);
     padding: 2rem;
-    border-radius: 3rem;
+    border-radius: 1rem;
     text-shadow: 0 1px 0 black;
   }
+}
+.home-logo {
+  clip-path: ellipse(33% 50%);
 }
