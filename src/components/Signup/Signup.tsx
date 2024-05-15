@@ -1,23 +1,23 @@
-import { Form, FormInput, Button } from 'semantic-ui-react';
-import './Signin.scss';
-import Header from '../Header/Header';
+import { Button, Form, FormInput } from 'semantic-ui-react';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import './Signup.scss';
 
-function Signin() {
+function Signup() {
   return (
-    <div className="signin">
+    <div className="signup">
       <Header />
-      <h1 className="signin-title">Inscription</h1>
-      <Form className="signin-form">
+      <h1 className="signup-title">Inscription</h1>
+      <Form className="signup-form">
         <FormInput
-          className="signin-input"
+          className="signup-input"
           icon="user"
           iconPosition="left"
           label="Nom"
           placeholder="Nom"
         />
         <FormInput
-          className="signin-input"
+          className="signup-input"
           icon="user"
           iconPosition="left"
           label="Prénom"
@@ -25,7 +25,7 @@ function Signin() {
           placeholder="Prénom"
         />
         <FormInput
-          className="signin-input"
+          className="signup-input"
           icon="at"
           iconPosition="left"
           label="Email"
@@ -33,7 +33,7 @@ function Signin() {
           placeholder="Email"
         />
         <FormInput
-          className="signin-input"
+          className="signup-input"
           icon="lock"
           iconPosition="left"
           label="Mot de passe"
@@ -41,7 +41,7 @@ function Signin() {
           placeholder="Mot de passe"
         />
         <FormInput
-          className="signin-input"
+          className="signup-input"
           icon="lock"
           iconPosition="left"
           label="Confirmation"
@@ -56,4 +56,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default Signup;
