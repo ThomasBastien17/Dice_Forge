@@ -20,10 +20,9 @@ function Home() {
           <p className="home-paragraph">Bienvenue sur Dice Forge !</p>
           <p className="home-paragraph">
             Votre plateforme ultime pour la gestion de parties de jeux de rôles
-            en ligne ! <br />
-            Que vous soyez un maître du donjon expérimenté ou un aventurier
-            débutant, notre site offre tout ce dont vous avez besoin pour rendre
-            vos aventures encore plus épiques.
+            en ligne ! Que vous soyez un maître du donjon expérimenté ou un
+            aventurier débutant, notre site offre tout ce dont vous avez besoin
+            pour rendre vos aventures encore plus épiques.
           </p>
           <p className="home-paragraph">
             Plongez dans un univers de possibilités infinies, où chaque lancer
