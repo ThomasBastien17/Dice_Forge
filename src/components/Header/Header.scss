@@ -1,0 +1,38 @@
+@use '../../styles/variables' as v;
+
+.Header {
+  width: 95%;
+  margin: auto;
+  background-color: v.$color-primary;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+
+  &-block {
+    display: flex;
+    align-items: center;
+    margin-left: 3rem;
+  }
+
+  &-logo {
+    height: 3rem;
+  }
+
+  &-title {
+    margin: 0 1rem;
+    color: v.$color;
+  }
+
+  &-link {
+    margin-left: 2rem;
+    align-items: center;
+    text-decoration: none;
+    color: v.$color;
+  }
+
+  &-block2 {
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+  }
+}
