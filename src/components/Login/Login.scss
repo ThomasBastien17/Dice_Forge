@@ -4,14 +4,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
-  width: 95%;
-  height: 86.5vh;
+  height: 100vh;
 
   &-title {
     font-size: 4rem;
     padding: 2rem;
     color: v.$color-primary;
+  }
+  &-form {
+    flex-grow: 1;
   }
   &-input {
     margin-bottom: 1rem;
