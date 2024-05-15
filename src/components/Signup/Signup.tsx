@@ -3,7 +3,13 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Signup.scss';
 
-function Signup() {
+interface SignupProps {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+}
+function Signup({ email, setEmail, password, setPassword }: SignupProps) {
   return (
     <div className="signup">
       <Header />
