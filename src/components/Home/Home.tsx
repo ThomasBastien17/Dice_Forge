@@ -1,6 +1,6 @@
+import { Image, Container, Button, Icon } from 'semantic-ui-react';
 import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
-import { Image, Container, Button, Icon } from 'semantic-ui-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -12,7 +12,6 @@ function Home() {
         src="public/LogoDiceForge.jpg"
         size="large"
         className="home-logo"
-        rounded
       />
       <div className="home-container">
         <Container text textAlign="center">
