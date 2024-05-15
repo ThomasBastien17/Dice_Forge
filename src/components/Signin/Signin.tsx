@@ -1,9 +1,12 @@
 import { Form, FormInput, Button } from 'semantic-ui-react';
 import './Signin.scss';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function Signin() {
   return (
     <div className="signin">
+      <Header />
       <h1 className="signin-title">Inscription</h1>
       <Form className="signin-form">
         <FormInput
@@ -23,7 +26,7 @@ function Signin() {
         />
         <FormInput
           className="signin-input"
-          icon="lock"
+          icon="at"
           iconPosition="left"
           label="Email"
           type="email"
@@ -46,13 +49,9 @@ function Signin() {
           placeholder="Confirmation mot de passe"
         />
 
-        <Button
-          className="signin-btn"
-          content="Valider"
-          primary
-          type="submit"
-        />
+        <Button content="Valider" type="submit" color="red" />
       </Form>
+      <Footer />
     </div>
   );
 }

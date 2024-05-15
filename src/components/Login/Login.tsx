@@ -1,9 +1,12 @@
 import { Button, Form, FormInput } from 'semantic-ui-react';
 import './Login.scss';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function Login() {
   return (
     <div className="login">
+      <Header />
       <h1 className="login-title">Inscription</h1>
       <div className="login-form">
         <Form>
@@ -23,6 +26,7 @@ function Login() {
           <Button content="Se connecter" type="submit" color="red" />
         </Form>
       </div>
+      <Footer />
     </div>
   );
 }
