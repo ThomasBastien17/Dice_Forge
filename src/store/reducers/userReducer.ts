@@ -25,9 +25,7 @@ export const actionChangeUser = createAction<{
 }>('CHANGE_USER');
 
 const userReducer = createReducer(initialState, (builder) => {
-  builder.addCase(actionChangeUser, (state, action) => {
-    state.credentials[action.payload.credentialName] = action.payload.newValue;
-  });
+  builder.addCase(actionChangeUser, (state, action) => {});
 });
 
 export default userReducer;
