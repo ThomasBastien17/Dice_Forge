@@ -29,6 +29,9 @@
     text-decoration: none;
     color: v.$color;
   }
+  &-link:hover {
+    color: rgb(145, 144, 144);
+  }
 
   &-block2 {
     display: flex;
