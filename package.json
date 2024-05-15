@@ -16,10 +16,6 @@
 		"semantic-ui-css": "^2.5.0",
 		"semantic-ui-react": "^2.1.5",
 		"react-router-dom": "^6.23.1"
-<<<<<<< HEAD
-
-=======
->>>>>>> 37c03c31f499444a690067cadf58398199a3d7de
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.28",
