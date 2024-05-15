@@ -1,8 +1,7 @@
-/* eslint-disable react/no-unescaped-entities */
+import { Image, Container, Button, Icon } from 'semantic-ui-react';
 import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
-import { Image, Container, Button, Icon } from 'semantic-ui-react';
 import Footer from '../Footer/Footer';
 
 function Home() {
@@ -13,7 +12,6 @@ function Home() {
         src="public/LogoDiceForge.jpg"
         size="large"
         className="home-logo"
-        rounded
       />
       <div className="home-container">
         <Container text textAlign="center">
