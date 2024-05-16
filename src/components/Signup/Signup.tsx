@@ -16,13 +16,13 @@ function Signup() {
   });
 
   /**
-   * La fonction postTask envoie une requête POST à une URL spécifiée avec les données du formulaire et enregistre la réponse.
-  @formData - Le paramètre formData dans la fonction postTask est de type IUser,
+   * La fonction postUser envoie une requête POST à une URL spécifiée avec les données du formulaire et enregistre la réponse.
+  @formData - Le paramètre formData dans la fonction postUser est de type IUser,
    qui contient des données liées à un utilisateur, telles que leur nom,
    leur email, leur mot de passe, etc. Ces données sont ensuite envoyées en tant que
    requête POST à http://localhost:5000/signup en utilisant Axios.
   */
-  const postTask = async (formData: IUser) => {
+  const postUser = async (formData: IUser) => {
     const response = await axios.post(
       'http://localhost:5000/api/signup',
       formData
@@ -41,7 +41,7 @@ function Signup() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(userFormData);
-    postTask(userFormData);
+    postUser(userFormData);
   };
 
   /**
