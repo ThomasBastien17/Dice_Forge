@@ -17,9 +17,15 @@
     flex-direction: column;
     align-items: center;
     flex-grow: 1;
+    width: 80%;
   }
 
   &-input {
     margin-bottom: 1rem;
   }
+}
+.field {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }

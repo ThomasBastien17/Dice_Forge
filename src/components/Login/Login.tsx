@@ -48,6 +48,7 @@ function Login() {
             iconPosition="left"
             placeholder="Email"
             onChange={(event) => handleChange(event, 'email')}
+            label="Email"
           />
           <FormInput
             className="login-input"
@@ -56,6 +57,7 @@ function Login() {
             type="password"
             placeholder="Mot de passe"
             onChange={(event) => handleChange(event, 'password')}
+            label="Mot de passe"
           />
           <Button content="Se connecter" type="submit" color="red" />
         </Form>

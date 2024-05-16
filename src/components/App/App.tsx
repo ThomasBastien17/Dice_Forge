@@ -4,6 +4,7 @@ import CreateGame from '../CreateGame/CreateGame';
 import Game from '../Game/Game';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
+import Profile from '../Profile/Profile';
 import Signup from '../Signup/Signup';
 import './App.scss';
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/api/signup" element={<Signup />} />
         <Route path="/api/creategame" element={<CreateGame />} />
         <Route path="/api/game" element={<Game />} />
+        <Route path="/api/profile" element={<Profile />} />
       </Routes>
     </div>
   );
