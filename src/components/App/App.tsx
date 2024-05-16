@@ -4,9 +4,9 @@ import CreateGame from '../CreateGame/CreateGame';
 import Game from '../Game/Game';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
+import Profile from '../Profile/Profile';
 import Signup from '../Signup/Signup';
 import './App.scss';
-import Profile from '../Profile/Profile';
 
 function App() {
   return (
