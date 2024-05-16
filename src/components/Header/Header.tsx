@@ -21,6 +21,9 @@ function Header() {
         <NavLink className="Header-link" to="/login">
           Connexion
         </NavLink>
+        <NavLink className="Header-link" to="/profile">
+          Profil
+        </NavLink>
       </div>
     </div>
   );

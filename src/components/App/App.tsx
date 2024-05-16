@@ -6,6 +6,7 @@ import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 import './App.scss';
+import Profile from '../Profile/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/creategame" element={<CreateGame />} />
         <Route path="/game" element={<Game />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );
