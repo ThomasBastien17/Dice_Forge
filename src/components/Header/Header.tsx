@@ -15,7 +15,7 @@ function Header() {
         </NavLink>
       </div>
       <div className="Header-block2">
-        <NavLink className="Header-link" to="/signin">
+        <NavLink className="Header-link" to="/signup">
           Inscription
         </NavLink>
         <NavLink className="Header-link" to="/login">
