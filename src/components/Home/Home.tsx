@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Image, Container, Button, Icon } from 'semantic-ui-react';
 import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
@@ -56,7 +58,8 @@ function Home() {
         icon
         labelPosition="right"
         color="red"
-        type="submit"
+        as={Link}
+        to="/creategame"
       >
         Créer une partie
         <Icon name="right arrow" />
