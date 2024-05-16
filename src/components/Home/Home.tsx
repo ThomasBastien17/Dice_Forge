@@ -1,4 +1,4 @@
-import { Image, Container, Button, Icon } from 'semantic-ui-react';
+import { Image, Container, Button, Icon, ButtonGroup, ButtonOr } from 'semantic-ui-react';
 import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
@@ -50,6 +50,12 @@ function Home() {
           <p className="home-paragraph">L'aventure vous attend !</p>
         </Container>
       </div>
+      <ButtonGroup>
+    <Button>Cancel</Button>
+    <ButtonOr />
+    <Button positive>Save</Button>
+  </ButtonGroup>
+      
       <Button
         className="home-btn"
         icon
