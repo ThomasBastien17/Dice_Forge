@@ -59,7 +59,7 @@ function Home() {
         labelPosition="right"
         color="red"
         as={Link}
-        to="/creategame"
+        to="/api/creategame"
       >
         Créer une partie
         <Icon name="right arrow" />
