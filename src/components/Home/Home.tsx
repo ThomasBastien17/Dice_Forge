@@ -1,6 +1,13 @@
+import {
+  Image,
+  Container,
+  Button,
+  Icon,
+  ButtonGroup,
+  ButtonOr,
+} from 'semantic-ui-react';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Image, Container, Button, Icon } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
@@ -53,17 +60,25 @@ function Home() {
           <p className="home-paragraph">L'aventure vous attend !</p>
         </Container>
       </div>
-      <Button
-        className="home-btn"
-        icon
-        labelPosition="right"
-        color="red"
-        as={Link}
-        to="/api/creategame"
-      >
-        Créer une partie
-        <Icon name="right arrow" />
-      </Button>
+
+      <div className="home-group-btn">
+        <ButtonGroup>
+          <NavLink to="/api/login">
+            <Button color="purple">Connectez-vous</Button>
+          </NavLink>
+          <ButtonOr />
+          <NavLink to="/api/signup">
+            <Button color="pink">Inscrivez-vous</Button>
+          </NavLink>
+        </ButtonGroup>
+      </div>
+
+      <NavLink to="/api/creategame">
+        <Button className="home-btn" icon labelPosition="right" color="red">
+          Créer une partie
+          <Icon name="arrow right" />
+        </Button>
+      </NavLink>
       <Footer />
     </div>
   );
