@@ -15,10 +15,10 @@ function Header() {
         </NavLink>
       </div>
       <div className="Header-block2">
-        <NavLink className="Header-link" to="/signup">
+        <NavLink className="Header-link" to="/api/signup">
           Inscription
         </NavLink>
-        <NavLink className="Header-link" to="/login">
+        <NavLink className="Header-link" to="/api/login">
           Connexion
         </NavLink>
       </div>
