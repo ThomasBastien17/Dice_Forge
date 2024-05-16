@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Dropdown, Button, Input } from 'semantic-ui-react';
+import {
+  Dropdown,
+  Button,
+  Input,
+  Icon,
+  Image,
+  Container,
+} from 'semantic-ui-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import '../CreateSheet/CreateSheet.scss';
@@ -49,7 +56,7 @@ function CreateSheet() {
 
       <div className="create-sheet">
         <div className="left-section">
-          <h2>Fiche</h2>
+          <h2>Fiche Personnage</h2>
           <Dropdown
             placeholder="Sélectionner une licence"
             fluid
@@ -80,10 +87,17 @@ function CreateSheet() {
           </Button>
         </div>
       </div>
-
-      <Button onClick={handleValidation} primary>
-        Valider
-      </Button>
+      <div className="submit-btn">
+        <Button
+          onClick={handleValidation}
+          primary
+          icon
+          labelPosition="right"
+          color="red"
+        >
+          Valider <Icon name="right arrow" />
+        </Button>
+      </div>
 
       <Footer />
     </div>
