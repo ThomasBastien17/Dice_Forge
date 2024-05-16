@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Input } from 'semantic-ui-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import '../CreateGame/CreateGame.scss';
 
 function CreateGame() {
   const [inputs, setInputs] = useState([
