@@ -25,7 +25,7 @@ function Profile() {
           <div className="profile-game">
             <h2 className="profile-game-title">
               Parties
-              <NavLink to="/creategame">
+              <NavLink to="/api/creategame">
                 <Button
                   className="profile-game-btn"
                   content="Crée une partie"

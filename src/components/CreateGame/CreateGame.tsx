@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { Form, Button, Input } from 'semantic-ui-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import '../CreateGame/CreateGame.scss';
+import './CreateGame.scss';
 
 function CreateGame() {
   const [inputs, setInputs] = useState([
     { id: 1, name: 'Titre', placeholder: 'Titre', value: '' },
     { id: 2, name: 'Theme', placeholder: 'Thème', value: '' },
-    { id: 3, name: 'Joueur', placeholder: 'Ajouter un joueur', value: '' },
+    {
+      id: 3,
+      name: 'Joueur',
+      placeholder: 'Ajouter un joueur',
+      value: '',
+    },
   ]);
 
   const handleInputChange = (index: number, value: string) => {
     const newInputs = [...inputs];
-    newInputs[index] = { ...newInputs[index], value: value };
+    newInputs[index] = { ...newInputs[index], value };
     setInputs(newInputs);
   };
 
@@ -34,11 +39,11 @@ function CreateGame() {
   };
 
   return (
-    <>
+    <div className="create">
       <Header />
-      <div className="create">
+      <div className="create-content">
         <h1 className="create-title">Créer ta partie</h1>
-        <div>
+        <div className="create-form">
           <Form>
             {inputs.map((input, index) => (
               <Form.Field key={input.id}>
@@ -52,6 +57,7 @@ function CreateGame() {
                     onClick={() => handleRemoveInput(input.id)}
                     icon="minus"
                     negative
+                    compact
                   />
                 )}
               </Form.Field>
@@ -60,10 +66,10 @@ function CreateGame() {
           <Button onClick={handleAddInput} primary>
             +
           </Button>
-          <Footer />
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }
 
