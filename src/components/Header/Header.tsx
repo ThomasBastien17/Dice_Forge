@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './Header.scss';
 
 function Header() {
@@ -9,15 +10,20 @@ function Header() {
           src="../../../public/d20-7136921_640.png"
           alt="Logo Dice Forge"
         />
-        <h1 className="Header-title">Dice Forge</h1>
+        <NavLink to="/">
+          <h1 className="Header-title">Dice Forge</h1>
+        </NavLink>
       </div>
       <div className="Header-block2">
-        <a className="Header-link" href="/inscription">
+        <NavLink className="Header-link" to="/api/signup">
           Inscription
-        </a>
-        <a className="Header-link" href="/connexion">
+        </NavLink>
+        <NavLink className="Header-link" to="/api/login">
           Connexion
-        </a>
+        </NavLink>
+        <NavLink className="Header-link" to="/api/profile">
+          Profil
+        </NavLink>
       </div>
     </div>
   );

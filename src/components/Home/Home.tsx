@@ -1,4 +1,13 @@
-import { Image, Container, Button, Icon, ButtonGroup, ButtonOr } from 'semantic-ui-react';
+import {
+  Image,
+  Container,
+  Button,
+  Icon,
+  ButtonGroup,
+  ButtonOr,
+} from 'semantic-ui-react';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
@@ -20,9 +29,10 @@ function Home() {
           <p className="home-paragraph">Bienvenue sur Dice Forge !</p>
           <p className="home-paragraph">
             Votre plateforme ultime pour la gestion de parties de jeux de rôles
-            en ligne ! Que vous soyez un maître du donjon expérimenté ou un
-            aventurier débutant, notre site offre tout ce dont vous avez besoin
-            pour rendre vos aventures encore plus épiques.
+            en ligne ! <br />
+            Que vous soyez un maître du donjon expérimenté ou un aventurier
+            débutant, notre site offre tout ce dont vous avez besoin pour rendre
+            vos aventures encore plus épiques.
           </p>
           <p className="home-paragraph">
             Plongez dans un univers de possibilités infinies, où chaque lancer
@@ -50,22 +60,25 @@ function Home() {
           <p className="home-paragraph">L'aventure vous attend !</p>
         </Container>
       </div>
-      <ButtonGroup>
-    <Button>Cancel</Button>
-    <ButtonOr />
-    <Button positive>Save</Button>
-  </ButtonGroup>
-      
-      <Button
-        className="home-btn"
-        icon
-        labelPosition="right"
-        color="red"
-        type="submit"
-      >
-        Créer une partie
-        <Icon name="right arrow" />
-      </Button>
+
+      <div className="home-group-btn">
+        <ButtonGroup>
+          <NavLink to="/api/login">
+            <Button color="purple">Connectez-vous</Button>
+          </NavLink>
+          <ButtonOr />
+          <NavLink to="/api/signup">
+            <Button color="pink">Inscrivez-vous</Button>
+          </NavLink>
+        </ButtonGroup>
+      </div>
+
+      <NavLink to="/api/creategame">
+        <Button className="home-btn" icon labelPosition="right" color="red">
+          Créer une partie
+          <Icon name="arrow right" />
+        </Button>
+      </NavLink>
       <Footer />
     </div>
   );
