@@ -7,6 +7,8 @@ import {
   Segment,
   Grid,
   Divider,
+  Form,
+  FormField,
 } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
@@ -32,6 +34,8 @@ function CreateSheet() {
     { id: 3, name: '' },
   ]);
 
+  const [avatarPreview, setAvatarPreview] = useState(null);
+
   const [selectedCharacteristics, setSelectedCharacteristics] = useState([]);
 
   const [selectedWeapons, setSelectedWeapons] = useState([]);
@@ -52,7 +56,14 @@ function CreateSheet() {
   };
 
   const handleAvatarChange = (e) => {
-    // Handle avatar upload
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleCharacteristicsChange = (e, { value }) => {
@@ -94,11 +105,24 @@ function CreateSheet() {
               <div className="left-section">
                 <h2>Fiche Personnage</h2>
                 <div>
+                  <Form className="">
+                    <FormField>
+                      <label>Nom de votre personnage</label>
+                      <input />
+                    </FormField>
+                  </Form>
                   <span>Importer un avatar </span>
                   <input type="file" onChange={handleAvatarChange} />
+                  {avatarPreview && (
+                    <div className="avatar-preview">
+                      {avatarPreview && (
+                        <img src={avatarPreview} alt="Avatar Preview" />
+                      )}
+                    </div>
+                  )}
                 </div>
                 <Dropdown
-                  placeholder="Sélectionner une licence"
+                  placeholder="Sélectionnez une licence"
                   fluid
                   selection
                   options={licenses.map((license) => ({
@@ -114,6 +138,7 @@ function CreateSheet() {
                   fluid
                   multiple
                   selection
+                  search
                   options={characteristicsOptions}
                   value={selectedCharacteristics}
                   onChange={handleCharacteristicsChange}
@@ -132,6 +157,7 @@ function CreateSheet() {
                 fluid
                 multiple
                 selection
+                search
                 options={weaponsOptions}
                 value={selectedWeapons}
                 onChange={handleWeaponsChange}
@@ -142,9 +168,9 @@ function CreateSheet() {
             </div>
           </Grid.Column>
         </Grid>
-        <Divider vertical></Divider>
+        <Divider vertical />
       </Segment>
-      <div className="fucking-btn">
+      <div className="valider-btn">
         <Button primary icon labelPosition="right">
           Valider <Icon name="right arrow" />
         </Button>
