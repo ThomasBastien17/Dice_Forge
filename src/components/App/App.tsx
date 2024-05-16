@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
-import Login from '../Login/Login';
-import Signin from '../Signin/Signin';
+import CreateGame from '../CreateGame/CreateGame';
+import Game from '../Game/Game';
 import Home from '../Home/Home';
+import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 import './App.scss';
 
 function App() {
@@ -13,7 +13,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/creategame" element={<CreateGame />} />
+        <Route path="/game" element={<Game />} />
       </Routes>
     </div>
   );
