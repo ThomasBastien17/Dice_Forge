@@ -1,12 +1,56 @@
+@use '../../styles/variables' as v;
+
 .create-sheet {
+  position: relative;
   display: flex;
-  justify-content: space-between; /* Pour aligner les blocs à gauche et à droite */
+  justify-content: center;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+.ui.segment {
+  background-image: url(../../../public/paper-1074131_1280.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h2.sheet-title {
+  text-align: center;
+  font-size: 3rem;
 }
 
 .left-section {
-  width: 45%; /* Largeur du bloc "Fiche" */
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
 }
 
 .right-section {
-  width: 45%; /* Largeur du bloc "Inventaire" */
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+}
+
+.grid.column {
+  display: flex;
+  justify-content: center;
+}
+
+.ui.input {
+  margin: 1.5rem;
+}
+
+.ui.primary.button {
+  color: white;
+  background-color: #b55923;
+}
+.ui.primary.button:hover {
+  background-color: #5a332f;
+}
+
+.fucking-btn {
+  display: flex;
+  justify-content: center;
 }

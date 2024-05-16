@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
-import { Dropdown, Button, Input } from 'semantic-ui-react';
+import { useState } from 'react';
+import {
+  Dropdown,
+  Button,
+  Input,
+  Icon,
+  Segment,
+  Grid,
+  Divider,
+} from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import '../CreateSheet/CreateSheet.scss';
+import './CreateSheet.scss';
 
 function CreateSheet() {
   const [licenses, setLicenses] = useState([
     { id: 1, name: 'Warhammer' },
     { id: 2, name: 'D&D' },
-    // Ajoutez d'autres licences au besoin
+    // Add other licenses as needed
   ]);
 
-  const [characters, setCharacters] = useState([
+  const [characteristics, setCharacteristics] = useState([
     { id: 1, name: '' },
     { id: 2, name: '' },
     { id: 3, name: '' },
@@ -23,70 +32,125 @@ function CreateSheet() {
     { id: 3, name: '' },
   ]);
 
-  const handleAddCharacter = () => {
-    setCharacters([...characters, { id: characters.length + 1, name: '' }]);
+  const [selectedCharacteristics, setSelectedCharacteristics] = useState([]);
+
+  const [selectedWeapons, setSelectedWeapons] = useState([]);
+
+  const handleAddCharacteristics = () => {
+    setCharacteristics([
+      ...characteristics,
+      { id: characteristics.length + 1, name: '' },
+    ]);
   };
 
   const handleAddItem = () => {
     setItems([...items, { id: items.length + 1, name: '' }]);
   };
 
-  const handleLicenseChange = (e: any, { value }: any) => {
+  const handleLicenseChange = (e, { value }) => {
     // Handle selected license
   };
 
-  const handleAvatarChange = (e: any) => {
+  const handleAvatarChange = (e) => {
     // Handle avatar upload
   };
 
-  const handleValidation = () => {
-    // Handle form validation
+  const handleCharacteristicsChange = (e, { value }) => {
+    if (value.length <= 3) {
+      setSelectedCharacteristics(value);
+    }
   };
 
+  const handleWeaponsChange = (e, { value }) => {
+    if (value.length <= 1) {
+      setSelectedWeapons(value);
+    }
+  };
+
+  const weaponsOptions = [
+    { key: 'hache', text: 'Hache', value: 'hache' },
+    { key: 'arc', text: 'Arc', value: 'arc' },
+    { key: 'épée', text: 'Epée', value: 'épée' },
+    { key: 'arbalette', text: 'Arbalette', value: 'arbalette' },
+    { key: 'masse', text: 'Masse', value: 'masse' },
+  ];
+
+  const characteristicsOptions = [
+    { key: 'charisme', text: 'Charisme', value: 'charisme' },
+    { key: 'dextérité', text: 'Dextérité', value: 'dextérité' },
+    { key: 'force', text: 'Force', value: 'force' },
+    { key: 'agilité', text: 'Agilité', value: 'agilité' },
+    { key: 'esprit', text: 'Esprit', value: 'esprit' },
+  ];
+
   return (
-    <div>
+    <>
       <Header />
+      <h2 className="sheet-title">Création de Fiche</h2>
+      <Segment>
+        <Grid columns={2} relaxed="very">
+          <Grid.Column>
+            <div className="create-sheet">
+              <div className="left-section">
+                <h2>Fiche Personnage</h2>
+                <div>
+                  <span>Importer un avatar </span>
+                  <input type="file" onChange={handleAvatarChange} />
+                </div>
+                <Dropdown
+                  placeholder="Sélectionner une licence"
+                  fluid
+                  selection
+                  options={licenses.map((license) => ({
+                    key: license.id,
+                    text: license.name,
+                    value: license.id,
+                  }))}
+                  onChange={handleLicenseChange}
+                />
 
-      <div className="create-sheet">
-        <div className="left-section">
-          <h2>Fiche</h2>
-          <Dropdown
-            placeholder="Sélectionner une licence"
-            fluid
-            selection
-            options={licenses.map((license) => ({
-              key: license.id,
-              text: license.name,
-              value: license.id,
-            }))}
-            onChange={handleLicenseChange}
-          />
-          <input type="file" onChange={handleAvatarChange} />
-          {characters.map((character) => (
-            <Input key={character.id} placeholder="Placeholder" />
-          ))}
-          <Button onClick={handleAddCharacter} primary>
-            +
-          </Button>
-        </div>
-
-        <div className="right-section">
-          <h2>Inventaire</h2>
-          {items.map((item) => (
-            <Input key={item.id} placeholder="Placeholder" />
-          ))}
-          <Button onClick={handleAddItem} primary>
-            +
-          </Button>
-        </div>
+                <Dropdown
+                  placeholder="Choisissez 3 caractéristiques"
+                  fluid
+                  multiple
+                  selection
+                  options={characteristicsOptions}
+                  value={selectedCharacteristics}
+                  onChange={handleCharacteristicsChange}
+                />
+                <Button onClick={handleAddCharacteristics} primary>
+                  +
+                </Button>
+              </div>
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <div className="right-section create-sheet">
+              <h2>Inventaire</h2>
+              <Dropdown
+                placeholder="Choisissez une arme"
+                fluid
+                multiple
+                selection
+                options={weaponsOptions}
+                value={selectedWeapons}
+                onChange={handleWeaponsChange}
+              />
+              <Button onClick={handleAddItem} primary>
+                +
+              </Button>
+            </div>
+          </Grid.Column>
+        </Grid>
+        <Divider vertical></Divider>
+      </Segment>
+      <div className="fucking-btn">
+        <Button primary icon labelPosition="right">
+          Valider <Icon name="right arrow" />
+        </Button>
       </div>
-
-      <Button onClick={handleValidation} primary>
-        Valider
-      </Button>
-
       <Footer />
-    </div>
+    </>
   );
 }
 
