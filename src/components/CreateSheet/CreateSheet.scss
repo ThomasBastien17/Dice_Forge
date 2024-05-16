@@ -1,0 +1,12 @@
+.create-sheet {
+  display: flex;
+  justify-content: space-between; /* Pour aligner les blocs à gauche et à droite */
+}
+
+.left-section {
+  width: 45%; /* Largeur du bloc "Fiche" */
+}
+
+.right-section {
+  width: 45%; /* Largeur du bloc "Inventaire" */
+}
