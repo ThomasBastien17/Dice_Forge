@@ -15,6 +15,7 @@ function Login() {
             icon="at"
             iconPosition="left"
             placeholder="Email"
+            label="Email"
           />
           <FormInput
             className="login-input"
@@ -22,6 +23,7 @@ function Login() {
             iconPosition="left"
             type="password"
             placeholder="Mot de passe"
+            label="Mot de passe"
           />
           <Button content="Se connecter" type="submit" color="red" />
         </Form>
