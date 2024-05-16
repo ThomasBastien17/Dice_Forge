@@ -1,18 +1,18 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Button, Form, FormInput } from 'semantic-ui-react';
-import { IUser } from '../../@Types/user';
+import { IUserLogin } from '../../@Types/user';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
 
 function Login() {
-  const [userLoginData, setUserLoginData] = useState<IUser>({
+  const [userLoginData, setUserLoginData] = useState<IUserLogin>({
     email: '',
     password: '',
   });
 
-  const postUser = async (formData: IUser) => {
+  const postUser = async (formData: IUserLogin) => {
     const response = await axios.post(
       'http://localhost:5000/api/login',
       formData
