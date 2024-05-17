@@ -9,6 +9,7 @@ import {
   Divider,
   Form,
   FormField,
+  TextArea,
 } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
@@ -113,11 +114,17 @@ function CreateSheet() {
                 <div>
                   <Form className="">
                     <FormField>
-                      <input
-                        placeholder="Nom de votre personnage"
-                        value={characterName}
-                        onChange={handleCharacterNameChange}
-                      />
+                      <div>
+                        <label htmlFor="characterNameInput">
+                          Nom de votre personnage :
+                        </label>
+                        <input
+                          placeholder="Nom de votre personnage"
+                          value={characterName}
+                          onChange={handleCharacterNameChange}
+                          style={{ marginBottom: '4rem', marginTop: '1rem' }}
+                        />
+                      </div>
                     </FormField>
                   </Form>
                   <span>Importer un avatar </span>
@@ -130,16 +137,25 @@ function CreateSheet() {
                     </div>
                   )}
                 </div>
-                <Input
-                  placeholder="Choisissez votre licence"
-                  value={license}
-                  onChange={handleLicenseChange}
-                />
+                <div>
+                  <label>Choix de la licence :</label>
+                  <Input
+                    placeholder="Choisissez votre licence"
+                    value={license}
+                    onChange={handleLicenseChange}
+                    style={{
+                      width: '90%',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  />{' '}
+                </div>
                 {characteristics.map((characteristic, index) => (
                   <div
                     key={index}
                     style={{ display: 'flex', alignItems: 'center' }}
                   >
+                    <label>Choix des caractéristiques :</label>
                     <Input
                       placeholder="Nom de la caractéristique"
                       value={characteristic.name}
@@ -172,61 +188,55 @@ function CreateSheet() {
           <Grid.Column>
             <div className="right-section create-sheet">
               <h2>Inventaire</h2>
-              <Grid columns={2}>
-                <Grid.Row>
-                  <Grid.Column>
-                    {items
-                      .slice(0, Math.ceil(items.length / 2))
-                      .map((item, index) => (
-                        <div key={index} className="inventory-item">
-                          <div className="item-input">
-                            <Input
-                              placeholder="Choisissez vos objets"
-                              value={item}
-                              onChange={(e) =>
-                                handleItemChange(index, e.target.value)
-                              }
-                            />
-                          </div>
-                          <Button
-                            icon="minus"
-                            onClick={() => handleRemoveItem(index)}
-                          />
-                        </div>
-                      ))}
-                  </Grid.Column>
-                  <Grid.Column>
-                    {items
-                      .slice(Math.ceil(items.length / 2))
-                      .map((item, index) => (
-                        <div
-                          key={index + Math.ceil(items.length / 2)}
-                          className="inventory-item"
-                        >
-                          <div className="item-input">
-                            <Input
-                              placeholder="Choisissez vos armes"
-                              value={item}
-                              onChange={(e) =>
-                                handleItemChange(
-                                  index + Math.ceil(items.length / 2),
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </div>
-                          <Button
-                            icon="minus"
-                            onClick={() =>
-                              handleRemoveItem(
-                                index + Math.ceil(items.length / 2)
-                              )
-                            }
-                          />
-                        </div>
-                      ))}
-                  </Grid.Column>
-                </Grid.Row>
+              <Grid columns={3}>
+                {items.map((item, index) => (
+                  <Grid.Row key={index} className="inventory-item">
+                    <Grid.Column>
+                      <label htmlFor={`item-name-${index}`}>
+                        Nom de l'objet:
+                      </label>
+                      <Input
+                        id={`item-name-${index}`}
+                        placeholder="Nom de l'objet"
+                        value={item.name}
+                        onChange={(e) =>
+                          handleItemNameChange(index, e.target.value)
+                        }
+                      />
+                    </Grid.Column>
+                    <Grid.Column>
+                      <label htmlFor={`item-description-${index}`}>
+                        Description:
+                      </label>
+                      <TextArea
+                        id={`item-description-${index}`}
+                        placeholder="Entrez ici la description de votre objet"
+                        value={item.description}
+                        onChange={(e) =>
+                          handleItemDescriptionChange(index, e.target.value)
+                        }
+                      />
+                    </Grid.Column>
+                    <Grid.Column>
+                      <label htmlFor={`item-quantity-${index}`}>
+                        Quantité:
+                      </label>
+                      <Input
+                        id={`item-quantity-${index}`}
+                        placeholder="Quantité"
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) =>
+                          handleItemQuantityChange(index, e.target.value)
+                        }
+                      />
+                      <Button
+                        icon="minus"
+                        onClick={() => handleRemoveItem(index)}
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                ))}
               </Grid>
               <Button onClick={handleAddItem} primary>
                 +
