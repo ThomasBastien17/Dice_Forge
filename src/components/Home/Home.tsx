@@ -64,11 +64,11 @@ function Home() {
       <div className="home-group-btn">
         <ButtonGroup>
           <NavLink to="/api/login">
-            <Button color="purple">Connectez-vous</Button>
+            <Button color="black">Connectez-vous</Button>
           </NavLink>
           <ButtonOr />
           <NavLink to="/api/signup">
-            <Button color="pink">Inscrivez-vous</Button>
+            <Button color="grey">Inscrivez-vous</Button>
           </NavLink>
         </ButtonGroup>
       </div>
