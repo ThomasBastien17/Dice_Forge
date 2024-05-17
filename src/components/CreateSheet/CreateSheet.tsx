@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { useState } from 'react';
 import {
-  Dropdown,
   Button,
   Input,
   Icon,
@@ -16,43 +16,50 @@ import Footer from '../Footer/Footer';
 import './CreateSheet.scss';
 
 function CreateSheet() {
-  const [licenses, setLicenses] = useState([
-    { id: 1, name: 'Warhammer' },
-    { id: 2, name: 'D&D' },
-    // Add other licenses as needed
-  ]);
-
   const [characteristics, setCharacteristics] = useState([
-    { id: 1, name: '' },
-    { id: 2, name: '' },
-    { id: 3, name: '' },
+    { name: '', value: '' },
   ]);
-
-  const [items, setItems] = useState([
-    { id: 1, name: '' },
-    { id: 2, name: '' },
-    { id: 3, name: '' },
-  ]);
-
+  const [items, setItems] = useState(['']);
+  const [characterName, setCharacterName] = useState('');
+  const [license, setLicense] = useState('');
   const [avatarPreview, setAvatarPreview] = useState(null);
 
-  const [selectedCharacteristics, setSelectedCharacteristics] = useState([]);
+  const handleAddCharacteristic = () => {
+    setCharacteristics([...characteristics, { name: '', value: '' }]);
+  };
 
-  const [selectedWeapons, setSelectedWeapons] = useState([]);
-
-  const handleAddCharacteristics = () => {
-    setCharacteristics([
-      ...characteristics,
-      { id: characteristics.length + 1, name: '' },
-    ]);
+  const handleRemoveCharacteristic = (index) => {
+    const updatedCharacteristics = [...characteristics];
+    updatedCharacteristics.splice(index, 1);
+    setCharacteristics(updatedCharacteristics);
   };
 
   const handleAddItem = () => {
-    setItems([...items, { id: items.length + 1, name: '' }]);
+    setItems([...items, '']);
   };
 
-  const handleLicenseChange = (e, { value }) => {
-    // Handle selected license
+  const handleRemoveItem = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
+  };
+
+  const handleCharacteristicNameChange = (index, value) => {
+    const updatedCharacteristics = [...characteristics];
+    updatedCharacteristics[index].name = value;
+    setCharacteristics(updatedCharacteristics);
+  };
+
+  const handleCharacteristicValueChange = (index, value) => {
+    const updatedCharacteristics = [...characteristics];
+    updatedCharacteristics[index].value = value;
+    setCharacteristics(updatedCharacteristics);
+  };
+
+  const handleItemChange = (index, value) => {
+    const updatedItems = [...items];
+    updatedItems[index] = value;
+    setItems(updatedItems);
   };
 
   const handleAvatarChange = (e) => {
@@ -66,33 +73,32 @@ function CreateSheet() {
     }
   };
 
-  const handleCharacteristicsChange = (e, { value }) => {
-    if (value.length <= 3) {
-      setSelectedCharacteristics(value);
-    }
+  const handleCharacterNameChange = (e) => {
+    setCharacterName(e.target.value);
   };
 
-  const handleWeaponsChange = (e, { value }) => {
-    if (value.length <= 1) {
-      setSelectedWeapons(value);
-    }
+  const handleLicenseChange = (e) => {
+    setLicense(e.target.value);
   };
 
-  const weaponsOptions = [
-    { key: 'hache', text: 'Hache', value: 'hache' },
-    { key: 'arc', text: 'Arc', value: 'arc' },
-    { key: 'épée', text: 'Epée', value: 'épée' },
-    { key: 'arbalette', text: 'Arbalette', value: 'arbalette' },
-    { key: 'masse', text: 'Masse', value: 'masse' },
-  ];
+  const handleSubmit = () => {
+    const data = {
+      characterName,
+      license,
+      characteristics,
+      items,
+      avatar: avatarPreview,
+    };
 
-  const characteristicsOptions = [
-    { key: 'charisme', text: 'Charisme', value: 'charisme' },
-    { key: 'dextérité', text: 'Dextérité', value: 'dextérité' },
-    { key: 'force', text: 'Force', value: 'force' },
-    { key: 'agilité', text: 'Agilité', value: 'agilité' },
-    { key: 'esprit', text: 'Esprit', value: 'esprit' },
-  ];
+    axios
+      .post('/api/createsheet', data)
+      .then((response) => {
+        console.log('Success:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   return (
     <>
@@ -107,8 +113,11 @@ function CreateSheet() {
                 <div>
                   <Form className="">
                     <FormField>
-                      <label>Nom de votre personnage</label>
-                      <input />
+                      <input
+                        placeholder="Nom de votre personnage"
+                        value={characterName}
+                        onChange={handleCharacterNameChange}
+                      />
                     </FormField>
                   </Form>
                   <span>Importer un avatar </span>
@@ -121,29 +130,40 @@ function CreateSheet() {
                     </div>
                   )}
                 </div>
-                <Dropdown
-                  placeholder="Sélectionnez une licence"
-                  fluid
-                  selection
-                  options={licenses.map((license) => ({
-                    key: license.id,
-                    text: license.name,
-                    value: license.id,
-                  }))}
+                <Input
+                  placeholder="Choisissez votre licence"
+                  value={license}
                   onChange={handleLicenseChange}
                 />
-
-                <Dropdown
-                  placeholder="Choisissez 3 caractéristiques"
-                  fluid
-                  multiple
-                  selection
-                  search
-                  options={characteristicsOptions}
-                  value={selectedCharacteristics}
-                  onChange={handleCharacteristicsChange}
-                />
-                <Button onClick={handleAddCharacteristics} primary>
+                {characteristics.map((characteristic, index) => (
+                  <div
+                    key={index}
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <Input
+                      placeholder="Nom de la caractéristique"
+                      value={characteristic.name}
+                      onChange={(e) =>
+                        handleCharacteristicNameChange(index, e.target.value)
+                      }
+                      style={{ marginRight: '10px' }}
+                    />
+                    <Input
+                      type="number"
+                      placeholder="Valeur"
+                      value={characteristic.value}
+                      onChange={(e) =>
+                        handleCharacteristicValueChange(index, e.target.value)
+                      }
+                      style={{ marginRight: '10px' }}
+                    />
+                    <Button
+                      icon="minus"
+                      onClick={() => handleRemoveCharacteristic(index)}
+                    />
+                  </div>
+                ))}
+                <Button onClick={handleAddCharacteristic} primary>
                   +
                 </Button>
               </div>
@@ -152,16 +172,62 @@ function CreateSheet() {
           <Grid.Column>
             <div className="right-section create-sheet">
               <h2>Inventaire</h2>
-              <Dropdown
-                placeholder="Choisissez une arme"
-                fluid
-                multiple
-                selection
-                search
-                options={weaponsOptions}
-                value={selectedWeapons}
-                onChange={handleWeaponsChange}
-              />
+              <Grid columns={2}>
+                <Grid.Row>
+                  <Grid.Column>
+                    {items
+                      .slice(0, Math.ceil(items.length / 2))
+                      .map((item, index) => (
+                        <div key={index} className="inventory-item">
+                          <div className="item-input">
+                            <Input
+                              placeholder="Choisissez vos objets"
+                              value={item}
+                              onChange={(e) =>
+                                handleItemChange(index, e.target.value)
+                              }
+                            />
+                          </div>
+                          <Button
+                            icon="minus"
+                            onClick={() => handleRemoveItem(index)}
+                          />
+                        </div>
+                      ))}
+                  </Grid.Column>
+                  <Grid.Column>
+                    {items
+                      .slice(Math.ceil(items.length / 2))
+                      .map((item, index) => (
+                        <div
+                          key={index + Math.ceil(items.length / 2)}
+                          className="inventory-item"
+                        >
+                          <div className="item-input">
+                            <Input
+                              placeholder="Choisissez vos armes"
+                              value={item}
+                              onChange={(e) =>
+                                handleItemChange(
+                                  index + Math.ceil(items.length / 2),
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </div>
+                          <Button
+                            icon="minus"
+                            onClick={() =>
+                              handleRemoveItem(
+                                index + Math.ceil(items.length / 2)
+                              )
+                            }
+                          />
+                        </div>
+                      ))}
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
               <Button onClick={handleAddItem} primary>
                 +
               </Button>
@@ -171,7 +237,7 @@ function CreateSheet() {
         <Divider vertical />
       </Segment>
       <div className="valider-btn">
-        <Button primary icon labelPosition="right">
+        <Button primary icon labelPosition="right" onClick={handleSubmit}>
           Valider <Icon name="right arrow" />
         </Button>
       </div>
