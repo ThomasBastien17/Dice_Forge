@@ -26,7 +26,7 @@ function CreateSheet() {
   const [characterName, setCharacterName] = useState('');
   const [className, setClassName] = useState('');
   const [level, setLevel] = useState(1);
-  const [gameId, setGameId] = useState(null);
+  const [gameId, setGameId] = useState('');
   const [license, setLicense] = useState('');
   const [avatarPreview, setAvatarPreview] = useState(null);
 
