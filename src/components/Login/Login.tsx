@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Button, Form, FormInput } from 'semantic-ui-react';
+import { useNavigate } from 'react-router-dom';
 import { IUserLogin } from '../../@Types/user';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -11,17 +12,33 @@ function Login() {
     email: '',
     password: '',
   });
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const postUser = async (formData: IUserLogin) => {
-    const response = await axios.post(
-      'http://localhost:5000/api/login',
-      formData
-    );
-    console.log(response);
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/login',
+        formData
+      );
+      console.log(response);
+      setSuccess(true);
+      setError(null);
+      navigate('/');
+    } catch (err) {
+      setError('Échec de la connexion. Veuillez vérifier vos informations.');
+      setSuccess(false);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!userLoginData.email || !userLoginData.password) {
+      setError('Veuillez remplir tous les champs.');
+      return;
+    }
+    setError(null);
     postUser(userLoginData);
   };
 
