@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
 import { IUserLogin } from '../../@Types/user';
@@ -12,6 +13,7 @@ function Login() {
     email: '',
     password: '',
   });
+  const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -26,16 +28,15 @@ function Login() {
         setSuccessMessage(response.data.message);
         setErrorMessage('');
         setIsHidden(false);
+        navigate('/');
       }
       console.log(response);
       console.log(response.data.message);
-    } catch (error) {
-      const axiosError = error as AxiosError;
+    } catch (err) {
+      const axiosError = err as AxiosError;
       if (axiosError.response) {
         const data = axiosError.response.data as IResponseData;
         if (axiosError.response.status === 401) {
-          console.log("log d'erreur : ", data.error);
-
           setErrorMessage(data.error);
           setSuccessMessage('');
           setIsHidden(false);
@@ -94,6 +95,7 @@ function Login() {
             placeholder="Mot de passe"
             onChange={(event) => handleChange(event, 'password')}
           />
+          <a href="/forgot-password">Mot de passe oublié ?</a>
           <Button content="Se connecter" type="submit" color="red" />
         </Form>
       </div>

@@ -66,7 +66,7 @@ function Home() {
           <NavLink to="/api/login">
             <Button color="black">Connectez-vous</Button>
           </NavLink>
-          <ButtonOr />
+          <ButtonOr text="/" />
           <NavLink to="/api/signup">
             <Button color="grey">Inscrivez-vous</Button>
           </NavLink>
