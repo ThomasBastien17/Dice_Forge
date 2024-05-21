@@ -20,10 +20,27 @@ function CreateSheet() {
   const [characteristics, setCharacteristics] = useState([
     { name: '', value: '' },
   ]);
-  const [items, setItems] = useState(['']);
+  const [items, setItems] = useState([
+    { name: '', description: '', quantity: 1 },
+  ]);
   const [characterName, setCharacterName] = useState('');
+  const [className, setClassName] = useState('');
+  const [level, setLevel] = useState(1);
+  const [gameId, setGameId] = useState(null);
   const [license, setLicense] = useState('');
   const [avatarPreview, setAvatarPreview] = useState(null);
+
+  const postUserCreateSheet = async (formData) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/sheet',
+        formData
+      );
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const handleAddCharacteristic = () => {
     setCharacteristics([...characteristics, { name: '', value: '' }]);
@@ -36,7 +53,7 @@ function CreateSheet() {
   };
 
   const handleAddItem = () => {
-    setItems([...items, '']);
+    setItems([...items, { name: '', description: '', quantity: 1 }]);
   };
 
   const handleRemoveItem = (index) => {
@@ -57,9 +74,9 @@ function CreateSheet() {
     setCharacteristics(updatedCharacteristics);
   };
 
-  const handleItemChange = (index, value) => {
+  const handleItemChange = (index, key, value) => {
     const updatedItems = [...items];
-    updatedItems[index] = value;
+    updatedItems[index][key] = value;
     setItems(updatedItems);
   };
 
@@ -78,27 +95,33 @@ function CreateSheet() {
     setCharacterName(e.target.value);
   };
 
+  const handleClassNameChange = (e) => {
+    setClassName(e.target.value);
+  };
+
+  const handleLevelChange = (e) => {
+    setLevel(e.target.value);
+  };
+
+  const handleGameIdChange = (e) => {
+    setGameId(e.target.value);
+  };
+
   const handleLicenseChange = (e) => {
     setLicense(e.target.value);
   };
 
   const handleSubmit = () => {
     const data = {
-      characterName,
-      license,
+      name: characterName,
+      image: avatarPreview,
+      class: className,
+      level,
+      game_id: gameId,
       characteristics,
       items,
-      avatar: avatarPreview,
     };
-
-    axios
-      .post('/api/createsheet', data)
-      .then((response) => {
-        console.log('Success:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    postUserCreateSheet(data);
   };
 
   return (
@@ -112,17 +135,50 @@ function CreateSheet() {
               <div className="left-section">
                 <h2>Fiche Personnage</h2>
                 <div>
-                  <Form className="">
+                  <Form>
                     <FormField>
                       <div>
                         <label htmlFor="characterNameInput">
                           Nom de votre personnage :
                         </label>
                         <input
+                          id="characterNameInput"
                           placeholder="Nom de votre personnage"
                           value={characterName}
                           onChange={handleCharacterNameChange}
-                          style={{ marginBottom: '4rem', marginTop: '1rem' }}
+                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="classNameInput">Classe :</label>
+                        <input
+                          id="classNameInput"
+                          placeholder="Classe"
+                          value={className}
+                          onChange={handleClassNameChange}
+                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="levelInput">Niveau :</label>
+                        <input
+                          id="levelInput"
+                          type="number"
+                          placeholder="Niveau"
+                          value={level}
+                          onChange={handleLevelChange}
+                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="gameIdInput">ID du Jeu :</label>
+                        <input
+                          id="gameIdInput"
+                          type="number"
+                          placeholder="ID du Jeu"
+                          value={gameId}
+                          onChange={handleGameIdChange}
+                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
                         />
                       </div>
                     </FormField>
@@ -131,24 +187,9 @@ function CreateSheet() {
                   <input type="file" onChange={handleAvatarChange} />
                   {avatarPreview && (
                     <div className="avatar-preview">
-                      {avatarPreview && (
-                        <img src={avatarPreview} alt="Avatar Preview" />
-                      )}
+                      <img src={avatarPreview} alt="Avatar Preview" />
                     </div>
                   )}
-                </div>
-                <div>
-                  <label>Choix de la licence :</label>
-                  <Input
-                    placeholder="Choisissez votre licence"
-                    value={license}
-                    onChange={handleLicenseChange}
-                    style={{
-                      width: '90%',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  />{' '}
                 </div>
                 {characteristics.map((characteristic, index) => (
                   <div
@@ -200,7 +241,7 @@ function CreateSheet() {
                         placeholder="Nom de l'objet"
                         value={item.name}
                         onChange={(e) =>
-                          handleItemNameChange(index, e.target.value)
+                          handleItemChange(index, 'name', e.target.value)
                         }
                       />
                     </Grid.Column>
@@ -213,7 +254,7 @@ function CreateSheet() {
                         placeholder="Entrez ici la description de votre objet"
                         value={item.description}
                         onChange={(e) =>
-                          handleItemDescriptionChange(index, e.target.value)
+                          handleItemChange(index, 'description', e.target.value)
                         }
                       />
                     </Grid.Column>
@@ -227,7 +268,7 @@ function CreateSheet() {
                         type="number"
                         value={item.quantity}
                         onChange={(e) =>
-                          handleItemQuantityChange(index, e.target.value)
+                          handleItemChange(index, 'quantity', e.target.value)
                         }
                       />
                       <Button
