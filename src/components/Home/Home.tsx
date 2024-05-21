@@ -12,8 +12,10 @@ import './Home.scss';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { useAppSelector } from '../../hooks/hooks';
 
 function Home() {
+  const isLogged = useAppSelector((state) => state.user.isLogged);
   return (
     <div className="home">
       <Header />
@@ -62,23 +64,26 @@ function Home() {
       </div>
 
       <div className="home-group-btn">
-        <ButtonGroup>
-          <NavLink to="/api/login">
-            <Button color="black">Connectez-vous</Button>
+        {isLogged ? (
+          <NavLink to="/api/creategame">
+            <Button className="home-btn" icon labelPosition="right" color="red">
+              Créer une partie
+              <Icon name="arrow right" />
+            </Button>
           </NavLink>
-          <ButtonOr text="/" />
-          <NavLink to="/api/signup">
-            <Button color="grey">Inscrivez-vous</Button>
-          </NavLink>
-        </ButtonGroup>
+        ) : (
+          <ButtonGroup>
+            <NavLink to="/api/login">
+              <Button color="black">Connectez-vous</Button>
+            </NavLink>
+            <ButtonOr text="/" />
+            <NavLink to="/api/signup">
+              <Button color="grey">Inscrivez-vous</Button>
+            </NavLink>
+          </ButtonGroup>
+        )}
       </div>
 
-      <NavLink to="/api/creategame">
-        <Button className="home-btn" icon labelPosition="right" color="red">
-          Créer une partie
-          <Icon name="arrow right" />
-        </Button>
-      </NavLink>
       <Footer />
     </div>
   );
