@@ -2,33 +2,26 @@ import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { IUserLogin } from '../../@Types/user';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
 
-interface LoginParameters extends React.InputHTMLAttributes<HTMLInputElement> {
-  name: 'email' | 'password';
-}
-
-function Login({ name, ...rest }: LoginParameters) {
-  // const [userLoginData, setUserLoginData] = useState<IUserLogin>({
-  //   email: '',
-  //   password: '',
-  // });
-  const inputValue = useAppSelector((state) => state.user.userCredential[name]);
-  const dispatch = useAppDispatch();
+function Login() {
+  const [userLoginData, setUserLoginData] = useState<IUserLogin>({
+    email: '',
+    password: '',
+  });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
-  const postUser = async (formData) => {
+  const postUser = async (formData: IUserLogin) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/login',
-        formData
-      );
+      const response = await axios.post('http://localhost:5000/api/login', {
+        formData,
+      });
       if (response.status === 200) {
         setSuccessMessage(response.data.message);
         setErrorMessage('');
@@ -57,7 +50,7 @@ function Login({ name, ...rest }: LoginParameters) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    postUser(inputValue);
+    postUser(userLoginData);
   };
 
   const handleChange = (
