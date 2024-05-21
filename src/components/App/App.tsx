@@ -1,16 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
 
+import { useAppSelector } from '../../store/hooks/hooks';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
-import Game from '../Game/Game';
+import ForgotPassword from '../Forgot-password/Forgot-password';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import Signup from '../Signup/Signup';
 import './App.scss';
-import ForgotPassword from '../Forgot-password/Forgot-password';
 
 function App() {
+  const user = useAppSelector((state) => state.user);
+  console.log('je suis le state user :', user);
+
   return (
     <div className="App">
       <Routes>

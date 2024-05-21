@@ -20,16 +20,6 @@ export const initialState: UserState = {
   isLogged: false,
 };
 
-export const actionChangeMail = createAction<{
-  name: 'email';
-  newValue: string;
-}>('user/CHANGE_MAIL');
-
-export const actionChangePassword = createAction<{
-  name: 'password';
-  newValue: string;
-}>('user/CHANGE_PASSWORD');
-
 export const actionClearUser = createAction('CLEAR_USER');
 
 export const actionIsLogged = createAction<{
@@ -43,21 +33,19 @@ export const actionIsLogged = createAction<{
 }>('IS_LOGGED');
 
 const userReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(actionChangeMail, (state, action) => {
-      state.email = action.payload.newValue;
-    })
-    .addCase(actionChangePassword, (state, action) => {
-      state.password = action.payload.newValue;
-    })
+  builder.addCase(actionIsLogged, (state, action) => {
+    console.log('je suis l action :', action.payload);
+    console.log('je suis le state :', state);
 
-    .addCase(actionIsLogged, (state, action) => {
-      if (state.isLogged === true) {
-        state.id = action.payload.id;
-        state.lastname = action.payload.lastname;
-        state.firstname = action.payload.firstname;
-        state.image = action.payload.image;
-      }
-    });
+    if (action.payload && action.payload.email) {
+      state.isLogged = true;
+      state.id = action.payload.id;
+      state.lastname = action.payload.lastname;
+      state.firstname = action.payload.firstname;
+      state.email = action.payload.email;
+      state.image = action.payload.image;
+      sessionStorage.setItem('user', JSON.stringify(action.payload));
+    }
+  });
 });
 export default userReducer;
