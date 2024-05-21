@@ -8,6 +8,7 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import Signup from '../Signup/Signup';
 import './App.scss';
+import ForgotPassword from '../Forgot-password/Forgot-password';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/api/creategame" element={<CreateGame />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/profile" element={<Profile />} />
+        <Route path="/api/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </div>
   );

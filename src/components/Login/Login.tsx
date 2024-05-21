@@ -95,7 +95,7 @@ function Login() {
             placeholder="Mot de passe"
             onChange={(event) => handleChange(event, 'password')}
           />
-          <a href="/forgot-password">Mot de passe oublié ?</a>
+          <a href="/api/forgot-password">Mot de passe oublié ?</a>
           <Button content="Se connecter" type="submit" color="red" />
         </Form>
       </div>
