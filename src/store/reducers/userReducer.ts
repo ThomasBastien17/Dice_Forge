@@ -32,8 +32,6 @@ export const actionClearUser = createAction('CLEAR_USER');
 
 const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(actionChangeCredential, (state, action) => {
-    // -- action générique pour les inputs controllés du bloc Settings --
-    // changer l'email OU le password
     state.userCredential[action.payload.credentialName] =
       action.payload.newValue;
   });
