@@ -43,21 +43,21 @@ function Login() {
       <div className="login-form">
         <Form onSubmit={handleSubmit}>
           <FormInput
+            label="Email"
             className="login-input"
             icon="at"
             iconPosition="left"
             placeholder="Email"
             onChange={(event) => handleChange(event, 'email')}
-            label="Email"
           />
           <FormInput
+            label="Mot de passe"
             className="login-input"
             icon="lock"
             iconPosition="left"
             type="password"
             placeholder="Mot de passe"
             onChange={(event) => handleChange(event, 'password')}
-            label="Mot de passe"
           />
           <Button content="Se connecter" type="submit" color="red" />
         </Form>
