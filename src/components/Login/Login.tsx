@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
@@ -13,6 +14,7 @@ function Login() {
     email: '',
     password: '',
   });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -21,21 +23,25 @@ function Login() {
 
   const postUser = async (formData: IUserLogin) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/login', {
-        formData,
-      });
+      const response = await axios.post(
+        'http://localhost:5000/api/login',
+        formData
+      );
+
       if (response.status === 200) {
         setSuccessMessage(response.data.message);
         setErrorMessage('');
         setIsHidden(false);
+        dispatch(actionIsLogged(response.data.user));
         navigate('/');
       }
       console.log(response);
       console.log(response.data.message);
-    } catch (err) {
-      const axiosError = err as AxiosError;
+    } catch (error) {
+      const axiosError = error as AxiosError;
       if (axiosError.response) {
         const data = axiosError.response.data as IResponseData;
+
         if (axiosError.response.status === 401) {
           setErrorMessage(data.error);
           setSuccessMessage('');

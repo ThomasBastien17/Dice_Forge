@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
-import Game from '../Game/Game';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
