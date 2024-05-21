@@ -1,28 +1,19 @@
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
-import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
-import { IUserLogin } from '../../@Types/user';
+import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { IUserLogin } from '../../@Types/user';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
 
-interface LoginParameters {
-  name: string;
-}
-
-function Login({ name, ...rest }: LoginParameters) {
+function Login() {
   const [userLoginData, setUserLoginData] = useState<IUserLogin>({
     email: '',
     password: '',
   });
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
-  const inputValue = useAppSelector((state) => state.user.userCredential[name]);
-  const dispatch = useAppDispatch();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -30,17 +21,17 @@ function Login({ name, ...rest }: LoginParameters) {
 
   const postUser = async (formData: IUserLogin) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/login',
-        formData
-      );
-      console.log(response);
-      console.log(response.data.message);
+      const response = await axios.post('http://localhost:5000/api/login', {
+        formData,
+      });
       if (response.status === 200) {
-        setSuccess(true);
-        setError(null);
+        setSuccessMessage(response.data.message);
+        setErrorMessage('');
+        setIsHidden(false);
         navigate('/');
       }
+      console.log(response);
+      console.log(response.data.message);
     } catch (err) {
       const axiosError = err as AxiosError;
       if (axiosError.response) {
@@ -60,13 +51,7 @@ function Login({ name, ...rest }: LoginParameters) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!userLoginData.email || !userLoginData.password) {
-      setError('Veuillez remplir tous les champs.');
-      return;
-    }
-    setError(null);
     postUser(userLoginData);
-    postUser(inputValue);
   };
 
   const handleChange = (
