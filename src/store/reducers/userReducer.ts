@@ -49,7 +49,7 @@ const userReducer = createReducer(initialState, (builder) => {
         sessionStorage.setItem('user', JSON.stringify(action.payload));
       }
     })
-    .addCase(actionUserLogOut, (state, action) => {
+    .addCase(actionUserLogOut, (state) => {
       state.isLogged = false;
       state.id = 0;
       state.lastname = '';
