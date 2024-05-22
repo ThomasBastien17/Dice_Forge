@@ -17,9 +17,9 @@ function ForgotPassword() {
         'http://localhost:5000/api/forgot-password',
         { email }
       );
+      console.log(response);
       if (response.status === 200) {
-        console.log(response);
-        setMessage('Un email de réinitialisation a été envoyé.');
+        setMessage(response.data.message);
         setError(null);
       }
     } catch (err) {

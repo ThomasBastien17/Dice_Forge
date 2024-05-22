@@ -1,8 +1,10 @@
-import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
-import './Header.scss';
 import { useAppSelector } from '../../hooks/hooks';
+import { actionUserLogOut } from '../../store/reducers/userReducer';
+import './Header.scss';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +12,12 @@ function Header() {
     setIsOpen(!isOpen);
   };
   const isLogged = useAppSelector((state) => state.user.isLogged);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(actionUserLogOut());
+  };
+
   return (
     <header className="Header">
       <div className="Header-top">
@@ -32,7 +40,7 @@ function Header() {
       <nav className={`Header-menu ${isOpen ? 'open' : ''}`}>
         {isLogged ? (
           <>
-            <button type="button" className="Header-link-btn">
+            <button type="button" className="Header-link-btn" onClick={logout}>
               Deconnexion
             </button>
             <NavLink className="Header-link" to="/api/profile">
