@@ -9,23 +9,11 @@ import Profile from '../Profile/Profile';
 import Signup from '../Signup/Signup';
 import './App.scss';
 import ForgotPassword from '../Forgot-password/Forgot-password';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { getTokenFromLocalStorage } from '../../localStorage/localStorage';
-import { actionLogIn } from '../../store/reducers/userReducer';
-import { addTokenJwtToAxiosInstance } from '../../axios/axios';
+import { useAppSelector } from '../../hooks/hooks';
 
 function App() {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const { jwt } = getTokenFromLocalStorage();
-    if (jwt) {
-      dispatch(actionLogIn({ jwt }));
-      addTokenJwtToAxiosInstance(jwt);
-    } else {
-      console.log('rien dans le local storage');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const user = useAppSelector((state) => state.user);
+  console.log('je suis le state user :', user);
 
   return (
     <div className="App">
