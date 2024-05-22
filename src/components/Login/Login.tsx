@@ -1,7 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
-import { Button, Form, FormInput } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button, Form, FormInput, Message } from 'semantic-ui-react';
+import { IResponseData } from '../../@Types/response.data';
 import { IUserLogin } from '../../@Types/user';
+import { actionIsLogged } from '../../store/reducers/userReducer';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
@@ -11,13 +15,45 @@ function Login() {
     email: '',
     password: '',
   });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const postUser = async (formData: IUserLogin) => {
-    const response = await axios.post(
-      'http://localhost:5000/api/login',
-      formData
-    );
-    console.log(response);
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/login',
+        formData
+      );
+
+      if (response.status === 200) {
+        setSuccessMessage(response.data.message);
+        setErrorMessage('');
+        setIsHidden(false);
+        dispatch(actionIsLogged(response.data.user));
+        navigate('/');
+      }
+      console.log(response);
+      console.log(response.data.message);
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response) {
+        const data = axiosError.response.data as IResponseData;
+
+        if (axiosError.response.status === 401) {
+          setErrorMessage(data.error);
+          setSuccessMessage('');
+          setIsHidden(false);
+        } else if (axiosError.response.status === 500) {
+          setErrorMessage('Erreur serveur');
+          setSuccessMessage('');
+          setIsHidden(false);
+        }
+      }
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -41,6 +77,13 @@ function Login() {
       <Header />
       <h1 className="login-title">Connexion</h1>
       <div className="login-form">
+        {!isHidden &&
+          (errorMessage ? (
+            <Message negative>{errorMessage}</Message>
+          ) : (
+            <Message success header={successMessage} />
+          ))}
+
         <Form onSubmit={handleSubmit}>
           <FormInput
             label="Email"
@@ -59,6 +102,7 @@ function Login() {
             placeholder="Mot de passe"
             onChange={(event) => handleChange(event, 'password')}
           />
+          <a href="/api/forgot-password">Mot de passe oublié ?</a>
           <Button content="Se connecter" type="submit" color="red" />
         </Form>
       </div>

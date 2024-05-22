@@ -1,19 +1,20 @@
+import { NavLink } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
 import {
-  Image,
-  Container,
   Button,
-  Icon,
   ButtonGroup,
   ButtonOr,
+  Container,
+  Icon,
+  Image,
 } from 'semantic-ui-react';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import './Home.scss';
-import 'semantic-ui-css/semantic.min.css';
-import Header from '../Header/Header';
+import { useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import './Home.scss';
 
 function Home() {
+  const isLogged = useAppSelector((state) => state.user.isLogged);
   return (
     <div className="home">
       <Header />
@@ -62,23 +63,26 @@ function Home() {
       </div>
 
       <div className="home-group-btn">
-        <ButtonGroup>
-          <NavLink to="/api/login">
-            <Button color="black">Connectez-vous</Button>
+        {isLogged ? (
+          <NavLink to="/api/creategame">
+            <Button className="home-btn" icon labelPosition="right" color="red">
+              Créer une partie
+              <Icon name="arrow right" />
+            </Button>
           </NavLink>
-          <ButtonOr />
-          <NavLink to="/api/signup">
-            <Button color="grey">Inscrivez-vous</Button>
-          </NavLink>
-        </ButtonGroup>
+        ) : (
+          <ButtonGroup>
+            <NavLink to="/api/login">
+              <Button color="black">Connectez-vous</Button>
+            </NavLink>
+            <ButtonOr text="/" />
+            <NavLink to="/api/signup">
+              <Button color="grey">Inscrivez-vous</Button>
+            </NavLink>
+          </ButtonGroup>
+        )}
       </div>
 
-      <NavLink to="/api/creategame">
-        <Button className="home-btn" icon labelPosition="right" color="red">
-          Créer une partie
-          <Icon name="arrow right" />
-        </Button>
-      </NavLink>
       <Footer />
     </div>
   );

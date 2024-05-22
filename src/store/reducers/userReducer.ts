@@ -1,31 +1,51 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 
-export interface UserDataState {
+export interface UserState {
+  id: number;
   lastname: string;
   firstname: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  image: string;
+  isLogged: boolean;
 }
 
-export const initialState: UserDataState = {
+export const initialState: UserState = {
+  id: 0,
   lastname: '',
   firstname: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  image: '',
+  isLogged: false,
 };
 
-export const actionChangeUser = createAction<{
+export const actionClearUser = createAction('CLEAR_USER');
+
+export const actionIsLogged = createAction<{
+  isLogged: boolean;
+  id: number;
   lastname: string;
   firstname: string;
+  image: string;
   email: string;
   password: string;
-  confirmPassword: string;
-}>('CHANGE_USER');
+}>('IS_LOGGED');
 
 const userReducer = createReducer(initialState, (builder) => {
-  builder.addCase(actionChangeUser, (state, action) => {});
-});
+  builder.addCase(actionIsLogged, (state, action) => {
+    console.log('je suis l action :', action.payload);
+    console.log('je suis le state :', state);
 
+    if (action.payload && action.payload.email) {
+      state.isLogged = true;
+      state.id = action.payload.id;
+      state.lastname = action.payload.lastname;
+      state.firstname = action.payload.firstname;
+      state.email = action.payload.email;
+      state.image = action.payload.image;
+      sessionStorage.setItem('user', JSON.stringify(action.payload));
+    }
+  });
+});
 export default userReducer;
