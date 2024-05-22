@@ -1,18 +1,17 @@
+import { NavLink } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
 import {
-  Image,
-  Container,
   Button,
-  Icon,
   ButtonGroup,
   ButtonOr,
+  Container,
+  Icon,
+  Image,
 } from 'semantic-ui-react';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import './Home.scss';
-import 'semantic-ui-css/semantic.min.css';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import { useAppSelector } from '../../hooks/hooks';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import './Home.scss';
 
 function Home() {
   const isLogged = useAppSelector((state) => state.user.isLogged);

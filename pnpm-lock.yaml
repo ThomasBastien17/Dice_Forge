@@ -30,8 +30,8 @@ dependencies:
     specifier: ^2.5.0
     version: 2.5.0
   semantic-ui-react:
-    specifier: ^2.1.5
-    version: 2.1.5(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514)
+    specifier: 3.0.0-beta.2
+    version: 3.0.0-beta.2(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514)
 
 devDependencies:
   '@types/react':
@@ -569,18 +569,6 @@ packages:
       '@babel/runtime': 7.24.5
       react: 19.0.0-beta-26f2496093-20240514
       react-dom: 19.0.0-beta-26f2496093-20240514(react@19.0.0-beta-26f2496093-20240514)
-    dev: false
-
-  /@fluentui/react-component-ref@0.63.1(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514):
-    resolution: {integrity: sha512-8MkXX4+R3i80msdbD4rFpEB4WWq2UDvGwG386g3ckIWbekdvN9z2kWAd9OXhRGqB7QeOsoAGWocp6gAMCivRlw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17 || ^18
-      react-dom: ^16.8.0 || ^17 || ^18
-    dependencies:
-      '@babel/runtime': 7.24.5
-      react: 19.0.0-beta-26f2496093-20240514
-      react-dom: 19.0.0-beta-26f2496093-20240514(react@19.0.0-beta-26f2496093-20240514)
-      react-is: 16.13.1
     dev: false
 
   /@humanwhocodes/config-array@0.6.0:
@@ -2777,15 +2765,14 @@ packages:
       jquery: 3.7.1
     dev: false
 
-  /semantic-ui-react@2.1.5(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514):
-    resolution: {integrity: sha512-nIqmmUNpFHfovEb+RI2w3E2/maZQutd8UIWyRjf1SLse+XF51hI559xbz/sLN3O6RpLjr/echLOOXwKCirPy3Q==}
+  /semantic-ui-react@3.0.0-beta.2(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514):
+    resolution: {integrity: sha512-BFqd7dGPgXPbIkWkIzkPrPRBElf/iB4NKOSFl5tZwMEaIyGQXbvtVWHyOW0sMD2A/qZPgY2Wl/19GDc9JOg3ng==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.24.5
       '@fluentui/react-component-event-listener': 0.63.1(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514)
-      '@fluentui/react-component-ref': 0.63.1(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514)
       '@popperjs/core': 2.11.8
       '@semantic-ui-react/event-stack': 3.1.3(react-dom@19.0.0-beta-26f2496093-20240514)(react@19.0.0-beta-26f2496093-20240514)
       clsx: 1.2.1

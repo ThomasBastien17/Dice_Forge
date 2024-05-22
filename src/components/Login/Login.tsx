@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
 import { IUserLogin } from '../../@Types/user';
+import { actionIsLogged } from '../../store/reducers/userReducer';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
-import { actionIsLogged } from '../../store/reducers/userReducer';
 
 function Login() {
   const [userLoginData, setUserLoginData] = useState<IUserLogin>({
