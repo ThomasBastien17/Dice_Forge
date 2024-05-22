@@ -38,7 +38,7 @@ function ForgotPassword() {
       {message && <Message success content={message} />}
       {error && <Message negative content={error} />}
       <div className="forgot-password-form">
-        <Form on onSubmit={handlesubmit}>
+        <Form onSubmit={handlesubmit}>
           <FormInput
             label="Email"
             icon="at"
