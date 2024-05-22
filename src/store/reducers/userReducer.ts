@@ -36,7 +36,6 @@ const userReducer = createReducer(initialState, (builder) => {
   builder.addCase(actionIsLogged, (state, action) => {
     console.log('je suis l action :', action.payload);
     console.log('je suis le state :', state);
-    console.log('test');
 
     if (action.payload && action.payload.email) {
       state.isLogged = true;
@@ -50,4 +49,3 @@ const userReducer = createReducer(initialState, (builder) => {
   });
 });
 export default userReducer;
-

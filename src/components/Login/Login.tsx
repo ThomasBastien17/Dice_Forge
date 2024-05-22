@@ -8,6 +8,7 @@ import { IUserLogin } from '../../@Types/user';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
+import { actionIsLogged } from '../../store/reducers/userReducer';
 
 function Login() {
   const [userLoginData, setUserLoginData] = useState<IUserLogin>({
