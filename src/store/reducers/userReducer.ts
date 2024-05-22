@@ -1,5 +1,4 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import actionCheckLogin from '../thunks/checklogin';
 
 export interface UserState {
   id: number;
@@ -9,8 +8,6 @@ export interface UserState {
   password: string;
   image: string;
   isLogged: boolean;
-  token: null | string;
-  error: null | string;
 }
 
 export const initialState: UserState = {
@@ -21,48 +18,36 @@ export const initialState: UserState = {
   password: '',
   image: '',
   isLogged: false,
-  token: null,
-  error: null,
 };
-
-export const actionChangeMail = createAction<{
-  name: 'email';
-  newValue: string;
-}>('user/CHANGE_MAIL');
-
-export const actionChangePassword = createAction<{
-  name: 'password';
-  newValue: string;
-}>('user/CHANGE_PASSWORD');
-
-export const actionLogOut = createAction('user/LOGOUT');
 
 export const actionClearUser = createAction('CLEAR_USER');
 
-export const actionLogIn = createAction<{ jwt: string }>('user/LOGIN');
+export const actionIsLogged = createAction<{
+  isLogged: boolean;
+  id: number;
+  lastname: string;
+  firstname: string;
+  image: string;
+  email: string;
+  password: string;
+}>('IS_LOGGED');
 
-// ----- REDUCER ------
 const userReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(actionChangeMail, (state, action) => {
-      state.email = action.payload.newValue;
-    })
-    .addCase(actionChangePassword, (state, action) => {
-      state.password = action.payload.newValue;
-    })
-    .addCase(actionCheckLogin.fulfilled, (state, action) => {
+  builder.addCase(actionIsLogged, (state, action) => {
+    console.log('je suis l action :', action.payload);
+    console.log('je suis le state :', state);
+    console.log('test');
+
+    if (action.payload && action.payload.email) {
       state.isLogged = true;
-      state.token = action.payload.token;
-    })
-    .addCase(actionCheckLogin.rejected, (state) => {
-      state.error = 'erreur de connexion';
-    })
-    .addCase(actionLogIn, (state, action) => {
-      state.isLogged = true;
-      state.token = action.payload.jwt;
-    })
-    .addCase(actionLogOut, (state) => {
-      state.isLogged = false;
-    });
+      state.id = action.payload.id;
+      state.lastname = action.payload.lastname;
+      state.firstname = action.payload.firstname;
+      state.email = action.payload.email;
+      state.image = action.payload.image;
+      sessionStorage.setItem('user', JSON.stringify(action.payload));
+    }
+  });
 });
 export default userReducer;
+
