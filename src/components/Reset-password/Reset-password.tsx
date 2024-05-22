@@ -6,6 +6,8 @@ import Header from '../Header/Header';
 import './Reset-password.scss';
 
 function ResetPassword() {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,7 +15,8 @@ function ResetPassword() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/reset-password'
+        'http://localhost:5000/api/reset-password',
+        { password, confirmPassword }
       );
       console.log(response);
       if (response.status === 200) {
@@ -43,6 +46,8 @@ function ResetPassword() {
             placeholder="Nouveau mot de passe"
             className="reset-password-input"
             type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
           />
           <FormInput
             label="Confirmation mot de passe"
@@ -51,6 +56,8 @@ function ResetPassword() {
             placeholder="Confirmation mot de passe"
             className="reset-password-input"
             type="password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
           />
           <Button type="submit" content="Envoyer" color="grey" />
         </Form>
