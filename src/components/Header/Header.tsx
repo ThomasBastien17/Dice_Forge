@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import { useAppSelector } from '../../hooks/hooks';
+import { actionUserLogOut } from '../../store/reducers/userReducer';
 import './Header.scss';
 
 function Header() {
@@ -13,9 +14,9 @@ function Header() {
   const isLogged = useAppSelector((state) => state.user.isLogged);
   const dispatch = useDispatch();
 
-  // const logout = () => {
-  //   dispatch(actionUserLogOut());
-  // };
+  const logout = () => {
+    dispatch(actionUserLogOut());
+  };
 
   return (
     <header className="Header">
@@ -39,7 +40,7 @@ function Header() {
       <nav className={`Header-menu ${isOpen ? 'open' : ''}`}>
         {isLogged ? (
           <>
-            <button type="button" className="Header-link-btn" /* onClick={} */>
+            <button type="button" className="Header-link-btn" onClick={logout}>
               Deconnexion
             </button>
             <NavLink className="Header-link" to="/api/profile">
