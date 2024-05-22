@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { Form, Button, Input } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Input, Dropdown } from 'semantic-ui-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import axios from 'axios';
 import './CreateGame.scss';
 
 function CreateGame() {
   const [inputs, setInputs] = useState([
     { id: 1, name: 'Titre', placeholder: 'Titre', value: '' },
-    { id: 2, name: 'Theme', placeholder: 'Thème', value: '' },
+    { id: 2, name: 'Licence', placeholder: 'Licence', value: '' },
     {
       id: 3,
       name: 'Joueur',
@@ -15,8 +16,28 @@ function CreateGame() {
       value: '',
     },
   ]);
+  const [licenseOptions, setLicenseOptions] = useState([]);
 
-  const handleInputChange = (index: number, value: string) => {
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/license')
+      .then((response) => {
+        const { data } = response;
+        if (data) {
+          const options = data.map((license) => ({
+            key: license.id,
+            text: license.name,
+            value: license.name,
+          }));
+          setLicenseOptions(options);
+        } else {
+          setLicenseOptions([]);
+        }
+      })
+      .catch((error) => console.error('Ca marche pas meuf:', error));
+  }, []);
+
+  const handleInputChange = (index, value) => {
     const newInputs = [...inputs];
     newInputs[index] = { ...newInputs[index], value };
     setInputs(newInputs);
@@ -34,7 +55,7 @@ function CreateGame() {
     ]);
   };
 
-  const handleRemoveInput = (id: number) => {
+  const handleRemoveInput = (id) => {
     setInputs(inputs.filter((input) => input.id !== id));
   };
 
@@ -47,11 +68,22 @@ function CreateGame() {
           <Form>
             {inputs.map((input, index) => (
               <Form.Field key={input.id}>
-                <Input
-                  placeholder={input.placeholder}
-                  value={input.value}
-                  onChange={(e) => handleInputChange(index, e.target.value)}
-                />
+                {input.name === 'Licence' ? (
+                  <Dropdown
+                    placeholder={input.placeholder}
+                    fluid
+                    selection
+                    options={licenseOptions}
+                    value={input.value}
+                    onChange={(e, { value }) => handleInputChange(index, value)}
+                  />
+                ) : (
+                  <Input
+                    placeholder={input.placeholder}
+                    value={input.value}
+                    onChange={(e) => handleInputChange(index, e.target.value)}
+                  />
+                )}
                 {index >= 3 && (
                   <Button
                     onClick={() => handleRemoveInput(input.id)}
