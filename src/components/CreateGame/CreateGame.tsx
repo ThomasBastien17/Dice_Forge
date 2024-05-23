@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './CreateGame.scss';
+import { ILicenceOption } from '../../@Types/game';
 
 function CreateGame() {
   const [inputs, setInputs] = useState([
@@ -24,7 +25,7 @@ function CreateGame() {
       .then((response) => {
         const { data } = response;
         if (data) {
-          const options = data.map((license) => ({
+          const options = data.map((license: ILicenceOption) => ({
             key: license.id,
             text: license.name,
             value: license.name,
@@ -37,7 +38,7 @@ function CreateGame() {
       .catch((error) => console.error('Erreur: ', error));
   }, []);
 
-  const handleInputChange = (index, value) => {
+  const handleInputChange = (index: number, value: string) => {
     const newInputs = [...inputs];
     newInputs[index] = { ...newInputs[index], value };
     setInputs(newInputs);
@@ -55,7 +56,7 @@ function CreateGame() {
     ]);
   };
 
-  const handleRemoveInput = (id) => {
+  const handleRemoveInput = (id: number) => {
     setInputs(inputs.filter((input) => input.id !== id));
   };
 
@@ -79,7 +80,9 @@ function CreateGame() {
                     selection
                     options={licenseOptions}
                     value={input.value}
-                    onChange={(e, { value }) => handleInputChange(index, value)}
+                    onChange={(e, { value }) =>
+                      handleInputChange(index, value as string)
+                    }
                   />
                 ) : (
                   <Input
