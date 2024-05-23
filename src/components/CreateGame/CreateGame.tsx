@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Input, Dropdown } from 'semantic-ui-react';
+import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import axios from 'axios';
 import './CreateGame.scss';
 
 function CreateGame() {
@@ -34,7 +34,7 @@ function CreateGame() {
           setLicenseOptions([]);
         }
       })
-      .catch((error) => console.error('Ca marche pas meuf:', error));
+      .catch((error) => console.error('Erreur: ', error));
   }, []);
 
   const handleInputChange = (index, value) => {
@@ -49,7 +49,7 @@ function CreateGame() {
       {
         id: inputs.length + 1,
         name: `Joueur${inputs.length + 1}`,
-        placeholder: 'Paramètre personnalisé',
+        placeholder: 'Ajouter un joueur',
         value: '',
       },
     ]);
@@ -57,6 +57,10 @@ function CreateGame() {
 
   const handleRemoveInput = (id) => {
     setInputs(inputs.filter((input) => input.id !== id));
+  };
+
+  const handleSubmit = () => {
+    console.log('Form submitted:', inputs);
   };
 
   return (
@@ -82,6 +86,9 @@ function CreateGame() {
                     placeholder={input.placeholder}
                     value={input.value}
                     onChange={(e) => handleInputChange(index, e.target.value)}
+                    icon={
+                      input.placeholder === 'Ajouter un joueur' ? 'at' : null
+                    }
                   />
                 )}
                 {index >= 3 && (
@@ -98,6 +105,11 @@ function CreateGame() {
           <Button onClick={handleAddInput} primary>
             +
           </Button>
+          <div className="submit-container">
+            <Button onClick={handleSubmit} primary>
+              Valider
+            </Button>
+          </div>
         </div>
       </div>
       <Footer />
