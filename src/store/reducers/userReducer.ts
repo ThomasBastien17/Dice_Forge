@@ -6,6 +6,7 @@ export interface UserState {
   firstname: string;
   image: string;
   isLogged: boolean;
+  token: string;
 }
 
 export const initialState: UserState = {
@@ -14,6 +15,7 @@ export const initialState: UserState = {
   firstname: '',
   image: '',
   isLogged: false,
+  token: '',
 };
 
 export const actionClearUser = createAction('CLEAR_USER');
@@ -26,13 +28,9 @@ export const actionIsLogged = createAction<{
   image: string;
 }>('IS_LOGGED');
 
-export const actionUserLogOut = createAction<{
-  isLogged: boolean;
-  id: number;
-  lastname: string;
-  firstname: string;
-  image: string;
-}>('USER_LOGOUT');
+export const actionGetUserToken = createAction<string>('GET_USER_TOKEN');
+
+export const actionUserLogOut = createAction('USER_LOGOUT');
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -56,6 +54,11 @@ const userReducer = createReducer(initialState, (builder) => {
       state.firstname = '';
       state.image = '';
       sessionStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+    })
+    .addCase(actionGetUserToken, (state, action) => {
+      state.token = action.payload;
+      sessionStorage.setItem('token', action.payload);
     });
 });
 export default userReducer;
