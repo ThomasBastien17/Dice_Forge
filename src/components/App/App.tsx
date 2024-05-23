@@ -10,6 +10,7 @@ import Signup from '../Signup/Signup';
 import './App.scss';
 import ForgotPassword from '../Forgot-password/Forgot-password';
 import { useAppSelector } from '../../hooks/hooks';
+import ResetPassword from '../Reset-password/Reset-password';
 
 function App() {
   const user = useAppSelector((state) => state.user);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
+        <Route path="/api/reset-password" element={<ResetPassword />} />
       </Routes>
     </div>
   );
