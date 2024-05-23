@@ -54,6 +54,7 @@ const userReducer = createReducer(initialState, (builder) => {
       state.firstname = '';
       state.image = '';
       sessionStorage.removeItem('user');
+      sessionStorage.removeItem('token');
     })
     .addCase(actionGetUserToken, (state, action) => {
       state.token = action.payload;
