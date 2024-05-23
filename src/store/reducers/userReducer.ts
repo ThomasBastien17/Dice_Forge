@@ -4,20 +4,18 @@ export interface UserState {
   id: number;
   lastname: string;
   firstname: string;
-  email: string;
-  password: string;
   image: string;
   isLogged: boolean;
+  token: string;
 }
 
 export const initialState: UserState = {
   id: 0,
   lastname: '',
   firstname: '',
-  email: '',
-  password: '',
   image: '',
   isLogged: false,
+  token: '',
 };
 
 export const actionClearUser = createAction('CLEAR_USER');
@@ -28,24 +26,39 @@ export const actionIsLogged = createAction<{
   lastname: string;
   firstname: string;
   image: string;
-  email: string;
-  password: string;
 }>('IS_LOGGED');
 
-const userReducer = createReducer(initialState, (builder) => {
-  builder.addCase(actionIsLogged, (state, action) => {
-    console.log('je suis l action :', action.payload);
-    console.log('je suis le state :', state);
+export const actionGetUserToken = createAction<string>('GET_USER_TOKEN');
 
-    if (action.payload && action.payload.email) {
-      state.isLogged = true;
-      state.id = action.payload.id;
-      state.lastname = action.payload.lastname;
-      state.firstname = action.payload.firstname;
-      state.email = action.payload.email;
-      state.image = action.payload.image;
-      sessionStorage.setItem('user', JSON.stringify(action.payload));
-    }
-  });
+export const actionUserLogOut = createAction('USER_LOGOUT');
+
+const userReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(actionIsLogged, (state, action) => {
+      console.log('je suis l action :', action.payload);
+      console.log('je suis le state :', state);
+
+      if (action.payload) {
+        state.isLogged = true;
+        state.id = action.payload.id;
+        state.lastname = action.payload.lastname;
+        state.firstname = action.payload.firstname;
+        state.image = action.payload.image;
+        sessionStorage.setItem('user', JSON.stringify(action.payload));
+      }
+    })
+    .addCase(actionUserLogOut, (state) => {
+      state.isLogged = false;
+      state.id = 0;
+      state.lastname = '';
+      state.firstname = '';
+      state.image = '';
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+    })
+    .addCase(actionGetUserToken, (state, action) => {
+      state.token = action.payload;
+      sessionStorage.setItem('token', action.payload);
+    });
 });
 export default userReducer;

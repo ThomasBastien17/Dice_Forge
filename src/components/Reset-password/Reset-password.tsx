@@ -3,10 +3,9 @@ import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import axios from 'axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
-import './Forgot-password.scss';
+import './Reset-password.scss';
 
-function ForgotPassword() {
-  const [email, setEmail] = useState('');
+function ResetPassword() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,8 +13,7 @@ function ForgotPassword() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/forgot-password',
-        { email }
+        'http://localhost:5000/api/reset-password'
       );
       console.log(response);
       if (response.status === 200) {
@@ -28,24 +26,31 @@ function ForgotPassword() {
     }
   };
   return (
-    <div className="forgot-password">
+    <div className="reset-password">
       <Header />
-      <h1 className="forgot-password-title">Mot de passe oublié ?</h1>
-      <p className="forgot-password-text">
-        Vous allez recevoir un e-mail allant vous permettre de modifier votre
-        mot de passe.
+      <h1 className="reset-password-title">Reinitialiser votre mot de passe</h1>
+      <p className="reset-password-text">
+        Veuillez choisir un nouveau mot de passe.
       </p>
       {message && <Message success content={message} />}
       {error && <Message negative content={error} />}
-      <div className="forgot-password-form">
+      <div className="reset-password-form">
         <Form onSubmit={handlesubmit}>
           <FormInput
-            label="Email"
-            icon="at"
+            label="Nouveau mot de passe"
+            icon="lock"
             iconPosition="left"
-            placeholder="Email"
-            className="forgot-password-input"
-            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Nouveau mot de passe"
+            className="reset-password-input"
+            type="password"
+          />
+          <FormInput
+            label="Confirmation mot de passe"
+            icon="lock"
+            iconPosition="left"
+            placeholder="Confirmation mot de passe"
+            className="reset-password-input"
+            type="password"
           />
           <Button type="submit" content="Envoyer" color="grey" />
         </Form>
@@ -55,4 +60,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default ResetPassword;

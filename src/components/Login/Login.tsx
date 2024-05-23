@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
 import { IUserLogin } from '../../@Types/user';
-import { actionIsLogged } from '../../store/reducers/userReducer';
+import { useAppSelector } from '../../hooks/hooks';
+import {
+  actionGetUserToken,
+  actionIsLogged,
+} from '../../store/reducers/userReducer';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
@@ -22,6 +26,8 @@ function Login() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
+  const token = useAppSelector((state) => state.user.token);
+
   const postUser = async (formData: IUserLogin) => {
     try {
       const response = await axios.post(
@@ -34,6 +40,7 @@ function Login() {
         setErrorMessage('');
         setIsHidden(false);
         dispatch(actionIsLogged(response.data.user));
+        dispatch(actionGetUserToken(response.data.token));
         navigate('/');
       }
       console.log(response);
