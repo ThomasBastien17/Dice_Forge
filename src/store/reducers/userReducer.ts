@@ -30,13 +30,7 @@ export const actionIsLogged = createAction<{
 
 export const actionGetUserToken = createAction<string>('GET_USER_TOKEN');
 
-export const actionUserLogOut = createAction<{
-  isLogged: boolean;
-  id: number;
-  lastname: string;
-  firstname: string;
-  image: string;
-}>('USER_LOGOUT');
+export const actionUserLogOut = createAction('USER_LOGOUT');
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -63,6 +57,7 @@ const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actionGetUserToken, (state, action) => {
       state.token = action.payload;
+      sessionStorage.setItem('token', action.payload);
     });
 });
 export default userReducer;
