@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './Chat.scss'; // Import des styles CSS
-
-interface Message {
-  id: number;
-  text: string;
-  user: string;
-  tab: string;
-}
+import './Chat.scss'; // Assurez-vous d'avoir les styles pour votre chat
+import { Message } from '../../@Types/Message';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);

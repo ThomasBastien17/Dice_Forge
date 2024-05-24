@@ -11,6 +11,7 @@ import './App.scss';
 import ForgotPassword from '../Forgot-password/Forgot-password';
 import { useAppSelector } from '../../hooks/hooks';
 import ResetPassword from '../Reset-password/Reset-password';
+import Game from '../Game/Game';
 
 function App() {
   const user = useAppSelector((state) => state.user);
@@ -23,6 +24,7 @@ function App() {
         <Route path="/api/login" element={<Login />} />
         <Route path="/api/signup" element={<Signup />} />
         <Route path="/api/creategame" element={<CreateGame />} />
+        <Route path="/api/game" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
