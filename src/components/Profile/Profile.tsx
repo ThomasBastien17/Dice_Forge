@@ -1,13 +1,34 @@
 import { Button, Icon, Image } from 'semantic-ui-react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import { useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
-import { useAppSelector } from '../../hooks/hooks';
+import { IGames } from '../../@Types/game';
 
 function Profile() {
   const lastname = useAppSelector((state) => state.user.lastname);
   const firstname = useAppSelector((state) => state.user.firstname);
+  const token = useAppSelector((state) => state.user.token);
+
+  const [games, setGames] = useState<IGames[]>([]);
+
+  useEffect(() => {
+    const fetchgames = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/game');
+        console.log(response);
+
+        setGames(response.data.games);
+      } catch (error) {
+        console.error('error fetching game', error);
+      }
+    };
+    fetchgames();
+  }, [token]);
+
   return (
     <div className="profile">
       <Header />
@@ -38,21 +59,13 @@ function Profile() {
                 />
               </NavLink>
             </h2>
-            <div className="profile-game-edit">
-              <Icon size="large" name="pencil" />
-              <Icon size="large" name="trash" />
-              <p>Partie 1</p>
-            </div>
-            <div className="profile-game-edit">
-              <Icon size="large" name="pencil" />
-              <Icon size="large" name="trash" />
-              <p>Partie 2</p>
-            </div>
-            <div className="profile-game-edit">
-              <Icon size="large" name="pencil" />
-              <Icon size="large" name="trash" />
-              <p>Partie 3</p>
-            </div>
+            {games.map((game) => (
+              <div className="profile-game-edit" key={game.id}>
+                <Icon size="large" name="pencil" />
+                <Icon size="large" name="trash" />
+                <p>{game.name}</p>
+              </div>
+            ))}
           </div>
           <div className="profile-session">
             <h2 className="profile-session-title">Session à venir :</h2>
