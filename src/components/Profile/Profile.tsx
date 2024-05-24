@@ -3,8 +3,11 @@ import { NavLink } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
+import { useAppSelector } from '../../hooks/hooks';
 
 function Profile() {
+  const lastname = useAppSelector((state) => state.user.lastname);
+  const firstname = useAppSelector((state) => state.user.firstname);
   return (
     <div className="profile">
       <Header />
@@ -17,8 +20,8 @@ function Profile() {
             className="profile-avatar"
           />
           <div className="profile-user-name">
-            <p>Dupont</p>
-            <p>Bernard</p>
+            <p>{lastname}</p>
+            <p>{firstname}</p>
           </div>
         </div>
         <div className="game-session">
