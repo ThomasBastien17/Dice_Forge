@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent } from 'react';
 import {
   Button,
   Input,
-  Icon,
   Segment,
   Grid,
   Divider,
@@ -308,8 +307,8 @@ function CreateSheet() {
         <Divider vertical />
       </Segment>
       <div className="valider-btn">
-        <Button primary icon labelPosition="right" onClick={handleSubmit}>
-          Valider <Icon name="right arrow" />
+        <Button primary onClick={handleSubmit}>
+          Valider
         </Button>
       </div>
       <Footer />
