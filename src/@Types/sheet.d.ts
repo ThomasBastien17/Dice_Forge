@@ -11,3 +11,7 @@ export interface Item {
   description: string;
   quantity: number;
 }
+
+declare module 'uuid' {
+  export function v4(): string;
+}
