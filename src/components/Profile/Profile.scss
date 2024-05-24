@@ -1,0 +1,97 @@
+@use '../../styles/variables' as v;
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100vh;
+
+  &-page {
+    margin: 1rem;
+    flex-grow: 1;
+    width: 90%;
+    margin: auto;
+  }
+
+  &-user {
+    display: flex;
+    margin: 2rem 0;
+
+    &-name {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      font-size: x-large;
+    }
+
+    &-name p {
+      margin: 0;
+      margin-left: 1.5rem;
+      font-size: 2.5rem;
+    }
+  }
+
+  &-game {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+
+    &-title {
+      font-size: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid v.$color-primary;
+    }
+
+    &-edit {
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1px solid v.$color-primary;
+      margin-bottom: 0.5rem;
+    }
+
+    &-edit p {
+      font-size: 1.5rem;
+      margin-left: 1.5rem;
+    }
+  }
+  &-session {
+    display: flex;
+    flex-direction: column;
+
+    &-title {
+      font-size: 2.5rem;
+      border-bottom: 3px solid v.$color-primary;
+    }
+
+    &-edit {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media (min-width: 580px) {
+  .game-session {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .profile-game {
+    width: 50%;
+    padding: 1rem;
+  }
+  .profile-session {
+    width: 50%;
+    padding: 1rem;
+  }
+  .profile-user-name p {
+    font-size: 4rem;
+  }
+}

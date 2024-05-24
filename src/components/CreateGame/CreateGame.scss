@@ -1,0 +1,46 @@
+@use '../../styles/variables' as v;
+
+.create {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+
+  &-content {
+    flex-grow: 1;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  &-title {
+    font-size: 4rem;
+    padding: 2rem;
+    color: v.$color-primary;
+  }
+
+  &-input {
+    margin-bottom: 1rem;
+  }
+}
+
+.field {
+  display: flex;
+  align-items: center;
+}
+
+.submit-container {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-container .ui.button {
+  width: 100px;
+}

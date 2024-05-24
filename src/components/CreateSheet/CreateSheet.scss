@@ -1,0 +1,92 @@
+@use '../../styles/variables' as v;
+
+.create-sheet {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+.ui.segment {
+  background-image: url(../../../public/paper-1074131_1280.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h2.sheet-title {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.left-section {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+}
+
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+}
+
+.avatar-preview img {
+  max-width: 100px; /* Ajustez la taille de l'avatar selon vos besoins */
+  max-height: 100px; /* Ajustez la taille de l'avatar selon vos besoins */
+  margin-top: 5rem;
+}
+
+.right-section {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+}
+
+.grid.column {
+  display: flex;
+  justify-content: center;
+}
+
+.ui.input {
+  margin: 1.5rem;
+}
+
+.ui.primary.button {
+  color: white;
+  background-color: #b55923;
+}
+.ui.primary.button:hover {
+  background-color: #5a332f;
+}
+
+.valider-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.inventory-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.item-input {
+  flex: 1;
+  margin-right: 1px;
+}
+
+.inventory-item Button {
+  margin-left: 1px;
+}
+
+label {
+  font-weight: 600;
+  font-size: larger;
+}
+
+.FormField {
+  font-weight: 600;
+  font-size: larger;
+}
