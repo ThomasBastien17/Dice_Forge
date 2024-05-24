@@ -16,9 +16,14 @@ function Profile() {
   const [games, setGames] = useState<IGames[]>([]);
 
   useEffect(() => {
+    const userId = token;
     const fetchgames = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/game');
+        const response = await axios.get(`http://localhost:5000/api/game`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log(response);
 
         setGames(response.data.games);
