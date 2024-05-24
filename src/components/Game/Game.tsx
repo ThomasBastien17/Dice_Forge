@@ -1,30 +1,39 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Button, Dropdown, Checkbox } from 'semantic-ui-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Chat from '../Chat/Chat'; // Assurez-vous d'avoir le bon chemin d'importation
+import Chat from '../Chat/Chat';
 import './Game.scss';
 
-function Game() {
+const Game: React.FC = () => {
   const [timerRunning, setTimerRunning] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(0); // Temps écoulé en secondes
-  const [selectedDice, setSelectedDice] = useState('d6'); // Le dé par défaut
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
-  const [diceResult, setDiceResult] = useState(null); // Résultat du dé
+  const [diceResult, setDiceResult] = useState<number | null>(null);
+  const [showCharacterSheet, setShowCharacterSheet] = useState(true); // Change to false on mobile screens
+  const [showCharacterSheetButton, setShowCharacterSheetButton] =
+    useState(false);
 
-  // Fonction pour démarrer ou arrêter le timer
+  useEffect(() => {
+    const handleResize = () => {
+      setShowCharacterSheetButton(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on mount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const toggleTimer = () => {
     setTimerRunning(!timerRunning);
   };
 
-  // Fonction pour réinitialiser le timer
   const resetTimer = () => {
     setTimeElapsed(0);
   };
 
-  // Fonction pour mettre à jour le temps écoulé chaque seconde
   useEffect(() => {
-    let interval;
+    let interval: NodeJS.Timeout;
     if (timerRunning) {
       interval = setInterval(() => {
         setTimeElapsed((prevTime) => prevTime + 1);
@@ -35,7 +44,6 @@ function Game() {
     return () => clearInterval(interval);
   }, [timerRunning]);
 
-  // Fonction pour formater le temps écoulé en format "mm:ss"
   const formatTime = () => {
     const minutes = Math.floor(timeElapsed / 60);
     const seconds = timeElapsed % 60;
@@ -44,22 +52,35 @@ function Game() {
     }`;
   };
 
-  // Fonction pour changer le type de dé sélectionné
-  const handleDiceChange = (e, { value }) => {
+  const handleDiceChange = (
+    e: React.SyntheticEvent<HTMLElement>,
+    { value }: any
+  ) => {
     setSelectedDice(value);
   };
 
-  // Fonction pour lancer les dés
   const rollDice = () => {
-    // Simulation du lancer de dé (exemple pour un dé de 6 faces)
-    const result = Math.floor(Math.random() * 6) + 1;
+    const max = {
+      d4: 4,
+      d6: 6,
+      d8: 8,
+      d10: 10,
+      d12: 12,
+      d20: 20,
+      d100: 100,
+    }[selectedDice];
+    const result = Math.floor(Math.random() * max) + 1;
     setDiceResult(result);
   };
 
+  const toggleCharacterSheet = () => {
+    setShowCharacterSheet(!showCharacterSheet);
+  };
+
   return (
-    <div className="create-game">
+    <div className="game-container">
       <Header />
-      <Container>
+      <Container className="main-content">
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
           <p>Temps écoulé: {formatTime()}</p>
@@ -73,9 +94,13 @@ function Game() {
             placeholder="Sélectionner un dé"
             selection
             options={[
+              { key: 'd4', text: 'Dé de 4', value: 'd4' },
               { key: 'd6', text: 'Dé de 6', value: 'd6' },
+              { key: 'd8', text: 'Dé de 8', value: 'd8' },
+              { key: 'd10', text: 'Dé de 10', value: 'd10' },
+              { key: 'd12', text: 'Dé de 12', value: 'd12' },
               { key: 'd20', text: 'Dé de 20', value: 'd20' },
-              // Autres options de dés
+              { key: 'd100', text: 'Dé de 100', value: 'd100' },
             ]}
             onChange={handleDiceChange}
           />
@@ -87,13 +112,26 @@ function Game() {
           />
           {diceResult !== null && <p>Résultat du dé: {diceResult}</p>}
         </div>
-        <div className="chat-section">
-          <Chat />
+        <div className="content-section">
+          <div className="left-section">
+            {showCharacterSheetButton && (
+              <Button onClick={toggleCharacterSheet}>Fiches</Button>
+            )}
+            {showCharacterSheet && !showCharacterSheetButton && (
+              <div className="directory-window">
+                <h2>Fiche Personnage</h2>
+                {/* Ajoutez le contenu de l'annuaire des fiches ici */}
+              </div>
+            )}
+          </div>
+          <div className="right-section">
+            <Chat />
+          </div>
         </div>
       </Container>
       <Footer />
     </div>
   );
-}
+};
 
 export default Game;
