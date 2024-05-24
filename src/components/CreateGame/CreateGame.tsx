@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Input, Dropdown } from 'semantic-ui-react';
-import axios from 'axios';
+import axiosInstance from '../../axios/axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './CreateGame.scss';
 import { ILicenceOption } from '../../@Types/game';
+
 
 function CreateGame() {
   const [inputs, setInputs] = useState([
@@ -20,8 +21,8 @@ function CreateGame() {
   const [licenseOptions, setLicenseOptions] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/license')
+    axiosInstance
+      .get('/license')
       .then((response) => {
         const { data } = response;
         if (data) {
