@@ -197,7 +197,9 @@ function CreateSheet() {
                     key={characteristic.id}
                     style={{ display: 'flex', alignItems: 'center' }}
                   >
-                    <label>Choix des caractéristiques :</label>
+                    <label htmlFor="characteristics">
+                      Choix des caractéristiques :
+                    </label>
                     <Input
                       placeholder="Nom de la caractéristique"
                       value={characteristic.name}
