@@ -20,6 +20,6 @@
     "vite.config.ts",
     ".eslintrc.cjs",
     "src"
-, "MessageTypes.ts"  ],
+, "src/@Types/MessageTypes.ts"  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
