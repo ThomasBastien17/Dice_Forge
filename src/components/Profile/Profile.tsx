@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
 import { IGames } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
 
 function Profile() {
   const lastname = useAppSelector((state) => state.user.lastname);
@@ -19,7 +20,7 @@ function Profile() {
     const userId = token;
     const fetchgames = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/game`, {
+        const response = await axiosInstance.get(`/game`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

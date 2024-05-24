@@ -13,6 +13,7 @@ import {
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
+import axiosInstance from '../../axios/axios';
 
 function Login() {
   const [userLoginData, setUserLoginData] = useState<IUserLogin>({
@@ -30,8 +31,8 @@ function Login() {
 
   const postUser = async (formData: IUserLogin) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/login',
+      const response = await axiosInstance.post(
+        'login',
         formData
       );
 
