@@ -4,18 +4,22 @@ export interface UserState {
   id: number;
   lastname: string;
   firstname: string;
+  email: string;
+  password: string;
   image: string;
   isLogged: boolean;
-  token: string;
+  token: string | null;
 }
 
 export const initialState: UserState = {
   id: 0,
   lastname: '',
   firstname: '',
+  email: '',
+  password: '',
   image: '',
   isLogged: false,
-  token: '',
+  token: '' as string | null,
 };
 
 export const actionClearUser = createAction('CLEAR_USER');
@@ -28,7 +32,14 @@ export const actionIsLogged = createAction<{
   image: string;
 }>('IS_LOGGED');
 
-export const actionGetUserToken = createAction<string>('GET_USER_TOKEN');
+export const actionSetCredentials = createAction<{
+  email: string;
+  password: string;
+}>('SET_CREDENTIALS');
+
+export const actionSetUserToken = createAction<{
+  jwt: string | null;
+}>('GET_USER_TOKEN');
 
 export const actionUserLogOut = createAction('USER_LOGOUT');
 
@@ -56,9 +67,12 @@ const userReducer = createReducer(initialState, (builder) => {
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('token');
     })
-    .addCase(actionGetUserToken, (state, action) => {
-      state.token = action.payload;
-      sessionStorage.setItem('token', action.payload);
+    .addCase(actionSetCredentials, (state, action) => {
+      state.email = action.payload.email;
+      state.password = action.payload.password;
+    })
+    .addCase(actionSetUserToken, (state, action) => {
+      state.token = action.payload.jwt;
     });
 });
 export default userReducer;

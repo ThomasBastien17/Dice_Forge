@@ -7,20 +7,22 @@ import { IResponseData } from '../../@Types/response.data';
 import { IUserLogin } from '../../@Types/user';
 import { useAppSelector } from '../../hooks/hooks';
 import {
-  actionGetUserToken,
   actionIsLogged,
+  actionSetCredentials,
+  actionSetUserToken,
 } from '../../store/reducers/userReducer';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
 
 function Login() {
-  const [userLoginData, setUserLoginData] = useState<IUserLogin>({
-    email: '',
-    password: '',
-  });
+  // const [userLoginData, setUserLoginData] = useState<IUserLogin>({
+  //   email: '',
+  //   password: '',
+  // });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { email, password } = useAppSelector((state) => state.user);
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -40,7 +42,7 @@ function Login() {
         setErrorMessage('');
         setIsHidden(false);
         dispatch(actionIsLogged(response.data.user));
-        dispatch(actionGetUserToken(response.data.token));
+        dispatch(actionSetUserToken(response.data.token));
         navigate('/');
       }
       console.log(response);
@@ -65,7 +67,7 @@ function Login() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    postUser(userLoginData);
+    postUser({ email, password });
   };
 
   const handleChange = (
@@ -73,10 +75,12 @@ function Login() {
     inputName: string
   ) => {
     event.preventDefault();
-    setUserLoginData((previousData) => ({
-      ...previousData,
-      [inputName]: event.target.value,
-    }));
+    dispatch(
+      actionSetCredentials({
+        ...{ email, password },
+        [inputName]: event.target.value,
+      })
+    );
   };
 
   return (

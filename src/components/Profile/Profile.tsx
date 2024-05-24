@@ -1,12 +1,12 @@
-import { Button, Icon, Image } from 'semantic-ui-react';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { Button, Icon, Image } from 'semantic-ui-react';
+import { IGames } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
 import { useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
-import { IGames } from '../../@Types/game';
 
 function Profile() {
   const lastname = useAppSelector((state) => state.user.lastname);
@@ -19,12 +19,8 @@ function Profile() {
     const userId = token;
     const fetchgames = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/game`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(response);
+        const response = await axiosInstance.get(`/game`);
+        console.log('profile response :', response);
 
         setGames(response.data.games);
       } catch (error) {
