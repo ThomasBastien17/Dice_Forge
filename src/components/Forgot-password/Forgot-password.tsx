@@ -4,6 +4,7 @@ import axios from 'axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Forgot-password.scss';
+import axiosInstance from '../../axios/axios';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -13,8 +14,8 @@ function ForgotPassword() {
   const handlesubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/forgot-password',
+      const response = await axiosInstance.post(
+        'forgot-password',
         { email }
       );
       console.log(response);
