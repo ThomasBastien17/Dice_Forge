@@ -26,7 +26,7 @@ function Signup() {
    requête POST à http://localhost:5000/api/signup en utilisant Axios.
   */
   const postUser = async (formData: IUser) => {
-    const response = await axiosInstance.post('signup', formData);
+    const response = await axiosInstance.post('/signup', formData);
     console.log(response);
   };
 
