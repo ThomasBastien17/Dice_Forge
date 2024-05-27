@@ -105,11 +105,11 @@ function CreateGame() {
               </Form.Field>
             ))}
           </Form>
-          <Button onClick={handleAddInput} primary>
+          <Button onClick={handleAddInput} color="grey">
             +
           </Button>
           <div className="submit-container">
-            <Button onClick={handleSubmit} primary>
+            <Button onClick={handleSubmit} color="red">
               Valider
             </Button>
           </div>
