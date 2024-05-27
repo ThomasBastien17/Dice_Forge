@@ -40,8 +40,8 @@ const durationOptions = [
 
 function Game() {
   const [timerRunning, setTimerRunning] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(30); // Durée par défaut de 30 secondes
-  const [selectedDuration, setSelectedDuration] = useState(30); // Durée sélectionnée par défaut de 30 secondes
+  const [timeElapsed, setTimeElapsed] = useState(30);
+  const [selectedDuration, setSelectedDuration] = useState(30);
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
@@ -63,7 +63,7 @@ function Game() {
   };
 
   const resetTimer = () => {
-    setTimeElapsed(selectedDuration); // Réinitialise à la durée sélectionnée
+    setTimeElapsed(selectedDuration);
   };
 
   useEffect(() => {
@@ -73,7 +73,7 @@ function Game() {
         setTimeElapsed((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
     } else if (timeElapsed === 0) {
-      setTimerRunning(false); // Arrête le timer à 0
+      setTimerRunning(false);
     }
     return () => clearInterval(interval);
   }, [timerRunning, timeElapsed]);
@@ -98,7 +98,7 @@ function Game() {
     { value }: DropdownProps
   ) => {
     setSelectedDuration(value as number);
-    setTimeElapsed(value as number); // Met à jour le timer à la durée sélectionnée
+    setTimeElapsed(value as number);
   };
 
   const rollDice = () => {
@@ -153,7 +153,7 @@ function Game() {
             {showCharacterSheet && (
               <div className="directory-window">
                 <h2>Fiche Personnage</h2>
-                {/* Ajoutez le contenu de l'annuaire des fiches ici */}
+                {/* Implémenter ici la fiche personnage */}
               </div>
             )}
           </div>
