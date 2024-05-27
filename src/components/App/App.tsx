@@ -1,20 +1,21 @@
 import { Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
+import ForgotPassword from '../Forgot-password/Forgot-password';
+import Game from '../Game/Game';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
+import ResetPassword from '../Reset-password/Reset-password';
 import Signup from '../Signup/Signup';
 import './App.scss';
-import ForgotPassword from '../Forgot-password/Forgot-password';
-import { useAppSelector } from '../../hooks/hooks';
-import ResetPassword from '../Reset-password/Reset-password';
-import Game from '../Game/Game';
 
 function App() {
   const user = useAppSelector((state) => state.user);
+  const dispatch = useDispatch();
   console.log('je suis le state user :', user);
 
   return (

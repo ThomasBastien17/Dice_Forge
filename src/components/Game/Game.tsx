@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Container,
   Button,
+  Checkbox,
+  Container,
   Dropdown,
   DropdownProps,
-  Checkbox,
 } from 'semantic-ui-react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import Chat from '../Chat/Chat';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 import './Game.scss';
 
 const diceOptions = [
