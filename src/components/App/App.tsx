@@ -5,6 +5,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
 import ForgotPassword from '../Forgot-password/Forgot-password';
+import Game from '../Game/Game';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
@@ -24,6 +25,7 @@ function App() {
         <Route path="/api/login" element={<Login />} />
         <Route path="/api/signup" element={<Signup />} />
         <Route path="/api/creategame" element={<CreateGame />} />
+        <Route path="/api/game" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />

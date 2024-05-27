@@ -1,27 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Form, Button, Input, Dropdown } from 'semantic-ui-react';
-import axios from 'axios';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import './CreateGame.scss';
+import { useEffect, useState } from 'react';
+import { Button, Dropdown, Form, Input } from 'semantic-ui-react';
 import { ILicenceOption } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import './CreateGame.scss';
 
 function CreateGame() {
-  const [inputs, setInputs] = useState([
-    { id: 1, name: 'Titre', placeholder: 'Titre', value: '' },
-    { id: 2, name: 'Licence', placeholder: 'Licence', value: '' },
-    {
-      id: 3,
-      name: 'Joueur',
-      placeholder: 'Ajouter un joueur',
-      value: '',
-    },
-  ]);
+  const [title, setTitle] = useState('');
+  const [licences, setLicences] = useState<string>('');
+  const [players, setPlayers] = useState<string[]>(['']);
   const [licenseOptions, setLicenseOptions] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/license')
+    axiosInstance
+      .get('/license')
       .then((response) => {
         const { data } = response;
         if (data) {
@@ -38,30 +31,36 @@ function CreateGame() {
       .catch((error) => console.error('Erreur: ', error));
   }, []);
 
-  const handleInputChange = (index: number, value: string) => {
-    const newInputs = [...inputs];
-    newInputs[index] = { ...newInputs[index], value };
-    setInputs(newInputs);
+  const postGame = async (formData: any) => {
+    try {
+      const response = await axiosInstance.post('/game', formData);
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
-  const handleAddInput = () => {
-    setInputs([
-      ...inputs,
-      {
-        id: inputs.length + 1,
-        name: `Joueur${inputs.length + 1}`,
-        placeholder: 'Ajouter un joueur',
-        value: '',
-      },
-    ]);
+  const handlePlayerChange = (index: number, value: string) => {
+    const newPlayers = [...players];
+    newPlayers[index] = value;
+    setPlayers(newPlayers);
   };
 
-  const handleRemoveInput = (id: number) => {
-    setInputs(inputs.filter((input) => input.id !== id));
+  const handleAddPlayer = () => {
+    setPlayers([...players, '']);
+  };
+
+  const handleRemovePlayer = (index: number) => {
+    setPlayers(players.filter((_, i) => i !== index));
   };
 
   const handleSubmit = () => {
-    console.log('Form submitted:', inputs);
+    const formData = {
+      title,
+      licences,
+      players,
+    };
+    postGame(formData);
   };
 
   return (
@@ -71,32 +70,34 @@ function CreateGame() {
         <h1 className="create-title">Créer ta partie</h1>
         <div className="create-form">
           <Form>
-            {inputs.map((input, index) => (
-              <Form.Field key={input.id}>
-                {input.name === 'Licence' ? (
-                  <Dropdown
-                    placeholder={input.placeholder}
-                    fluid
-                    selection
-                    options={licenseOptions}
-                    value={input.value}
-                    onChange={(e, { value }) =>
-                      handleInputChange(index, value as string)
-                    }
-                  />
-                ) : (
-                  <Input
-                    placeholder={input.placeholder}
-                    value={input.value}
-                    onChange={(e) => handleInputChange(index, e.target.value)}
-                    icon={
-                      input.placeholder === 'Ajouter un joueur' ? 'at' : null
-                    }
-                  />
-                )}
-                {index >= 3 && (
+            <Form.Field>
+              <Input
+                placeholder="Titre"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Dropdown
+                placeholder="Licence"
+                fluid
+                selection
+                options={licenseOptions}
+                value={licences}
+                onChange={(e, { value }) => setLicences(value as string)}
+              />
+            </Form.Field>
+            {players.map((player, index) => (
+              <Form.Field key={index}>
+                <Input
+                  placeholder="Ajouter un joueur"
+                  value={player}
+                  onChange={(e) => handlePlayerChange(index, e.target.value)}
+                  icon="at"
+                />
+                {index > 0 && (
                   <Button
-                    onClick={() => handleRemoveInput(input.id)}
+                    onClick={() => handleRemovePlayer(index)}
                     icon="minus"
                     negative
                     compact
@@ -105,7 +106,7 @@ function CreateGame() {
               </Form.Field>
             ))}
           </Form>
-          <Button onClick={handleAddInput} primary>
+          <Button onClick={handleAddPlayer} primary>
             +
           </Button>
           <div className="submit-container">

@@ -6,6 +6,7 @@ import { IUser } from '../../@Types/user';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Signup.scss';
+import axiosInstance from '../../axios/axios';
 
 function Signup() {
   const [userFormData, setUserFormData] = useState<IUser>({
@@ -25,8 +26,8 @@ function Signup() {
    requête POST à http://localhost:5000/api/signup en utilisant Axios.
   */
   const postUser = async (formData: IUser) => {
-    const response = await axios.post(
-      'http://localhost:5000/api/signup',
+    const response = await axiosInstance.post(
+      'signup',
       formData
     );
     console.log(response);

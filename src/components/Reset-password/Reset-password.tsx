@@ -5,6 +5,7 @@ import axios from 'axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Reset-password.scss';
+import axiosInstance from '../../axios/axios';
 
 function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -16,8 +17,8 @@ function ResetPassword() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/reset-password',
+      const response = await axiosInstance.post(
+        'reset-password',
         { password, confirmPassword }
       );
       console.log(response);

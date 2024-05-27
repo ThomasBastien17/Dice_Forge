@@ -15,6 +15,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './CreateSheet.scss';
 import { Characteristic, Item } from '../../@Types/sheet';
+import axiosInstance from '../../axios/axios';
 
 function CreateSheet() {
   const [characteristics, setCharacteristics] = useState<Characteristic[]>([
@@ -32,8 +33,8 @@ function CreateSheet() {
 
   const postUserCreateSheet = async (formData: FormData) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/sheet',
+      const response = await axiosInstance.post(
+        'sheet',
         formData
       );
       console.log('Success:', response.data);

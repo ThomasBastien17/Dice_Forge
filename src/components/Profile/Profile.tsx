@@ -19,8 +19,12 @@ function Profile() {
     const userId = token;
     const fetchgames = async () => {
       try {
-        const response = await axiosInstance.get(`/game`);
-        console.log('profile response :', response);
+        const response = await axiosInstance.get(`/game`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response);
 
         setGames(response.data.games);
       } catch (error) {
