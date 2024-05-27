@@ -1,7 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { addTokenJwtToAxiosInstance } from '../../axios/axios';
 import { useAppSelector } from '../../hooks/hooks';
+import { actionIsLogged } from '../../store/reducers/userReducer';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
 import ForgotPassword from '../Forgot-password/Forgot-password';
@@ -14,9 +17,22 @@ import Signup from '../Signup/Signup';
 import './App.scss';
 
 function App() {
-  const user = useAppSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log('je suis le state user :', user);
+  const user = useAppSelector((state) => state.user);
+  console.log('je suis le state de app :', user);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      addTokenJwtToAxiosInstance(token);
+      if (!user.isLogged) {
+        const userData = sessionStorage.getItem('user');
+        if (userData) {
+          dispatch(actionIsLogged(JSON.parse(userData)));
+        }
+      }
+    }
+  }, [dispatch, user.isLogged]);
 
   return (
     <div className="App">

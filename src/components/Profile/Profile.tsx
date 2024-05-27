@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, Icon, Image } from 'semantic-ui-react';
-import { IGames } from '../../@Types/game';
-import axiosInstance from '../../axios/axios';
 import { useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -11,28 +8,6 @@ import './Profile.scss';
 function Profile() {
   const lastname = useAppSelector((state) => state.user.lastname);
   const firstname = useAppSelector((state) => state.user.firstname);
-  const token = useAppSelector((state) => state.user.token);
-
-  const [games, setGames] = useState<IGames[]>([]);
-
-  useEffect(() => {
-    const userId = token;
-    const fetchgames = async () => {
-      try {
-        const response = await axiosInstance.get(`/game`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(response);
-
-        setGames(response.data.games);
-      } catch (error) {
-        console.error('error fetching game', error);
-      }
-    };
-    fetchgames();
-  }, [token]);
 
   return (
     <div className="profile">
@@ -64,13 +39,12 @@ function Profile() {
                 />
               </NavLink>
             </h2>
-            {games.map((game) => (
-              <div className="profile-game-edit" key={game.id}>
-                <Icon size="large" name="pencil" />
-                <Icon size="large" name="trash" />
-                <p>{game.name}</p>
-              </div>
-            ))}
+
+            <div className="profile-game-edit">
+              <Icon size="large" name="pencil" />
+              <Icon size="large" name="trash" />
+              <p>partie1</p>
+            </div>
           </div>
           <div className="profile-session">
             <h2 className="profile-session-title">Session à venir :</h2>
