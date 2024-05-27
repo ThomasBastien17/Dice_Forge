@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
@@ -31,10 +31,7 @@ function Login() {
 
   const postUser = async (formData: IUserLogin) => {
     try {
-      const response = await axiosInstance.post(
-        'login',
-        formData
-      );
+      const response = await axiosInstance.post('/login', formData);
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message);
