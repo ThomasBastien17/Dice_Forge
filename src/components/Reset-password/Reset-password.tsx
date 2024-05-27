@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Button, Form, FormInput, Message } from 'semantic-ui-react';
+import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Reset-password.scss';
-import axiosInstance from '../../axios/axios';
 
 function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -17,10 +16,10 @@ function ResetPassword() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axiosInstance.post(
-        'reset-password',
-        { password, confirmPassword }
-      );
+      const response = await axiosInstance.post('reset-password', {
+        password,
+        confirmPassword,
+      });
       console.log(response);
       if (response.status === 200) {
         setMessage(response.data.message);

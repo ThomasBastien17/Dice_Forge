@@ -10,13 +10,15 @@ function CreateGame() {
   const [title, setTitle] = useState('');
   const [licences, setLicences] = useState<string>('');
   const [players, setPlayers] = useState<string[]>(['']);
-  const [licenseOptions, setLicenseOptions] = useState([]);
+  const [licenseOptions, setLicenseOptions] = useState<ILicenceOption[]>([]);
 
   useEffect(() => {
     axiosInstance
       .get('/license')
       .then((response) => {
         const { data } = response;
+        console.log('Licences:', data);
+
         if (data) {
           const options = data.map((license: ILicenceOption) => ({
             key: license.id,
@@ -56,10 +58,12 @@ function CreateGame() {
 
   const handleSubmit = () => {
     const formData = {
-      title,
-      licences,
+      name: title,
+      license_name: licences,
       players,
     };
+    console.log('Form data:', formData);
+
     postGame(formData);
   };
 

@@ -19,6 +19,7 @@ import './App.scss';
 function App() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+  console.log('je suis le state de app :', user);
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
