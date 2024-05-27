@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Chat.scss';
-import { Message } from './Message';
+import { v4 as uuidv4 } from 'uuid';
 
-const Chat: React.FC = () => {
+interface Message {
+  sender: string;
+  content: string;
+}
+
+function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const [tabs, setTabs] = useState(['Chatbox', 'Notes', 'MJ', '...']);
+  const [tabs, setTabs] = useState(['Chatbox']);
   const [activeTab, setActiveTab] = useState('Chatbox');
 
   const sendMessage = () => {
@@ -15,38 +20,21 @@ const Chat: React.FC = () => {
     }
   };
 
-  const addTab = () => {
-    const newTab = `Tab ${tabs.length + 1}`;
-    setTabs([...tabs, newTab]);
-  };
-
   return (
     <div className="chat-window">
       <div className="chat-header">
-        <div className="tabs">
-          {tabs.slice(0, 3).map((tab) => (
-            <button
-              key={tab}
-              className={activeTab === tab ? 'active' : ''}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-          {tabs.length > 3 && (
-            <button
-              className={activeTab === '...' ? 'active' : ''}
-              onClick={() => setActiveTab('...')}
-            >
-              ...
-            </button>
-          )}
-          <button onClick={addTab}>+</button>
-        </div>
+        <button
+          type="button"
+          key={tabs.join('')}
+          className={tabs.includes(activeTab) ? 'active' : ''}
+          onClick={() => setActiveTab(tabs[0])}
+        >
+          {tabs}
+        </button>
       </div>
       <div className="chat-messages">
-        {messages.map((msg, index) => (
-          <div key={index} className="chat-message">
+        {messages.map((msg) => (
+          <div key={uuidv4()} className="chat-message">
             <strong>{msg.sender}: </strong>
             {msg.content}
           </div>
@@ -59,10 +47,12 @@ const Chat: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
         />
-        <button onClick={sendMessage}>Send</button>
+        <button type="button" onClick={sendMessage}>
+          Send
+        </button>
       </div>
     </div>
   );
-};
+}
 
 export default Chat;
