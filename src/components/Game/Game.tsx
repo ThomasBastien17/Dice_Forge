@@ -31,9 +31,17 @@ const diceMaxValue: { [key: string]: number } = {
   d100: 100,
 };
 
+const durationOptions = [
+  { key: '30', text: '30 secondes', value: 30 },
+  { key: '45', text: '45 secondes', value: 45 },
+  { key: '60', text: '60 secondes', value: 60 },
+  { key: '120', text: '120 secondes', value: 120 },
+];
+
 function Game() {
   const [timerRunning, setTimerRunning] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [timeElapsed, setTimeElapsed] = useState(30); // Durée par défaut de 30 secondes
+  const [selectedDuration, setSelectedDuration] = useState(30); // Durée sélectionnée par défaut de 30 secondes
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
@@ -55,20 +63,20 @@ function Game() {
   };
 
   const resetTimer = () => {
-    setTimeElapsed(0);
+    setTimeElapsed(selectedDuration); // Réinitialise à la durée sélectionnée
   };
-
-  // ...
 
   useEffect(() => {
     let interval: number;
-    if (timerRunning) {
+    if (timerRunning && timeElapsed > 0) {
       interval = setInterval(() => {
-        setTimeElapsed((prevTime) => prevTime + 1);
+        setTimeElapsed((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
+    } else if (timeElapsed === 0) {
+      setTimerRunning(false); // Arrête le timer à 0
     }
     return () => clearInterval(interval);
-  }, [timerRunning]);
+  }, [timerRunning, timeElapsed]);
 
   const formatTime = () => {
     const minutes = Math.floor(timeElapsed / 60);
@@ -83,6 +91,14 @@ function Game() {
     { value }: DropdownProps
   ) => {
     setSelectedDice(value as string);
+  };
+
+  const handleDurationChange = (
+    e: React.SyntheticEvent<HTMLElement>,
+    { value }: DropdownProps
+  ) => {
+    setSelectedDuration(value as number);
+    setTimeElapsed(value as number); // Met à jour le timer à la durée sélectionnée
   };
 
   const rollDice = () => {
@@ -101,11 +117,18 @@ function Game() {
       <Container className="main-content">
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
-          <p>Temps écoulé: {formatTime()}</p>
+          <p>Temps restant: {formatTime()}</p>
           <Button onClick={toggleTimer}>
             {timerRunning ? 'Pause' : 'Start'}
           </Button>
           <Button onClick={resetTimer}>Réinitialiser</Button>
+          <Dropdown
+            placeholder="Sélectionner une durée"
+            selection
+            options={durationOptions}
+            onChange={handleDurationChange}
+            value={selectedDuration}
+          />
         </div>
         <div className="dice-section">
           <Dropdown
