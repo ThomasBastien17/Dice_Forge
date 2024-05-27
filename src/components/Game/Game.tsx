@@ -1,17 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Dropdown, Checkbox } from 'semantic-ui-react';
+import {
+  Container,
+  Button,
+  Dropdown,
+  DropdownProps,
+  Checkbox,
+} from 'semantic-ui-react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Chat from '../Chat/Chat';
 import './Game.scss';
 
-const Game: React.FC = () => {
+const diceOptions = [
+  { key: 'd4', text: 'Dé de 4', value: 'd4' },
+  { key: 'd6', text: 'Dé de 6', value: 'd6' },
+  { key: 'd8', text: 'Dé de 8', value: 'd8' },
+  { key: 'd10', text: 'Dé de 10', value: 'd10' },
+  { key: 'd12', text: 'Dé de 12', value: 'd12' },
+  { key: 'd20', text: 'Dé de 20', value: 'd20' },
+  { key: 'd100', text: 'Dé de 100', value: 'd100' },
+];
+
+const diceMaxValue: { [key: string]: number } = {
+  d4: 4,
+  d6: 6,
+  d8: 8,
+  d10: 10,
+  d12: 12,
+  d20: 20,
+  d100: 100,
+};
+
+function Game() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
-  const [showCharacterSheet, setShowCharacterSheet] = useState(true); // Change to false on mobile screens
+  const [showCharacterSheet, setShowCharacterSheet] = useState(true);
   const [showCharacterSheetButton, setShowCharacterSheetButton] =
     useState(false);
 
@@ -20,7 +46,7 @@ const Game: React.FC = () => {
       setShowCharacterSheetButton(window.innerWidth < 768);
     };
     window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check on mount
+    handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -32,14 +58,14 @@ const Game: React.FC = () => {
     setTimeElapsed(0);
   };
 
+  // ...
+
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
     if (timerRunning) {
       interval = setInterval(() => {
         setTimeElapsed((prevTime) => prevTime + 1);
       }, 1000);
-    } else {
-      clearInterval(interval);
     }
     return () => clearInterval(interval);
   }, [timerRunning]);
@@ -54,21 +80,13 @@ const Game: React.FC = () => {
 
   const handleDiceChange = (
     e: React.SyntheticEvent<HTMLElement>,
-    { value }: any
+    { value }: DropdownProps
   ) => {
-    setSelectedDice(value);
+    setSelectedDice(value as string);
   };
 
   const rollDice = () => {
-    const max = {
-      d4: 4,
-      d6: 6,
-      d8: 8,
-      d10: 10,
-      d12: 12,
-      d20: 20,
-      d100: 100,
-    }[selectedDice];
+    const max = diceMaxValue[selectedDice];
     const result = Math.floor(Math.random() * max) + 1;
     setDiceResult(result);
   };
@@ -93,15 +111,7 @@ const Game: React.FC = () => {
           <Dropdown
             placeholder="Sélectionner un dé"
             selection
-            options={[
-              { key: 'd4', text: 'Dé de 4', value: 'd4' },
-              { key: 'd6', text: 'Dé de 6', value: 'd6' },
-              { key: 'd8', text: 'Dé de 8', value: 'd8' },
-              { key: 'd10', text: 'Dé de 10', value: 'd10' },
-              { key: 'd12', text: 'Dé de 12', value: 'd12' },
-              { key: 'd20', text: 'Dé de 20', value: 'd20' },
-              { key: 'd100', text: 'Dé de 100', value: 'd100' },
-            ]}
+            options={diceOptions}
             onChange={handleDiceChange}
           />
           <Button onClick={rollDice}>Lancer le dé</Button>
@@ -117,7 +127,7 @@ const Game: React.FC = () => {
             {showCharacterSheetButton && (
               <Button onClick={toggleCharacterSheet}>Fiches</Button>
             )}
-            {showCharacterSheet && !showCharacterSheetButton && (
+            {showCharacterSheet && (
               <div className="directory-window">
                 <h2>Fiche Personnage</h2>
                 {/* Ajoutez le contenu de l'annuaire des fiches ici */}
@@ -132,6 +142,6 @@ const Game: React.FC = () => {
       <Footer />
     </div>
   );
-};
+}
 
 export default Game;
