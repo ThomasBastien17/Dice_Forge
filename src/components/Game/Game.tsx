@@ -59,14 +59,6 @@ function Game() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggleTimer = () => {
-    setTimerRunning(!timerRunning);
-  };
-
-  const resetTimer = () => {
-    setTimeElapsed(selectedDuration);
-  };
-
   useEffect(() => {
     let interval: number;
     if (timerRunning && timeElapsed > 0) {
@@ -78,14 +70,6 @@ function Game() {
     }
     return () => clearInterval(interval);
   }, [timerRunning, timeElapsed]);
-
-  const formatTime = () => {
-    const minutes = Math.floor(timeElapsed / 60);
-    const seconds = timeElapsed % 60;
-    return `${minutes < 10 ? `0${minutes}` : minutes}:${
-      seconds < 10 ? `0${seconds}` : seconds
-    }`;
-  };
 
   const handleDiceChange = (
     e: React.SyntheticEvent<HTMLElement>,
@@ -112,6 +96,22 @@ function Game() {
     setShowCharacterSheet(!showCharacterSheet);
   };
 
+  const startTimer = () => {
+    setTimerRunning(true);
+  };
+
+  const resetTimer = () => {
+    setTimeElapsed(selectedDuration);
+  };
+
+  function formatTime() {
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = timeElapsed % 60;
+    return `${minutes < 10 ? `0${minutes}` : minutes}:${
+      seconds < 10 ? `0${seconds}` : seconds
+    }`;
+  }
+
   return (
     <div className="game-container">
       <Header />
@@ -120,7 +120,7 @@ function Game() {
         <div className="timer-section">
           <p>Temps restant: {formatTime()}</p>
           <div className="timer-controls">
-            <Button onClick={toggleTimer}>
+            <Button onClick={startTimer}>
               {timerRunning ? 'Pause' : 'Start'}
             </Button>
             <Button onClick={resetTimer}>Réinitialiser</Button>
@@ -133,7 +133,7 @@ function Game() {
             value={selectedDuration}
           />
           <div className="sablier-container">
-            <div className="sablier" />
+            {timerRunning && <div className="sablier" />}
           </div>
         </div>
         <div className="dice-section">
