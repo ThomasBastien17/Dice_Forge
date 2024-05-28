@@ -31,6 +31,16 @@
   align-items: center;
 }
 
+.timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-controls {
+  margin-bottom: 2rem;
+}
+
 .right-section {
   flex: 2;
   display: flex;
