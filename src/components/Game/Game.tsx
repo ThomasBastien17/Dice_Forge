@@ -10,6 +10,7 @@ import Chat from '../Chat/Chat';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
+import './Sablier.scss';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -69,7 +70,7 @@ function Game() {
   useEffect(() => {
     let interval: number;
     if (timerRunning && timeElapsed > 0) {
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         setTimeElapsed((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
     } else if (timeElapsed === 0) {
@@ -118,10 +119,12 @@ function Game() {
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
           <p>Temps restant: {formatTime()}</p>
-          <Button onClick={toggleTimer}>
-            {timerRunning ? 'Pause' : 'Start'}
-          </Button>
-          <Button onClick={resetTimer}>Réinitialiser</Button>
+          <div className="timer-controls">
+            <Button onClick={toggleTimer}>
+              {timerRunning ? 'Pause' : 'Start'}
+            </Button>
+            <Button onClick={resetTimer}>Réinitialiser</Button>
+          </div>
           <Dropdown
             placeholder="Sélectionner une durée"
             selection
@@ -129,6 +132,9 @@ function Game() {
             onChange={handleDurationChange}
             value={selectedDuration}
           />
+          <div className="sablier-container">
+            <div className="sablier" />
+          </div>
         </div>
         <div className="dice-section">
           <Dropdown
