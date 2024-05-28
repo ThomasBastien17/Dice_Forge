@@ -10,6 +10,7 @@ import Chat from '../Chat/Chat';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
+import './Sablier.scss';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -58,18 +59,10 @@ function Game() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggleTimer = () => {
-    setTimerRunning(!timerRunning);
-  };
-
-  const resetTimer = () => {
-    setTimeElapsed(selectedDuration);
-  };
-
   useEffect(() => {
     let interval: number;
     if (timerRunning && timeElapsed > 0) {
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         setTimeElapsed((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
     } else if (timeElapsed === 0) {
@@ -77,14 +70,6 @@ function Game() {
     }
     return () => clearInterval(interval);
   }, [timerRunning, timeElapsed]);
-
-  const formatTime = () => {
-    const minutes = Math.floor(timeElapsed / 60);
-    const seconds = timeElapsed % 60;
-    return `${minutes < 10 ? `0${minutes}` : minutes}:${
-      seconds < 10 ? `0${seconds}` : seconds
-    }`;
-  };
 
   const handleDiceChange = (
     e: React.SyntheticEvent<HTMLElement>,
@@ -111,6 +96,22 @@ function Game() {
     setShowCharacterSheet(!showCharacterSheet);
   };
 
+  const startTimer = () => {
+    setTimerRunning(true);
+  };
+
+  const resetTimer = () => {
+    setTimeElapsed(selectedDuration);
+  };
+
+  function formatTime() {
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = timeElapsed % 60;
+    return `${minutes < 10 ? `0${minutes}` : minutes}:${
+      seconds < 10 ? `0${seconds}` : seconds
+    }`;
+  }
+
   return (
     <div className="game-container">
       <Header />
@@ -118,10 +119,12 @@ function Game() {
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
           <p>Temps restant: {formatTime()}</p>
-          <Button onClick={toggleTimer}>
-            {timerRunning ? 'Pause' : 'Start'}
-          </Button>
-          <Button onClick={resetTimer}>Réinitialiser</Button>
+          <div className="timer-controls">
+            <Button onClick={startTimer}>
+              {timerRunning ? 'Pause' : 'Start'}
+            </Button>
+            <Button onClick={resetTimer}>Réinitialiser</Button>
+          </div>
           <Dropdown
             placeholder="Sélectionner une durée"
             selection
@@ -129,6 +132,9 @@ function Game() {
             onChange={handleDurationChange}
             value={selectedDuration}
           />
+          <div className="sablier-container">
+            {timerRunning && <div className="sablier" />}
+          </div>
         </div>
         <div className="dice-section">
           <Dropdown
