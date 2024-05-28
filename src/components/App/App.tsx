@@ -1,10 +1,12 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
+import setupInterceptors from '../../axios/axiosInterceptors';
 import { useAppSelector } from '../../hooks/hooks';
 import { actionIsLogged } from '../../store/reducers/userReducer';
+import Binder from '../Binder/Binder';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
 import ForgotPassword from '../Forgot-password/Forgot-password';
@@ -15,12 +17,16 @@ import Profile from '../Profile/Profile';
 import ResetPassword from '../Reset-password/Reset-password';
 import Signup from '../Signup/Signup';
 import './App.scss';
-import Binder from '../Binder/Binder';
 
 function App() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  console.log('je suis le state de app :', user);
+  console.log('je suis le state de app :', user.userId);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setupInterceptors(navigate);
+  }, [navigate]);
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
