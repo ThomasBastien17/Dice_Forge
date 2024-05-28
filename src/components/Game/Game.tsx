@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Checkbox,
-  Container,
-  Dropdown,
-  DropdownProps,
-} from 'semantic-ui-react';
+import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
 import Chat from '../Chat/Chat';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -32,17 +26,9 @@ const diceMaxValue: { [key: string]: number } = {
   d100: 100,
 };
 
-const durationOptions = [
-  { key: '30', text: '30 secondes', value: 30 },
-  { key: '45', text: '45 secondes', value: 45 },
-  { key: '60', text: '60 secondes', value: 60 },
-  { key: '120', text: '120 secondes', value: 120 },
-];
-
 function Game() {
   const [timerRunning, setTimerRunning] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(30);
-  const [selectedDuration, setSelectedDuration] = useState(30);
+  const [timeElapsed, setTimeElapsed] = useState(60);
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
@@ -71,19 +57,8 @@ function Game() {
     return () => clearInterval(interval);
   }, [timerRunning, timeElapsed]);
 
-  const handleDiceChange = (
-    e: React.SyntheticEvent<HTMLElement>,
-    { value }: DropdownProps
-  ) => {
-    setSelectedDice(value as string);
-  };
-
-  const handleDurationChange = (
-    e: React.SyntheticEvent<HTMLElement>,
-    { value }: DropdownProps
-  ) => {
-    setSelectedDuration(value as number);
-    setTimeElapsed(value as number);
+  const handleDiceChange = (value: string) => {
+    setSelectedDice(value);
   };
 
   const rollDice = () => {
@@ -92,16 +67,29 @@ function Game() {
     setDiceResult(result);
   };
 
-  const toggleCharacterSheet = () => {
+  const toggleCharacterSheet = async () => {
+    try {
+      const response = await fetch('/api/binder', {
+        method: 'GET',
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // You can process the response if needed here
+      console.log('Binder API response:', await response.json());
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
     setShowCharacterSheet(!showCharacterSheet);
   };
 
   const startTimer = () => {
+    setTimeElapsed(60);
     setTimerRunning(true);
   };
 
-  const resetTimer = () => {
-    setTimeElapsed(selectedDuration);
+  const stopTimer = () => {
+    setTimerRunning(false);
   };
 
   function formatTime() {
@@ -120,28 +108,20 @@ function Game() {
         <div className="timer-section">
           <p>Temps restant: {formatTime()}</p>
           <div className="timer-controls">
-            <Button onClick={startTimer}>
-              {timerRunning ? 'Pause' : 'Start'}
+            <Button onClick={timerRunning ? stopTimer : startTimer}>
+              {timerRunning ? 'Stop' : 'Démarrer'}
             </Button>
-            <Button onClick={resetTimer}>Réinitialiser</Button>
           </div>
-          <Dropdown
-            placeholder="Sélectionner une durée"
-            selection
-            options={durationOptions}
-            onChange={handleDurationChange}
-            value={selectedDuration}
-          />
-          <div className="sablier-container">
-            {timerRunning && <div className="sablier" />}
-          </div>
+          <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
         </div>
-        <div className="dice-section">
+        <div
+          className={`dice-section ${!timerRunning ? 'sablier-hidden' : ''}`}
+        >
           <Dropdown
             placeholder="Sélectionner un dé"
             selection
             options={diceOptions}
-            onChange={handleDiceChange}
+            onChange={(e, { value }) => handleDiceChange(value as string)}
           />
           <Button onClick={rollDice}>Lancer le dé</Button>
           <Checkbox

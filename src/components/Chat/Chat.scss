@@ -47,3 +47,18 @@
 .chat-input-form button:hover {
   background-color: #0056b3;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .chat-input-form button {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-input-form button {
+    padding: 3px 6px;
+    font-size: 12px;
+  }
+}
