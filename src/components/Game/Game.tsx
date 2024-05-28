@@ -67,7 +67,19 @@ function Game() {
     setDiceResult(result);
   };
 
-  const toggleCharacterSheet = () => {
+  const toggleCharacterSheet = async () => {
+    try {
+      const response = await fetch('/api/binder', {
+        method: 'GET',
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // You can process the response if needed here
+      console.log('Binder API response:', await response.json());
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
     setShowCharacterSheet(!showCharacterSheet);
   };
 
