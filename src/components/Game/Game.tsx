@@ -72,7 +72,7 @@ function Game() {
   };
 
   const startTimer = () => {
-    setTimeElapsed(60); // Réinitialisation de la durée à 30 secondes
+    setTimeElapsed(60);
     setTimerRunning(true);
   };
 
@@ -102,7 +102,9 @@ function Game() {
           </div>
           <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
         </div>
-        <div className="dice-section">
+        <div
+          className={`dice-section ${!timerRunning ? 'sablier-hidden' : ''}`}
+        >
           <Dropdown
             placeholder="Sélectionner un dé"
             selection

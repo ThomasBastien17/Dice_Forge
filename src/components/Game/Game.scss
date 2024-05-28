@@ -29,6 +29,7 @@
 .left-section {
   flex: 1;
   align-items: center;
+  gap: 1rem;
 }
 
 .timer-section {
@@ -39,6 +40,13 @@
 
 .timer-controls {
   margin-bottom: 2rem;
+}
+
+.dice-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .right-section {
