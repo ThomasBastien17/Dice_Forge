@@ -74,8 +74,14 @@ function Profile() {
             {games && games.length > 0 ? (
               games.map((game) => (
                 <div className="profile-game-edit" key={game.id}>
-                  <Icon size="large" name="pencil" />
-                  <button type="button" onClick={() => deleteGame(game.id)}>
+                  <button type="button" className="profile-game-edit-btn">
+                    <Icon size="large" name="pencil" />
+                  </button>
+                  <button
+                    type="button"
+                    className="profile-game-edit-btn"
+                    onClick={() => deleteGame(game.id)}
+                  >
                     <Icon size="large" name="trash" />
                   </button>
                   <NavLink to="/game/1">
