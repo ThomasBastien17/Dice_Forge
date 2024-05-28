@@ -16,6 +16,7 @@ function Profile() {
   const firstname = useAppSelector((state) => state.user.firstname);
   const [games, setGames] = useState<IGames[]>([]);
   const dispatch = useDispatch();
+  console.log(userId);
 
   useEffect(() => {
     const getGame = async () => {
