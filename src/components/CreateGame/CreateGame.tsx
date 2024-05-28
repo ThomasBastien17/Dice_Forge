@@ -36,7 +36,7 @@ function CreateGame() {
   const postGame = async (formData: any) => {
     try {
       const response = await axiosInstance.post('/game', formData);
-      console.log('Success:', response.data);
+      console.log('Success:', response.data.token);
     } catch (error) {
       console.error('Error:', error);
     }

@@ -12,10 +12,10 @@ const setupInterceptors = (navigate: (patch: string) => void) => {
   axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response && error.response.status === 401) {
+      if (error.response && error.response.status === 500) {
         sessionStorage.removeItem('token');
         removeTokenJwtFromAxiosInstance();
-        navigate('/login');
+        navigate('/api/login');
       }
       return Promise.reject(error);
     }
