@@ -33,7 +33,7 @@ function Profile() {
 
   const deleteGame = async (gameId: number) => {
     try {
-      await axiosInstance.delete(`/games/${gameId}`);
+      await axiosInstance.delete(`/game/${gameId}`);
       setGames((prevGames) => prevGames.filter((game) => game.id !== gameId));
     } catch (error) {
       console.log('Erreur lors de la suppression de la partie', error);

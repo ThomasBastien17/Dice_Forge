@@ -5,12 +5,14 @@ import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './CreateGame.scss';
+import { useNavigate } from 'react-router-dom';
 
 function CreateGame() {
   const [title, setTitle] = useState('');
   const [licences, setLicences] = useState<string>('');
   const [players, setPlayers] = useState<string[]>(['']);
   const [licenseOptions, setLicenseOptions] = useState<ILicenceOption[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance
@@ -37,6 +39,7 @@ function CreateGame() {
     try {
       const response = await axiosInstance.post('/game', formData);
       console.log('Success:', response.data);
+      navigate('/api/profile');
     } catch (error) {
       console.error('Error:', error);
     }
