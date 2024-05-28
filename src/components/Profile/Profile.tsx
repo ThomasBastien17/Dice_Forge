@@ -1,13 +1,44 @@
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Icon, Image } from 'semantic-ui-react';
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
+import axiosInstance from '../../axios/axios';
+import { actionSetUserToken } from '../../store/reducers/userReducer';
+import { IGames } from '../../@Types/game';
 
 function Profile() {
+  const userId = useAppSelector((state) => state.user.userId);
   const lastname = useAppSelector((state) => state.user.lastname);
   const firstname = useAppSelector((state) => state.user.firstname);
+  const [games, setGames] = useState<IGames[]>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getGame = async () => {
+      try {
+        const response = await axiosInstance.get(`/game/2`);
+        dispatch(actionSetUserToken(response.data.token));
+        console.log(response);
+        setGames(response.data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    getGame();
+  }, [dispatch, userId]);
+
+  const deleteGame = async (gameId: number) => {
+    try {
+      await axiosInstance.delete(`/games/${gameId}`);
+      setGames((prevGames) => prevGames.filter((game) => game.id !== gameId));
+    } catch (error) {
+      console.log('Erreur lors de la suppression de la partie', error);
+    }
+  };
 
   return (
     <div className="profile">
@@ -21,6 +52,7 @@ function Profile() {
             className="profile-avatar"
           />
           <div className="profile-user-name">
+            <p>{userId}</p>
             <p>{lastname}</p>
             <p>{firstname}</p>
           </div>
@@ -39,12 +71,21 @@ function Profile() {
                 />
               </NavLink>
             </h2>
-
-            <div className="profile-game-edit">
-              <Icon size="large" name="pencil" />
-              <Icon size="large" name="trash" />
-              <p>partie1</p>
-            </div>
+            {games && games.length > 0 ? (
+              games.map((game) => (
+                <div className="profile-game-edit" key={game.id}>
+                  <Icon size="large" name="pencil" />
+                  <button type="button" onClick={() => deleteGame(game.id)}>
+                    <Icon size="large" name="trash" />
+                  </button>
+                  <NavLink to="/game/1">
+                    <p>{game.name}</p>
+                  </NavLink>
+                </div>
+              ))
+            ) : (
+              <p>Aucune partie</p>
+            )}
           </div>
           <div className="profile-session">
             <h2 className="profile-session-title">Session à venir :</h2>
