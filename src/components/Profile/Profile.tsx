@@ -84,7 +84,7 @@ function Profile() {
                   >
                     <Icon size="large" name="trash" />
                   </button>
-                  <NavLink to="/game/1">
+                  <NavLink to="/api/game">
                     <p>{game.name}</p>
                   </NavLink>
                 </div>
