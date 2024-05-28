@@ -21,7 +21,7 @@ function Profile() {
   useEffect(() => {
     const getGame = async () => {
       try {
-        const response = await axiosInstance.get(`/game/2`);
+        const response = await axiosInstance.get(`/game/${userId}`);
         dispatch(actionSetUserToken(response.data.token));
         console.log(response);
         setGames(response.data);
@@ -53,7 +53,6 @@ function Profile() {
             className="profile-avatar"
           />
           <div className="profile-user-name">
-            <p>{userId}</p>
             <p>{lastname}</p>
             <p>{firstname}</p>
           </div>
@@ -91,7 +90,7 @@ function Profile() {
                 </div>
               ))
             ) : (
-              <p>Aucune partie</p>
+              <p className="profile-game-edit-message">Aucune partie</p>
             )}
           </div>
           <div className="profile-session">
