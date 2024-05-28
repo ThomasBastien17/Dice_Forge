@@ -32,7 +32,8 @@ function Login() {
         setErrorMessage('');
         setIsHidden(false);
         addTokenJwtToAxiosInstance(response.data.token);
-        sessionStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('accessToken', response.data.accessToken);
+        sessionStorage.setItem('refreshToken', response.data.refreshToken);
         dispatch(actionIsLogged(response.data.user));
         navigate('/');
       }
