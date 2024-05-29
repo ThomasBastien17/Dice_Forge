@@ -49,7 +49,8 @@ const userReducer = createReducer(initialState, (builder) => {
       state.firstname = '';
       state.image = '';
       sessionStorage.removeItem('user');
-      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('refreshToken');
       removeTokenJwtFromAxiosInstance();
     });
 });
