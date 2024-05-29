@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, Form, Input } from 'semantic-ui-react';
 import { ILicenceOption } from '../../@Types/game';
 import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './CreateGame.scss';
-import { useNavigate } from 'react-router-dom';
 
 function CreateGame() {
   const [title, setTitle] = useState('');

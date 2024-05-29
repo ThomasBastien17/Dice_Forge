@@ -32,7 +32,7 @@ function App() {
   if a token is stored in the session storage. If a token is found, it adds the
   token to the Axios instance using the `addTokenJwtToAxiosInstance` function. */
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('accessToken');
     if (token) {
       addTokenJwtToAxiosInstance(token);
       if (!user.isLogged) {
