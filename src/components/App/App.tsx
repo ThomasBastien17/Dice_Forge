@@ -9,6 +9,7 @@ import { actionIsLogged } from '../../store/reducers/userReducer';
 import Binder from '../Binder/Binder';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
+import Sheet from '../Sheet/Sheet';
 import ForgotPassword from '../Forgot-password/Forgot-password';
 import Game from '../Game/Game';
 import Home from '../Home/Home';
@@ -53,6 +54,7 @@ function App() {
         <Route path="/api/creategame" element={<CreateGame />} />
         <Route path="/api/game" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
+        <Route path="/api/sheet" element={<Sheet />} />
         <Route path="/api/binder" element={<Binder />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
