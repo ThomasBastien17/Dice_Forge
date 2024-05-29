@@ -1,4 +1,4 @@
-import { Form, FormInput, FormSelect, FormTextArea, Input } from "semantic-ui-react";
+import { Button, Form, FormInput, FormSelect, FormTextArea, Input } from "semantic-ui-react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import './EditGame.scss';
@@ -31,6 +31,7 @@ function EditGame() {
             setMusic(event.target.value);
           }}></input>
           </label>
+          <Button content="Modifier" color="red" />
         </Form>
       </div>
       <Footer />
