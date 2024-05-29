@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Chat.scss';
-import { v4 as uuidv4 } from 'uuid';
 import { Dropdown, DropdownProps, Modal, Button } from 'semantic-ui-react';
+import io, { SocketIOClient } from 'socket.io-client';
 
 interface Message {
   sender: string;
@@ -20,15 +20,32 @@ function Chat() {
   const [activeTab, setActiveTab] = useState('Chatbox');
   const [modalOpen, setModalOpen] = useState(false);
   const [newTabType, setNewTabType] = useState('');
+  const socket = useRef<SocketIOClient.Socket | null>(null);
+
+  useEffect(() => {
+    socket.current = io('http://localhost:5000');
+
+    socket.current.on('message', (message: Message) => {
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [activeTab]: [...prevMessages[activeTab], message],
+      }));
+    });
+
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+    };
+  }, [activeTab]);
 
   const sendMessage = () => {
-    if (input.trim()) {
+    if (input.trim() && socket.current) {
+      const message: Message = { sender: 'User', content: input };
+      socket.current.emit('message', message);
       setMessages({
         ...messages,
-        [activeTab]: [
-          ...messages[activeTab],
-          { sender: 'User', content: input },
-        ],
+        [activeTab]: [...messages[activeTab], message],
       });
       setInput('');
     }
@@ -65,6 +82,10 @@ function Chat() {
     { key: '...', text: '...', value: '...' },
   ];
 
+  function uuid(): React.Key | null | undefined {
+    return Math.random().toString(36).substring(2) + Date.now().toString(36);
+  }
+
   return (
     <div className="chat-window">
       <div className="chat-header">
@@ -90,7 +111,7 @@ function Chat() {
           />
         ) : (
           messages[activeTab].map((msg) => (
-            <div key={uuidv4()} className="chat-message">
+            <div key={uuid()} className="chat-message">
               <strong>{msg.sender}: </strong>
               {msg.content}
             </div>
@@ -104,26 +125,26 @@ function Chat() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ecrivez votre message ici!"
+              placeholder="Write your message here!"
             />
             <button type="button" onClick={sendMessage}>
-              Envoyer
+              Send
             </button>
           </>
         )}
       </div>
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-        <Modal.Header>Quel onglet souhaitez-vous ajouter?</Modal.Header>
+        <Modal.Header>Select the tab type you want to add</Modal.Header>
         <Modal.Content>
           <Dropdown
-            placeholder="Selectionner l'onglet à ajouter"
+            placeholder="Select the tab type to add"
             selection
             options={tabTypes}
             onChange={handleTabTypeChange}
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={handleAddTab}>Ajouter l&apos;onglet</Button>
+          <Button onClick={handleAddTab}>Add Tab</Button>
         </Modal.Actions>
       </Modal>
     </div>
