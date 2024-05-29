@@ -81,7 +81,7 @@ function Signup() {
       <h1 className="signup-title">Inscription</h1>
       <Form className="signup-form" onSubmit={handleSubmit}>
       <input
-            className="editprofile-input"
+            className="signup-input"
             type="file"
             onChange={handleAvatarChange}
           />
