@@ -17,5 +17,4 @@ export interface IGames {
   note: string | null;
   event: string | null;
   license_name: string;
-  [];
 }
