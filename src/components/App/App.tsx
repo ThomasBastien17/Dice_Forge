@@ -9,13 +9,13 @@ import { actionIsLogged } from '../../store/reducers/userReducer';
 import Binder from '../Binder/Binder';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
-import Sheet from '../Sheet/Sheet';
 import ForgotPassword from '../Forgot-password/Forgot-password';
 import Game from '../Game/Game';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import ResetPassword from '../Reset-password/Reset-password';
+import Sheet from '../Sheet/Sheet';
 import Signup from '../Signup/Signup';
 import './App.scss';
 
