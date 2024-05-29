@@ -1,4 +1,7 @@
-import axiosInstance, { removeTokenJwtFromAxiosInstance } from './axios';
+import axiosInstance, {
+  addTokenJwtToAxiosInstance,
+  removeTokenJwtFromAxiosInstance,
+} from './axios';
 
 /**
  * The function `setupInterceptors` sets up response interceptors for handling 401
@@ -11,11 +14,33 @@ import axiosInstance, { removeTokenJwtFromAxiosInstance } from './axios';
 const setupInterceptors = (navigate: (patch: string) => void) => {
   axiosInstance.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if (error.response && error.response.status === 401) {
-        sessionStorage.removeItem('token');
-        removeTokenJwtFromAxiosInstance();
-        navigate('/login');
+    async (error) => {
+      const originalRequest = error.config;
+
+      if (
+        error.response &&
+        error.response.status === 401 &&
+        !originalRequest.isRetry
+      ) {
+        originalRequest.isRetry = true;
+        try {
+          const refreshToken = sessionStorage.getItem('refreshToken');
+          const response = await axiosInstance.post('/api/refresh-token', {
+            token: refreshToken,
+          });
+          console.log('Refresh token response:', response.data);
+
+          const { accessToken } = response.data;
+          sessionStorage.setItem('accessToken', accessToken);
+          addTokenJwtToAxiosInstance(accessToken);
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          return await axiosInstance(originalRequest);
+        } catch (err) {
+          sessionStorage.removeItem('accessToken');
+          sessionStorage.removeItem('refreshToken');
+          removeTokenJwtFromAxiosInstance();
+          navigate('/api/login');
+        }
       }
       return Promise.reject(error);
     }

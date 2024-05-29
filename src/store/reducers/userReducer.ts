@@ -1,4 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
+import { removeTokenJwtFromAxiosInstance } from '../../axios/axios';
 
 export interface UserState {
   userId: number;
@@ -16,8 +17,6 @@ export const initialState: UserState = {
   isLogged: false,
 };
 
-export const actionClearUser = createAction('CLEAR_USER');
-
 export const actionIsLogged = createAction<{
   isLogged: boolean;
   userId: number;
@@ -25,10 +24,6 @@ export const actionIsLogged = createAction<{
   firstname: string;
   image: string;
 }>('IS_LOGGED');
-
-export const actionSetUserToken = createAction<{
-  jwt: string | null;
-}>('GET_USER_TOKEN');
 
 export const actionUserLogOut = createAction('USER_LOGOUT');
 
@@ -54,7 +49,9 @@ const userReducer = createReducer(initialState, (builder) => {
       state.firstname = '';
       state.image = '';
       sessionStorage.removeItem('user');
-      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('refreshToken');
+      removeTokenJwtFromAxiosInstance();
     });
 });
 export default userReducer;
