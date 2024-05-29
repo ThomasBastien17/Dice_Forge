@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import { useAppSelector } from '../../hooks/hooks';
 import { actionUserLogOut } from '../../store/reducers/userReducer';
@@ -8,6 +8,7 @@ import './Header.scss';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -16,6 +17,7 @@ function Header() {
 
   const logout = () => {
     dispatch(actionUserLogOut());
+    navigate('/');
   };
 
   return (

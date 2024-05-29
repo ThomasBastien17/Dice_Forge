@@ -7,7 +7,6 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
 import axiosInstance from '../../axios/axios';
-import { actionSetUserToken } from '../../store/reducers/userReducer';
 import { IGames } from '../../@Types/game';
 
 function Profile() {
@@ -22,7 +21,6 @@ function Profile() {
     const getGame = async () => {
       try {
         const response = await axiosInstance.get(`/game/${userId}`);
-        dispatch(actionSetUserToken(response.data.token));
         console.log(response);
         setGames(response.data);
       } catch (error) {
@@ -84,7 +82,7 @@ function Profile() {
                   >
                     <Icon size="large" name="trash" />
                   </button>
-                  <NavLink to="/game/1">
+                  <NavLink to="/api/game">
                     <p>{game.name}</p>
                   </NavLink>
                 </div>
