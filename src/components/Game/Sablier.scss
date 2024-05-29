@@ -13,7 +13,7 @@
 .sablier,
 .sablier:before,
 .sablier:after {
-  animation-duration: 35s;
+  animation-duration: 70s;
   animation-iteration-count: infinite;
 }
 .sablier {
@@ -227,6 +227,11 @@
     transform: rotate(180deg);
   }
 }
+
+.sablier:not(.animate) {
+  visibility: hidden;
+}
+
 /* Mode nuit */
 @media (prefers-color-scheme: dark) {
   :root {

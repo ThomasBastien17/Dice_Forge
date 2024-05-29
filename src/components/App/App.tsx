@@ -21,13 +21,16 @@ import './App.scss';
 function App() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
-  console.log('je suis le state de app :', user.userId);
+  console.log('je suis le state de app :', user);
   const navigate = useNavigate();
 
   useEffect(() => {
     setupInterceptors(navigate);
   }, [navigate]);
 
+  /* The `useEffect` hook in the provided code snippet is responsible for checking
+  if a token is stored in the session storage. If a token is found, it adds the
+  token to the Axios instance using the `addTokenJwtToAxiosInstance` function. */
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     if (token) {

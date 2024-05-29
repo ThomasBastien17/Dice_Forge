@@ -6,10 +6,7 @@ import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
 import { IUserLogin } from '../../@Types/user';
 import axiosInstance, { addTokenJwtToAxiosInstance } from '../../axios/axios';
-import {
-  actionIsLogged,
-  actionSetUserToken,
-} from '../../store/reducers/userReducer';
+import { actionIsLogged } from '../../store/reducers/userReducer';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
@@ -29,7 +26,6 @@ function Login() {
   const postUser = async (formData: IUserLogin) => {
     try {
       const response = await axiosInstance.post('/login', formData);
-      dispatch(actionSetUserToken(response.data.token));
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message);

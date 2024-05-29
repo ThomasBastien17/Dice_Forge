@@ -28,7 +28,27 @@
 
 .left-section {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 1rem;
+}
+
+.timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-controls {
+  margin-bottom: 2rem;
+}
+
+.dice-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .right-section {
@@ -91,5 +111,21 @@ footer {
   .directory-window,
   .chat-window {
     padding: 5px;
+  }
+
+  .directory-window {
+    display: none;
+  }
+
+  .left-section .show-character-sheet-button {
+    display: block;
+  }
+
+  .left-section .directory-window {
+    display: none;
+  }
+
+  .left-section.show-character-sheet .directory-window {
+    display: block;
   }
 }
