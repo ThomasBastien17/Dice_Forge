@@ -31,7 +31,7 @@ function Login() {
         setSuccessMessage(response.data.message);
         setErrorMessage('');
         setIsHidden(false);
-        addTokenJwtToAxiosInstance(response.data.token);
+        addTokenJwtToAxiosInstance(response.data.accessToken);
         sessionStorage.setItem('accessToken', response.data.accessToken);
         sessionStorage.setItem('refreshToken', response.data.refreshToken);
         dispatch(actionIsLogged(response.data.user));
