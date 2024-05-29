@@ -1,0 +1,39 @@
+@use '../../styles/variables' as v;
+
+
+.editprofile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+
+  &-page {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-title {
+    font-size: 4rem;
+    padding: 2rem;
+    color: v.$color-primary;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    width: 80%;
+  }
+
+  &-input {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}
+img{
+  margin: 1rem;
+}

@@ -18,6 +18,7 @@ import ResetPassword from '../Reset-password/Reset-password';
 import Sheet from '../Sheet/Sheet';
 import Signup from '../Signup/Signup';
 import './App.scss';
+import EditProfile from '../Profile/EditProfile';
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function App() {
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
         <Route path="/api/reset-password" element={<ResetPassword />} />
+        <Route path='/api/edit-profile' element={<EditProfile />} />
       </Routes>
     </div>
   );
