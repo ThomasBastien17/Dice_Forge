@@ -93,24 +93,22 @@ function Profile() {
           </div>
           <div className="profile-session">
             <h2 className="profile-session-title">Session à venir :</h2>
-            <div className="profile-session-edit">
-              <Button content="-" size="mini" compact />
-              <p className="profile-session-edit-date">
-                partie 1 : Prochaine session le 22/05/24
-              </p>
-            </div>
-            <div className="profile-session-edit">
-              <Button content="+" size="mini" compact />
-              <p className="profile-session-edit-date">
-                partie 2 : Pas de session programmés
-              </p>
-            </div>
-            <div className="profile-session-edit">
-              <Button content="+" size="mini" compact />
-              <p className="profile-session-edit-date">
-                partie 3 : Pas de session programmés
-              </p>
-            </div>
+            {games && games.length > 0 ? (
+              games.map((game) => (
+                <div className="profile-session-edit">
+                  <Button
+                    content={`${game.event ? '-' : '+'}`}
+                    size="mini"
+                    compact
+                  />
+                  <p className="profile-session-edit-date">
+                    {game.name}: {game.event}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p className="profile-game-edit-message">Aucune session</p>
+            )}
           </div>
         </div>
       </div>
