@@ -1,13 +1,13 @@
-import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Icon, Image } from 'semantic-ui-react';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { Button, Icon, Image } from 'semantic-ui-react';
+import { IGames } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
 import { useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
-import axiosInstance from '../../axios/axios';
-import { IGames } from '../../@Types/game';
 
 function Profile() {
   const userId = useAppSelector((state) => state.user.userId);
@@ -82,7 +82,7 @@ function Profile() {
                   >
                     <Icon size="large" name="trash" />
                   </button>
-                  <NavLink to="/api/game">
+                  <NavLink to="/game/1">
                     <p>{game.name}</p>
                   </NavLink>
                 </div>
