@@ -98,7 +98,7 @@ function Profile() {
             <h2 className="profile-session-title">Session à venir :</h2>
             {games && games.length > 0 ? (
               games.map((game) => (
-                <div className="profile-session-edit">
+                <div key={game.id} className="profile-session-edit">
                   <p className="profile-session-edit-date">
                     <div className="profile-session-edit-date-session">
                       {game.name}: {game.event}

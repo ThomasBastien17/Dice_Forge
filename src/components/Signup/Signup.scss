@@ -22,10 +22,15 @@
 
   &-input {
     margin-bottom: 1rem;
+    background: transparent;
   }
 }
 .field {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+}
+input.signup-input{
+  background: transparent;
+
 }
