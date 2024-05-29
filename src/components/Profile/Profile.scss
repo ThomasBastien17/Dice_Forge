@@ -53,6 +53,15 @@
       flex-direction: row;
       border-bottom: 1px solid v.$color-primary;
       margin-bottom: 0.5rem;
+
+      &-btn {
+        background: none;
+        border: none;
+      }
+
+      &-message {
+        font-size: 1.5rem;
+      }
     }
 
     &-edit p {

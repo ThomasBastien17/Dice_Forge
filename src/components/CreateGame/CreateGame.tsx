@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, Form, Input } from 'semantic-ui-react';
 import { ILicenceOption } from '../../@Types/game';
 import axiosInstance from '../../axios/axios';
@@ -11,6 +12,7 @@ function CreateGame() {
   const [licences, setLicences] = useState<string>('');
   const [players, setPlayers] = useState<string[]>(['']);
   const [licenseOptions, setLicenseOptions] = useState<ILicenceOption[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance
@@ -36,7 +38,11 @@ function CreateGame() {
   const postGame = async (formData: any) => {
     try {
       const response = await axiosInstance.post('/game', formData);
+
       console.log('Success:', response.data);
+      navigate('/api/profile');
+
+      console.log('Success:', response.data.token);
     } catch (error) {
       console.error('Error:', error);
     }

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Checkbox,
-  Container,
-  Dropdown,
-  DropdownProps,
-} from 'semantic-ui-react';
+import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
 import Chat from '../Chat/Chat';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
+import './Sablier.scss';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -31,17 +26,9 @@ const diceMaxValue: { [key: string]: number } = {
   d100: 100,
 };
 
-const durationOptions = [
-  { key: '30', text: '30 secondes', value: 30 },
-  { key: '45', text: '45 secondes', value: 45 },
-  { key: '60', text: '60 secondes', value: 60 },
-  { key: '120', text: '120 secondes', value: 120 },
-];
-
 function Game() {
   const [timerRunning, setTimerRunning] = useState(false);
-  const [timeElapsed, setTimeElapsed] = useState(30); // Durée par défaut de 30 secondes
-  const [selectedDuration, setSelectedDuration] = useState(30); // Durée sélectionnée par défaut de 30 secondes
+  const [timeElapsed, setTimeElapsed] = useState(60);
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
@@ -58,47 +45,20 @@ function Game() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggleTimer = () => {
-    setTimerRunning(!timerRunning);
-  };
-
-  const resetTimer = () => {
-    setTimeElapsed(selectedDuration); // Réinitialise à la durée sélectionnée
-  };
-
   useEffect(() => {
     let interval: number;
     if (timerRunning && timeElapsed > 0) {
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         setTimeElapsed((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
     } else if (timeElapsed === 0) {
-      setTimerRunning(false); // Arrête le timer à 0
+      setTimerRunning(false);
     }
     return () => clearInterval(interval);
   }, [timerRunning, timeElapsed]);
 
-  const formatTime = () => {
-    const minutes = Math.floor(timeElapsed / 60);
-    const seconds = timeElapsed % 60;
-    return `${minutes < 10 ? `0${minutes}` : minutes}:${
-      seconds < 10 ? `0${seconds}` : seconds
-    }`;
-  };
-
-  const handleDiceChange = (
-    e: React.SyntheticEvent<HTMLElement>,
-    { value }: DropdownProps
-  ) => {
-    setSelectedDice(value as string);
-  };
-
-  const handleDurationChange = (
-    e: React.SyntheticEvent<HTMLElement>,
-    { value }: DropdownProps
-  ) => {
-    setSelectedDuration(value as number);
-    setTimeElapsed(value as number); // Met à jour le timer à la durée sélectionnée
+  const handleDiceChange = (value: string) => {
+    setSelectedDice(value);
   };
 
   const rollDice = () => {
@@ -107,9 +67,38 @@ function Game() {
     setDiceResult(result);
   };
 
-  const toggleCharacterSheet = () => {
+  const toggleCharacterSheet = async () => {
+    try {
+      const response = await fetch('/api/binder', {
+        method: 'GET',
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // You can process the response if needed here
+      console.log('Binder API response:', await response.json());
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
     setShowCharacterSheet(!showCharacterSheet);
   };
+
+  const startTimer = () => {
+    setTimeElapsed(60);
+    setTimerRunning(true);
+  };
+
+  const stopTimer = () => {
+    setTimerRunning(false);
+  };
+
+  function formatTime() {
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = timeElapsed % 60;
+    return `${minutes < 10 ? `0${minutes}` : minutes}:${
+      seconds < 10 ? `0${seconds}` : seconds
+    }`;
+  }
 
   return (
     <div className="game-container">
@@ -118,24 +107,21 @@ function Game() {
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
           <p>Temps restant: {formatTime()}</p>
-          <Button onClick={toggleTimer}>
-            {timerRunning ? 'Pause' : 'Start'}
-          </Button>
-          <Button onClick={resetTimer}>Réinitialiser</Button>
-          <Dropdown
-            placeholder="Sélectionner une durée"
-            selection
-            options={durationOptions}
-            onChange={handleDurationChange}
-            value={selectedDuration}
-          />
+          <div className="timer-controls">
+            <Button onClick={timerRunning ? stopTimer : startTimer}>
+              {timerRunning ? 'Stop' : 'Démarrer'}
+            </Button>
+          </div>
+          <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
         </div>
-        <div className="dice-section">
+        <div
+          className={`dice-section ${!timerRunning ? 'sablier-hidden' : ''}`}
+        >
           <Dropdown
             placeholder="Sélectionner un dé"
             selection
             options={diceOptions}
-            onChange={handleDiceChange}
+            onChange={(e, { value }) => handleDiceChange(value as string)}
           />
           <Button onClick={rollDice}>Lancer le dé</Button>
           <Checkbox
@@ -153,7 +139,7 @@ function Game() {
             {showCharacterSheet && (
               <div className="directory-window">
                 <h2>Fiche Personnage</h2>
-                {/* Ajoutez le contenu de l'annuaire des fiches ici */}
+                {/* Implémenter ici la fiche personnage */}
               </div>
             )}
           </div>
