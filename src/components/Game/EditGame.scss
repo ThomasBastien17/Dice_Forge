@@ -1,0 +1,34 @@
+@use '../../styles/variables' as v;
+
+.edit-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+
+  &-title {
+    font-size: 4rem;
+    padding: 2rem;
+    color: v.$color-primary;
+  }
+  
+  &-page {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    width: 80%;
+  }
+  &-input {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}

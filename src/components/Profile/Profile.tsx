@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, Icon, Image } from 'semantic-ui-react';
 import { IGames } from '../../@Types/game';
 import axiosInstance from '../../axios/axios';
@@ -15,6 +15,7 @@ function Profile() {
   const firstname = useAppSelector((state) => state.user.firstname);
   const [games, setGames] = useState<IGames[]>([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   console.log(userId);
 
   useEffect(() => {
@@ -72,9 +73,11 @@ function Profile() {
             {games && games.length > 0 ? (
               games.map((game) => (
                 <div className="profile-game-edit" key={game.id}>
-                  <button type="button" className="profile-game-edit-btn">
-                    <Icon size="large" name="pencil" />
-                  </button>
+                  <NavLink to="/api/edit-game">
+                    <button type="button" className="profile-game-edit-btn">
+                      <Icon size="large" name="pencil" />
+                    </button>
+                  </NavLink>
                   <button
                     type="button"
                     className="profile-game-edit-btn"
@@ -82,7 +85,7 @@ function Profile() {
                   >
                     <Icon size="large" name="trash" />
                   </button>
-                  <NavLink to="/game/1">
+                  <NavLink to="/api/game">
                     <p>{game.name}</p>
                   </NavLink>
                 </div>
@@ -96,13 +99,10 @@ function Profile() {
             {games && games.length > 0 ? (
               games.map((game) => (
                 <div className="profile-session-edit">
-                  <Button
-                    content={`${game.event ? '-' : '+'}`}
-                    size="mini"
-                    compact
-                  />
                   <p className="profile-session-edit-date">
-                    {game.name}: {game.event}
+                    <div className="profile-session-edit-date-session">
+                      {game.name}: {game.event}
+                    </div>
                   </p>
                 </div>
               ))
