@@ -16,7 +16,7 @@ function CreateGame() {
 
   useEffect(() => {
     axiosInstance
-      .get('/license')
+      .get('license')
       .then((response) => {
         const { data } = response;
         console.log('Licences:', data);
@@ -61,10 +61,11 @@ function CreateGame() {
   };
 
   const handleSubmit = () => {
+    const email = players;
     const formData = {
       name: title,
       license_name: licences,
-      players,
+      email: email,
     };
     console.log('Form data:', formData);
 
