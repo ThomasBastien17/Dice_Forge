@@ -63,10 +63,11 @@ function CreateGame() {
   };
 
   const handleSubmit = () => {
+    const email = players;
     const formData = {
       name: title,
       license_name: licences,
-      players,
+      email: email,
     };
     console.log('Form data:', formData);
 
