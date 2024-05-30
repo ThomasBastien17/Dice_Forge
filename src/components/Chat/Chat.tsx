@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Dropdown, DropdownProps, Modal } from 'semantic-ui-react';
+import io, { Socket } from 'socket.io-client';
 import './Chat.scss';
-import { Dropdown, DropdownProps, Modal, Button } from 'semantic-ui-react';
-import io, { SocketIOClient } from 'socket.io-client';
 
 interface Message {
   sender: string;
@@ -20,7 +20,7 @@ function Chat() {
   const [activeTab, setActiveTab] = useState('Chatbox');
   const [modalOpen, setModalOpen] = useState(false);
   const [newTabType, setNewTabType] = useState('');
-  const socket = useRef<SocketIOClient.Socket | null>(null);
+  const socket = useRef<Socket | null>(null);
 
   useEffect(() => {
     socket.current = io('http://localhost:5000');

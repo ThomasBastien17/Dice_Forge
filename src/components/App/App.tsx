@@ -15,8 +15,11 @@ import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import ResetPassword from '../Reset-password/Reset-password';
+import Sheet from '../Sheet/Sheet';
 import Signup from '../Signup/Signup';
 import './App.scss';
+import EditProfile from '../Profile/EditProfile';
+import EditGame from '../Game/EditGame';
 
 function App() {
   const dispatch = useDispatch();
@@ -53,10 +56,13 @@ function App() {
         <Route path="/api/creategame" element={<CreateGame />} />
         <Route path="/api/game" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
+        <Route path="/api/sheet" element={<Sheet />} />
         <Route path="/api/binder" element={<Binder />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
         <Route path="/api/reset-password" element={<ResetPassword />} />
+        <Route path='/api/edit-profile' element={<EditProfile />} />
+        <Route path='/api/edit-game' element={<EditGame />} />
       </Routes>
     </div>
   );
