@@ -16,7 +16,7 @@ function CreateGame() {
 
   useEffect(() => {
     axiosInstance
-      .get('/license')
+      .get('license')
       .then((response) => {
         const { data } = response;
         console.log('Licences:', data);
