@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .game-container {
   display: flex;
   flex-direction: column;
@@ -49,6 +51,17 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+.dice-result {
+  background-color: v.$color-primary-light;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  color: #fff;
+  &-number {
+    font-weight: bold;
+  }
 }
 
 .right-section {

@@ -117,7 +117,14 @@ function Game() {
             checked={showDiceResult}
             onChange={() => setShowDiceResult(!showDiceResult)}
           />
-          {diceResult !== null && <p>Résultat du dé: {diceResult}</p>}
+          <div className="dice-result">
+            {diceResult !== null && (
+              <p>
+                Résultat du dé :{' '}
+                <span className="dice-result-number">{diceResult}</span>
+              </p>
+            )}
+          </div>
         </div>
         <div className="content-section">
           <div className="left-section">
