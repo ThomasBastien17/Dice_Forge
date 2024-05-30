@@ -67,21 +67,9 @@ function Game() {
     setDiceResult(result);
   };
 
-  const toggleCharacterSheet = async () => {
-    try {
-      const response = await fetch('/api/binder', {
-        method: 'GET',
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      // You can process the response if needed here
-      console.log('Binder API response:', await response.json());
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
-    setShowCharacterSheet(!showCharacterSheet);
-  };
+  function toggleCharacterSheet() {
+    window.location.href = 'http://localhost:5173/api/binder';
+  }
 
   const startTimer = () => {
     setTimeElapsed(60);
@@ -134,7 +122,9 @@ function Game() {
         <div className="content-section">
           <div className="left-section">
             {showCharacterSheetButton && (
-              <Button onClick={toggleCharacterSheet}>Fiches</Button>
+              <button type="button" onClick={toggleCharacterSheet}>
+                Fiches
+              </button>
             )}
             {showCharacterSheet && (
               <div className="directory-window">
