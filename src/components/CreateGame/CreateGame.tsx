@@ -64,7 +64,7 @@ function CreateGame() {
     const formData = {
       name: title,
       license_name: licences,
-      players,
+      email: players,
     };
     console.log('Form data:', formData);
 

@@ -19,12 +19,15 @@ const setupInterceptors = (navigate: (patch: string) => void) => {
 
       if (
         error.response &&
-        error.response.status === 401 &&
+        error.response.status === 403 &&
         !originalRequest.isRetry
       ) {
         originalRequest.isRetry = true;
         try {
           const refreshToken = sessionStorage.getItem('refreshToken');
+          if (!refreshToken) {
+            throw new Error('Pas de token de rafraîchissement disponible.');
+          }
           const response = await axiosInstance.post('/api/refresh-token', {
             token: refreshToken,
           });
