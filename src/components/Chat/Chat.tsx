@@ -3,6 +3,7 @@ import { Button, Dropdown, DropdownProps, Modal } from 'semantic-ui-react';
 import io, { Socket } from 'socket.io-client';
 import './Chat.scss';
 
+
 interface Message {
   sender: string;
   content: string;
