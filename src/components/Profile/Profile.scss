@@ -83,7 +83,13 @@
       justify-content: space-between;
       margin-bottom: 0.5rem;
       font-size: 1.5rem;
+      
+      &-date-session{
+        display: flex;
+        justify-content: space-between;
+      }
     }
+
   }
 }
 

@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
+import {
+  Button,
+  Checkbox,
+  Container,
+  Dropdown,
+  Grid,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  ButtonGroup,
+  Icon,
+} from 'semantic-ui-react';
 import Chat from '../Chat/Chat';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -67,22 +79,6 @@ function Game() {
     setDiceResult(result);
   };
 
-  const toggleCharacterSheet = async () => {
-    try {
-      const response = await fetch('/api/binder', {
-        method: 'GET',
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      // You can process the response if needed here
-      console.log('Binder API response:', await response.json());
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
-    setShowCharacterSheet(!showCharacterSheet);
-  };
-
   const startTimer = () => {
     setTimeElapsed(60);
     setTimerRunning(true);
@@ -99,6 +95,10 @@ function Game() {
       seconds < 10 ? `0${seconds}` : seconds
     }`;
   }
+
+  const toggleCharacterSheet = () => {
+    setShowCharacterSheet(!showCharacterSheet);
+  };
 
   return (
     <div className="game-container">
@@ -129,23 +129,60 @@ function Game() {
             checked={showDiceResult}
             onChange={() => setShowDiceResult(!showDiceResult)}
           />
-          {diceResult !== null && <p>Résultat du dé: {diceResult}</p>}
+          <div className="dice-result">
+            {diceResult !== null && (
+              <p>
+                Résultat du dé :{' '}
+                <span className="dice-result-number">{diceResult}</span>
+              </p>
+            )}
+          </div>
         </div>
         <div className="content-section">
-          <div className="left-section">
-            {showCharacterSheetButton && (
-              <Button onClick={toggleCharacterSheet}>Fiches</Button>
-            )}
-            {showCharacterSheet && (
-              <div className="directory-window">
-                <h2>Fiche Personnage</h2>
-                {/* Implémenter ici la fiche personnage */}
-              </div>
-            )}
-          </div>
-          <div className="right-section">
-            <Chat />
-          </div>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={8}>
+                {showCharacterSheetButton && (
+                  <Button
+                    className="show-character-sheet-button"
+                    type="button"
+                    onClick={toggleCharacterSheet}
+                  >
+                    Fiches
+                  </Button>
+                )}
+                {showCharacterSheet && (
+                  <div className="directory-window">
+                    <Container>
+                      <Card.Group>
+                        <Card className="binder">
+                          <CardContent>
+                            <CardHeader>Fiche Personnage</CardHeader>
+                            <CardDescription>
+                              Lorem, ipsum dolor sit amet consectetur
+                              adipisicing elit. Amet, deleniti cum earum harum
+                              eius praesentium voluptates officiis quis ratione
+                              nisi, delectus hic id quos aut exercitationem iure
+                              dolore vitae voluptatem.
+                            </CardDescription>
+                          </CardContent>
+                          <CardContent extra>
+                            <ButtonGroup className="binder-btn-group">
+                              <Button content={<Icon name="pencil" />} />
+                              <Button content={<Icon name="trash" />} />
+                            </ButtonGroup>
+                          </CardContent>
+                        </Card>
+                      </Card.Group>
+                    </Container>
+                  </div>
+                )}
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <Chat />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </div>
       </Container>
       <Footer />

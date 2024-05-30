@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Chat.scss';
-import { Dropdown, DropdownProps, Modal, Button } from 'semantic-ui-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Dropdown, DropdownProps, Modal } from 'semantic-ui-react';
 import io, { Socket } from 'socket.io-client';
+import './Chat.scss';
+
 
 interface Message {
   sender: string;

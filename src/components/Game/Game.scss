@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .game-container {
   display: flex;
   flex-direction: column;
@@ -24,6 +26,7 @@
   display: flex;
   flex: 1;
   margin-top: 20px;
+  flex-direction: row;
 }
 
 .left-section {
@@ -51,6 +54,18 @@
   gap: 1rem;
 }
 
+.dice-result {
+  background-color: v.$color-primary-light;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  color: #fff;
+
+  &-number {
+    font-weight: bold;
+  }
+}
+
 .right-section {
   flex: 2;
   display: flex;
@@ -63,10 +78,7 @@
   display: flex;
   flex-direction: column;
   height: 400px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   padding: 10px;
-  background: #fff;
 }
 
 footer {
