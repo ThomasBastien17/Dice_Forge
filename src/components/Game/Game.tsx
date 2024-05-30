@@ -106,36 +106,42 @@ function Game() {
       <Container className="main-content">
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
-          <p>Temps restant: {formatTime()}</p>
           <div className="timer-controls">
             <Button onClick={timerRunning ? stopTimer : startTimer}>
               {timerRunning ? 'Stop' : 'Démarrer'}
             </Button>
           </div>
-          <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
+          <div className="timer-sablier">
+            <span className="timer-result">{formatTime()}</span>
+            <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
+          </div>
         </div>
         <div
           className={`dice-section ${!timerRunning ? 'sablier-hidden' : ''}`}
         >
-          <Dropdown
-            placeholder="Sélectionner un dé"
-            selection
-            options={diceOptions}
-            onChange={(e, { value }) => handleDiceChange(value as string)}
-          />
-          <Button onClick={rollDice}>Lancer le dé</Button>
-          <Checkbox
-            label="Afficher le résultat aux autres joueurs"
-            checked={showDiceResult}
-            onChange={() => setShowDiceResult(!showDiceResult)}
-          />
-          <div className="dice-result">
-            {diceResult !== null && (
-              <p>
-                Résultat du dé :{' '}
-                <span className="dice-result-number">{diceResult}</span>
-              </p>
-            )}
+          <div className="dice-section-throw">
+            <Dropdown
+              placeholder="Sélectionner un dé"
+              selection
+              options={diceOptions}
+              onChange={(e, { value }) => handleDiceChange(value as string)}
+            />
+            <Button onClick={rollDice}>Lancer le dé</Button>
+          </div>
+          <div className="dice-section-result">
+            <Checkbox
+              label="Afficher le résultat aux autres joueurs"
+              checked={showDiceResult}
+              onChange={() => setShowDiceResult(!showDiceResult)}
+            />
+            <div className={`dice-result ${!diceResult ? 'hidden' : ''}`}>
+              {diceResult !== null && (
+                <p>
+                  Résultat du dé :{' '}
+                  <span className="dice-result-number">{diceResult}</span>
+                </p>
+              )}
+            </div>
           </div>
         </div>
         <div className="content-section">
