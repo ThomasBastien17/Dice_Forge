@@ -117,11 +117,8 @@ function CreateSheet() {
         <Form className="create-sheet-form">
           <div>
             <div>
-              <div>
-                <p className="create-sheet-game">
-                  Partie en cours :{' '}
-                  <span className="create-sheet-game-name">la partie</span>
-                </p>
+              <div className="create-sheet-game">
+                <span className="create-sheet-game-name">La partie</span>
               </div>
               <FormInput
                 label="Nom du personnage"
