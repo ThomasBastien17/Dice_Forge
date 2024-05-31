@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
@@ -12,21 +12,38 @@ function ResetPassword() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const query = new URLSearchParams(location.search);
+  const token = query.get('token');
+  const id = query.get('id');
+
+  useEffect(() => {
+    if (!token || !id) {
+      setError('Lien de réinitialisation invalide');
+    }
+  }, [token, id]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!token || !id) {
+      setError('Lien de réinitialisation invalide');
+      return;
+    }
     try {
       const response = await axiosInstance.post('reset-password', {
+        token,
+        id,
         password,
         confirmPassword,
       });
-      console.log(response);
       if (response.status === 200) {
         setMessage(response.data.message);
         setError(null);
-        navigate('/login');
+        navigate('/api/login');
       }
     } catch (err) {
+      console.error('Error:', err);
       setError('Une erreur est survenue. Veuillez réessayer.');
       setMessage(null);
     }
