@@ -1,37 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Sheet.scss';
 
-function Sheet() {
-    const [sheets, setSheets] = useState([]);
-    const [error, setError] = useState(null);
+interface Sheet {
+    id: number;
+    name: string;
+    image: string;
+    class: string;
+    level: number;
+}
+
+function SheetInfo() {
+    const [sheet, setSheet] = useState<Sheet | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        axiosInstance.get('/Sheet')
+        axiosInstance.get('/sheet')
             .then(response => {
-                setSheets(response.data);
+                setSheet(response.data);
             })
             .catch(error => {
-                setError("Erreur de récupération de fiche, as tu vraiment des fiches ?");
+                setError("Erreur lors de la récupération de la fiche, veuillez réessayer.");
             });
     }, []);
 
     return (
         <div>
             <Header />
-            <h1>Hello ma poule</h1>
+            <h1>Fiche Personnage</h1>
             <div>
                 {error ? (
                     <p>{error}</p>
                 ) : (
-                    sheets.length > 0 ? (
-                        sheets.map(sheet => (
-                            <div key={sheet.id} className="sheet">
-                                <h2>{sheet.name}</h2>
-                            </div>
-                        ))
+                    sheet ? (
+                        <div className="sheet">
+                            <h2>{sheet.name}</h2>
+                            <img src={sheet.image} alt={sheet.name} />
+                            <p>Classe: {sheet.class}</p>
+                            <p>Niveau: {sheet.level}</p>
+                        </div>
                     ) : (
                         <p>Loading...</p>
                     )
@@ -42,4 +51,4 @@ function Sheet() {
     );
 }
 
-export default Sheet;
+export default SheetInfo;
