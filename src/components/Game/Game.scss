@@ -94,16 +94,18 @@
   min-height: 400px;
 }
 .ui.button.timer-btn {
-  background-color: v.$color-primary-middle-light;
+  background-color: v.$color-primary-light;
   color: v.$color;
 }
 .ui.button.throw-dice-btn {
-  background-color: v.$color-primary-middle-light;
+  background-color: v.$color-primary-light;
   color: v.$color;
 }
 
 .ui.button.sheet-button {
   margin: 0 auto 1rem auto;
+  background-color: v.$color-primary-light;
+  color: v.$color;
 }
 
 /* Media Queries for Responsive Design */

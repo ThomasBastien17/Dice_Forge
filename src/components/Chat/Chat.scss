@@ -19,13 +19,14 @@
 }
 
 .onglet-button {
-  background-color: v.$color-primary-light;
-  color: v.$color;
+  background-color: v.$color;
+  color: v.$color-primary-light;
   padding: 0.25rem 1rem;
+  border: 1px solid v.$color-primary-light;
   border-radius: 0.5rem 0.5rem 0 0;
   &-active {
     font-weight: bold;
-    background-color: v.$color-primary;
+    background-color: v.$color-primary-light;
     color: v.$color;
     padding: 0.25rem 1rem;
     border-radius: 0.5rem 0.5rem 0 0;
