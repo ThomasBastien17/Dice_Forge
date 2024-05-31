@@ -1,13 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import {
-  Button,
-  Input,
-  Segment,
-  Grid,
-  Divider,
-  Form,
-  TextArea,
-} from 'semantic-ui-react';
+import { Button, Form, FormInput, FormTextArea } from 'semantic-ui-react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import 'semantic-ui-css/semantic.min.css';
@@ -16,6 +8,7 @@ import Footer from '../Footer/Footer';
 import './CreateSheet.scss';
 import { Characteristic, Item } from '../../@Types/sheet';
 import axiosInstance from '../../axios/axios';
+import { sortUserPlugins } from 'vite';
 
 function CreateSheet() {
   const [characteristics, setCharacteristics] = useState<Characteristic[]>([
@@ -33,10 +26,7 @@ function CreateSheet() {
 
   const postUserCreateSheet = async (formData: FormData) => {
     try {
-      const response = await axiosInstance.post(
-        'sheet',
-        formData
-      );
+      const response = await axiosInstance.post('sheet', formData);
       console.log('Success:', response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -119,203 +109,171 @@ function CreateSheet() {
   };
 
   return (
-    <>
+    <div className="create-sheet">
       <Header />
-      <h2 className="sheet-title">Création de Fiche</h2>
-      <Segment>
-        <Grid columns={2} relaxed="very">
-          <Grid.Column>
-            <div className="create-sheet">
-              <div className="left-section">
-                <h2>Fiche Personnage</h2>
-                <div>
-                  <Form>
-                    <Form.Field>
-                      <div>
-                        <label htmlFor="characterNameInput">
-                          Nom de votre personnage :
-                        </label>
-                        <Input
-                          id="characterNameInput"
-                          placeholder="Nom de votre personnage"
-                          value={characterName}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            setCharacterName(e.target.value)
-                          }
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="classNameInput">Classe :</label>
-                        <Input
-                          id="classNameInput"
-                          placeholder="Classe"
-                          value={className}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            setClassName(e.target.value)
-                          }
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="levelInput">Niveau :</label>
-                        <Input
-                          id="levelInput"
-                          type="number"
-                          placeholder="Niveau"
-                          value={level}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            setLevel(Number(e.target.value))
-                          }
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="gameIdInput">ID du Jeu :</label>
-                        <Input
-                          id="gameIdInput"
-                          type="number"
-                          placeholder="ID du Jeu"
-                          value={gameId}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            setGameId(e.target.value)
-                          }
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                    </Form.Field>
-                  </Form>
-                  <span>Importer un avatar </span>
-                  <input type="file" onChange={handleAvatarChange} />
-                  {avatarPreview && (
-                    <div className="avatar-preview">
-                      <img src={avatarPreview} alt="Avatar Preview" />
-                    </div>
-                  )}
+      <h1 className="create-sheet-title">Création de Fiche</h1>
+      <div className="create-sheet-content">
+        <h2 className="create-sheet-subtitle">Fiche Personnage</h2>
+        <Form className="create-sheet-form">
+          <div>
+            <div>
+              <FormInput
+                label="Nom du personnage"
+                className="create-sheet-input"
+                placeholder="Nom de votre personnage"
+                value={characterName}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setCharacterName(e.target.value)
+                }
+              />
+              <FormInput
+                label="Classe:"
+                className="create-sheet-input"
+                placeholder="Classe"
+                value={className}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setClassName(e.target.value)
+                }
+              />
+              <FormInput
+                label="Niveau:"
+                className="create-sheet-input"
+                type="number"
+                placeholder="Niveau"
+                value={level}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setLevel(Number(e.target.value))
+                }
+              />
+              <FormInput
+                label="ID de la partie:"
+                className="create-sheet-input"
+                type="number"
+                placeholder="ID du Jeu"
+                value={gameId}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setGameId(e.target.value)
+                }
+              />
+            </div>
+
+            <div className="create-sheet-avatar">
+              <span>Importer un avatar </span>
+              <input type="file" onChange={handleAvatarChange} />
+              {avatarPreview && (
+                <div className="create-sheet-avatar-preview">
+                  <img
+                    className="create-sheet-avatar-img"
+                    src={avatarPreview}
+                    alt="Avatar Preview"
+                  />
                 </div>
-                {characteristics.map((characteristic) => (
-                  <div
-                    key={characteristic.id}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    <label htmlFor="characteristics">
-                      Choix des caractéristiques :
-                    </label>
-                    <Input
-                      placeholder="Nom de la caractéristique"
-                      value={characteristic.name}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        handleCharacteristicChange(
-                          characteristic.id,
-                          'name',
-                          e.target.value
-                        )
-                      }
-                      style={{ marginRight: '10px' }}
-                    />
-                    <Input
-                      type="number"
-                      placeholder="Valeur"
-                      value={characteristic.value}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        handleCharacteristicChange(
-                          characteristic.id,
-                          'value',
-                          e.target.value
-                        )
-                      }
-                      style={{ marginRight: '10px' }}
-                    />
-                    <Button
-                      icon="minus"
-                      onClick={() =>
-                        handleRemoveCharacteristic(characteristic.id)
-                      }
-                    />
-                  </div>
-                ))}
-                <Button onClick={handleAddCharacteristic} primary>
-                  +
-                </Button>
+              )}
+            </div>
+          </div>
+          {characteristics.map((characteristic) => (
+            <div className="create-sheet-caracteristic" key={characteristic.id}>
+              <FormInput
+                className="create-sheet-input"
+                label="Choix des caractéristiques :"
+                placeholder="Nom de la caractéristique"
+                value={characteristic.name}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleCharacteristicChange(
+                    characteristic.id,
+                    'name',
+                    e.target.value
+                  )
+                }
+              />
+              <FormInput
+                label="Valeur :"
+                className="create-sheet-input-value"
+                type="number"
+                placeholder="Valeur"
+                value={characteristic.value}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleCharacteristicChange(
+                    characteristic.id,
+                    'value',
+                    e.target.value
+                  )
+                }
+              />
+              <Button
+                className="create-sheet-caracteristic-btn"
+                icon="minus"
+                onClick={() => handleRemoveCharacteristic(characteristic.id)}
+              />
+            </div>
+          ))}
+          <Button
+            className="create-sheet-caracteristic-add-btn"
+            onClick={handleAddCharacteristic}
+            icon="plus"
+          />
+
+          <h2 className="create-sheet-subtitle">Inventaire</h2>
+          {items.map((item) => (
+            <div className="create-sheet-inventory-content">
+              <FormInput
+                className="create-sheet-input"
+                label="Nom de l'objet :"
+                placeholder="Nom de l'objet"
+                value={item.name}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleItemChange(item.id, 'name', e.target.value)
+                }
+              />
+              <FormTextArea
+                className="create-sheet-input"
+                label="Description"
+                placeholder="Entrez ici la description de votre objet"
+                value={item.description}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                  handleItemChange(item.id, 'description', e.target.value)
+                }
+              />
+              <div className="create-sheet-inventory-quantity">
+                <FormInput
+                  className="create-sheet-input-quantity"
+                  label="Quantité :"
+                  placeholder="Quantité"
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleItemChange(
+                      item.id,
+                      'quantity',
+                      Number(e.target.value)
+                    )
+                  }
+                />
+                <Button
+                  className="create-sheet-inventory-btn"
+                  icon="minus"
+                  onClick={() => handleRemoveItem(item.id)}
+                />
               </div>
             </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div className="right-section create-sheet">
-              <h2>Inventaire</h2>
-              <Grid columns={3}>
-                {items.map((item) => (
-                  <Grid.Row key={item.id} className="inventory-item">
-                    <Grid.Column>
-                      <label htmlFor={`item-name-${item.id}`}>
-                        Nom de l'objet:
-                      </label>
-                      <Input
-                        id={`item-name-${item.id}`}
-                        placeholder="Nom de l'objet"
-                        value={item.name}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleItemChange(item.id, 'name', e.target.value)
-                        }
-                      />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <label htmlFor={`item-description-${item.id}`}>
-                        Description:
-                      </label>
-                      <TextArea
-                        id={`item-description-${item.id}`}
-                        placeholder="Entrez ici la description de votre objet"
-                        value={item.description}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                          handleItemChange(
-                            item.id,
-                            'description',
-                            e.target.value
-                          )
-                        }
-                      />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <label htmlFor={`item-quantity-${item.id}`}>
-                        Quantité:
-                      </label>
-                      <Input
-                        id={`item-quantity-${item.id}`}
-                        placeholder="Quantité"
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleItemChange(
-                            item.id,
-                            'quantity',
-                            Number(e.target.value)
-                          )
-                        }
-                      />
-                      <Button
-                        icon="minus"
-                        onClick={() => handleRemoveItem(item.id)}
-                      />
-                    </Grid.Column>
-                  </Grid.Row>
-                ))}
-              </Grid>
-              <Button onClick={handleAddItem} primary>
-                +
-              </Button>
-            </div>
-          </Grid.Column>
-        </Grid>
-        <Divider vertical />
-      </Segment>
-      <div className="valider-btn">
-        <Button primary onClick={handleSubmit}>
-          Valider
-        </Button>
+          ))}
+          <Button
+            className="create-sheet-inventory-add-btn"
+            onClick={handleAddItem}
+            icon="plus"
+          />
+          <div className="submit-btn">
+            <Button
+              className="create-sheet-submit-btn"
+              type="submit"
+              content="Valider"
+              onClick={handleSubmit}
+            />
+          </div>
+        </Form>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
