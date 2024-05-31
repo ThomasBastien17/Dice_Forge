@@ -117,6 +117,12 @@ function CreateSheet() {
         <Form className="create-sheet-form">
           <div>
             <div>
+              <div>
+                <p className="create-sheet-game">
+                  Partie en cours :{' '}
+                  <span className="create-sheet-game-name">la partie</span>
+                </p>
+              </div>
               <FormInput
                 label="Nom du personnage"
                 className="create-sheet-input"
@@ -143,16 +149,6 @@ function CreateSheet() {
                 value={level}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setLevel(Number(e.target.value))
-                }
-              />
-              <FormInput
-                label="ID de la partie:"
-                className="create-sheet-input"
-                type="number"
-                placeholder="ID du Jeu"
-                value={gameId}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setGameId(e.target.value)
                 }
               />
             </div>
