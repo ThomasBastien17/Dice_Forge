@@ -1,19 +1,40 @@
+@use '../../styles/variables' as v;
+
 .chat-window {
-  position: relative;
   display: flex;
   flex-direction: column;
-  height: 400px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
-  background: #fff;
+  padding: 0 1rem 1rem 1rem;
+  background: v.$color;
+  flex-grow: 1;
 }
 
 .chat-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 0 -1rem 1rem -1rem;
+  background-color: v.$color-primary-ultra-light;
+}
+
+.onglet-button {
+  background-color: v.$color-primary-light;
+  color: v.$color;
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  &-active {
+    font-weight: bold;
+    background-color: v.$color-primary;
+    color: v.$color;
+    padding: 0.25rem 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+}
+
+.notes-textarea {
+  width: 100%;
+  height: 100%;
 }
 
 .chat-messages {
@@ -39,26 +60,11 @@
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
-  color: white;
+  background-color: v.$color-primary-light;
+  color: v.$color;
   cursor: pointer;
 }
 
 .chat-input-form button:hover {
-  background-color: #0056b3;
-}
-
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-  .chat-input-form button {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .chat-input-form button {
-    padding: 3px 6px;
-    font-size: 12px;
-  }
+  background-color: v.$color-primary;
 }

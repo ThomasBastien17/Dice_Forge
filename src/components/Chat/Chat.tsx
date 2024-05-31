@@ -93,13 +93,15 @@ function Chat() {
           <button
             type="button"
             key={tab}
-            className={activeTab === tab ? 'active' : ''}
+            className={
+              activeTab === tab ? 'onglet-button-active' : 'onglet-button'
+            }
             onClick={() => setActiveTab(tab)}
           >
             {tab}
           </button>
         ))}
-        <button type="button" onClick={addTab}>
+        <button className="onglet-button" type="button" onClick={addTab}>
           + Add Tab
         </button>
       </div>
@@ -107,7 +109,7 @@ function Chat() {
         {activeTab === 'Notes' ? (
           <textarea
             className="notes-textarea"
-            placeholder="Write your notes here..."
+            placeholder="Ecrivez vos notes ici ..."
           />
         ) : (
           messages[activeTab].map((msg) => (
@@ -125,10 +127,14 @@ function Chat() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Write your message here!"
+              placeholder="Ecrivez votre message"
             />
-            <button type="button" onClick={sendMessage}>
-              Send
+            <button
+              className="chat-input-btn"
+              type="button"
+              onClick={sendMessage}
+            >
+              Envoyer
             </button>
           </>
         )}
@@ -137,7 +143,7 @@ function Chat() {
         <Modal.Header>Select the tab type you want to add</Modal.Header>
         <Modal.Content>
           <Dropdown
-            placeholder="Select the tab type to add"
+            placeholder="Choisissez votre onglet"
             selection
             options={tabTypes}
             onChange={handleTabTypeChange}

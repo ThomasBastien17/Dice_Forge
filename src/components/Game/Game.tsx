@@ -108,7 +108,10 @@ function Game() {
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
           <div className="timer-controls">
-            <Button onClick={timerRunning ? stopTimer : startTimer}>
+            <Button
+              className="timer-btn"
+              onClick={timerRunning ? stopTimer : startTimer}
+            >
               {timerRunning ? 'Stop' : 'Démarrer le Timer'}
             </Button>
           </div>
@@ -127,7 +130,9 @@ function Game() {
               options={diceOptions}
               onChange={(e, { value }) => handleDiceChange(value as string)}
             />
-            <Button onClick={rollDice}>Lancer le dé</Button>
+            <Button className="throw-dice-btn" onClick={rollDice}>
+              Lancer le dé
+            </Button>
           </div>
           <div className="dice-section-result">
             <Checkbox
