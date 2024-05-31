@@ -17,6 +17,7 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
 import './Sablier.scss';
+import { NavLink } from 'react-router-dom';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -106,83 +107,56 @@ function Game() {
       <Container className="main-content">
         <h1 className="create-title">Partie</h1>
         <div className="timer-section">
-          <p>Temps restant: {formatTime()}</p>
           <div className="timer-controls">
-            <Button onClick={timerRunning ? stopTimer : startTimer}>
-              {timerRunning ? 'Stop' : 'Démarrer'}
+            <Button
+              className="timer-btn"
+              onClick={timerRunning ? stopTimer : startTimer}
+            >
+              {timerRunning ? 'Stop' : 'Démarrer le Timer'}
             </Button>
           </div>
-          <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
+          <div className={`timer-sablier${!timerRunning ? '-hidden' : ''} `}>
+            <span className="timer-result">{formatTime()}</span>
+            <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
+          </div>
         </div>
         <div
           className={`dice-section ${!timerRunning ? 'sablier-hidden' : ''}`}
         >
-          <Dropdown
-            placeholder="Sélectionner un dé"
-            selection
-            options={diceOptions}
-            onChange={(e, { value }) => handleDiceChange(value as string)}
-          />
-          <Button onClick={rollDice}>Lancer le dé</Button>
-          <Checkbox
-            label="Afficher le résultat aux autres joueurs"
-            checked={showDiceResult}
-            onChange={() => setShowDiceResult(!showDiceResult)}
-          />
-          <div className="dice-result">
-            {diceResult !== null && (
-              <p>
-                Résultat du dé :{' '}
-                <span className="dice-result-number">{diceResult}</span>
-              </p>
-            )}
+          <div className="dice-section-throw">
+            <Dropdown
+              placeholder="Sélectionner un dé"
+              selection
+              options={diceOptions}
+              onChange={(e, { value }) => handleDiceChange(value as string)}
+            />
+            <Button className="throw-dice-btn" onClick={rollDice}>
+              Lancer le dé
+            </Button>
+          </div>
+          <div className="dice-section-result">
+            <Checkbox
+              label="Afficher le résultat aux autres joueurs"
+              checked={showDiceResult}
+              onChange={() => setShowDiceResult(!showDiceResult)}
+            />
+            <div className={`dice-result ${!diceResult ? 'hidden' : ''}`}>
+              {diceResult !== null && (
+                <p>
+                  Résultat du dé :{' '}
+                  <span className="dice-result-number">{diceResult}</span>
+                </p>
+              )}
+            </div>
           </div>
         </div>
         <div className="content-section">
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={8}>
-                {showCharacterSheetButton && (
-                  <Button
-                    className="show-character-sheet-button"
-                    type="button"
-                    onClick={toggleCharacterSheet}
-                  >
-                    Fiches
-                  </Button>
-                )}
-                {showCharacterSheet && (
-                  <div className="directory-window">
-                    <Container>
-                      <Card.Group>
-                        <Card className="binder">
-                          <CardContent>
-                            <CardHeader>Fiche Personnage</CardHeader>
-                            <CardDescription>
-                              Lorem, ipsum dolor sit amet consectetur
-                              adipisicing elit. Amet, deleniti cum earum harum
-                              eius praesentium voluptates officiis quis ratione
-                              nisi, delectus hic id quos aut exercitationem iure
-                              dolore vitae voluptatem.
-                            </CardDescription>
-                          </CardContent>
-                          <CardContent extra>
-                            <ButtonGroup className="binder-btn-group">
-                              <Button content={<Icon name="pencil" />} />
-                              <Button content={<Icon name="trash" />} />
-                            </ButtonGroup>
-                          </CardContent>
-                        </Card>
-                      </Card.Group>
-                    </Container>
-                  </div>
-                )}
-              </Grid.Column>
-              <Grid.Column width={8}>
-                <Chat />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          <NavLink to="/api/binder">
+            <Button className="sheet-button" type="button">
+              Fiches
+            </Button>
+          </NavLink>
+          <Chat />
         </div>
       </Container>
       <Footer />

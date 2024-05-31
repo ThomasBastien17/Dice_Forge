@@ -3,44 +3,46 @@
 .game-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: 100vh;
 }
 
-.main-content {
+.ui.container.main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  justify-content: space-between;
 }
 
 .create-title {
   text-align: center;
+  font-size: 1.75rem;
+  padding: 0.25rem;
 }
-
-.timer-section,
-.dice-section {
-  margin-bottom: 20px;
-}
-
-.content-section {
-  display: flex;
-  flex: 1;
-  margin-top: 20px;
-  flex-direction: row;
-}
-
-.left-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
 .timer-section {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  justify-content: space-evenly;
   align-items: center;
+  margin-bottom: 2rem;
+}
+
+.timer-sablier {
+  margin-bottom: 2rem;
+  &-hidden {
+    display: none;
+  }
+}
+
+.timer-result {
+  background-color: v.$color-primary-light;
+  color: v.$color;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  top: 16rem;
+  left: 5.5rem;
 }
 
 .timer-controls {
@@ -52,39 +54,58 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 20px;
+}
+
+.dice-result.hidden {
+  display: none;
 }
 
 .dice-result {
   background-color: v.$color-primary-light;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 0.5rem;
   font-size: 1.5rem;
   color: #fff;
+  text-align: center;
+  margin-bottom: 0.5rem;
 
   &-number {
     font-weight: bold;
   }
 }
 
-.right-section {
-  flex: 2;
+.dice-section-throw {
   display: flex;
-  flex-direction: column;
-}
-
-.directory-window,
-.chat-window {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-  padding: 10px;
-}
-
-footer {
-  flex-shrink: 0;
+  flex-direction: row;
+  justify-content: space-around;
   width: 100%;
-  text-align: center;
+}
+
+.dice-section-result {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.content-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 400px;
+}
+.ui.button.timer-btn {
+  background-color: v.$color-primary-light;
+  color: v.$color;
+}
+.ui.button.throw-dice-btn {
+  background-color: v.$color-primary-light;
+  color: v.$color;
+}
+
+.ui.button.sheet-button {
+  margin: 0 auto 1rem auto;
+  background-color: v.$color-primary-light;
+  color: v.$color;
 }
 
 /* Media Queries for Responsive Design */
@@ -103,8 +124,7 @@ footer {
     flex: 1;
   }
 
-  .directory-window,
-  .chat-window {
+  .directory-window {
     height: auto;
     min-height: 300px;
   }
@@ -118,11 +138,6 @@ footer {
   .timer-section,
   .dice-section {
     margin-bottom: 10px;
-  }
-
-  .directory-window,
-  .chat-window {
-    padding: 5px;
   }
 
   .directory-window {
