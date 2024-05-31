@@ -7,11 +7,12 @@
   min-height: 100vh;
 }
 
-.main-content {
+.ui.container.main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  justify-content: space-between;
 }
 
 .create-title {
@@ -29,6 +30,9 @@
 
 .timer-sablier {
   margin-bottom: 2rem;
+  &-hidden {
+    display: none;
+  }
 }
 
 .timer-result {
@@ -39,20 +43,6 @@
   position: absolute;
   top: 16rem;
   left: 5.5rem;
-}
-
-.content-section {
-  display: flex;
-  flex-direction: row;
-  margin-top: 2rem;
-  width: 100%;
-}
-
-.left-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
 }
 
 .timer-controls {
@@ -68,7 +58,7 @@
 }
 
 .dice-result.hidden {
-  background-color: transparent;
+  display: none;
 }
 
 .dice-result {
@@ -97,25 +87,14 @@
   flex-direction: column-reverse;
 }
 
-.right-section {
-  flex: 2;
+.content-section {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.directory-window,
-.chat-window {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-  padding: 10px;
-}
-
-footer {
-  flex-shrink: 0;
-  width: 100%;
-  text-align: center;
+.ui.button.sheet-button {
+  margin: 0 auto 1rem auto;
 }
 
 /* Media Queries for Responsive Design */

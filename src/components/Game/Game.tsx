@@ -17,6 +17,7 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
 import './Sablier.scss';
+import { NavLink } from 'react-router-dom';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -108,10 +109,10 @@ function Game() {
         <div className="timer-section">
           <div className="timer-controls">
             <Button onClick={timerRunning ? stopTimer : startTimer}>
-              {timerRunning ? 'Stop' : 'Démarrer'}
+              {timerRunning ? 'Stop' : 'Démarrer le Timer'}
             </Button>
           </div>
-          <div className="timer-sablier">
+          <div className={`timer-sablier${!timerRunning ? '-hidden' : ''} `}>
             <span className="timer-result">{formatTime()}</span>
             <div className={`sablier ${timerRunning ? 'animate' : ''}`} />
           </div>
@@ -145,50 +146,12 @@ function Game() {
           </div>
         </div>
         <div className="content-section">
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={8}>
-                {showCharacterSheetButton && (
-                  <Button
-                    className="show-character-sheet-button"
-                    type="button"
-                    onClick={toggleCharacterSheet}
-                  >
-                    Fiches
-                  </Button>
-                )}
-                {showCharacterSheet && (
-                  <div className="directory-window">
-                    <Container>
-                      <Card.Group>
-                        <Card className="binder">
-                          <CardContent>
-                            <CardHeader>Fiche Personnage</CardHeader>
-                            <CardDescription>
-                              Lorem, ipsum dolor sit amet consectetur
-                              adipisicing elit. Amet, deleniti cum earum harum
-                              eius praesentium voluptates officiis quis ratione
-                              nisi, delectus hic id quos aut exercitationem iure
-                              dolore vitae voluptatem.
-                            </CardDescription>
-                          </CardContent>
-                          <CardContent extra>
-                            <ButtonGroup className="binder-btn-group">
-                              <Button content={<Icon name="pencil" />} />
-                              <Button content={<Icon name="trash" />} />
-                            </ButtonGroup>
-                          </CardContent>
-                        </Card>
-                      </Card.Group>
-                    </Container>
-                  </div>
-                )}
-              </Grid.Column>
-              <Grid.Column width={8}>
-                <Chat />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          <NavLink to="/api/binder">
+            <Button className="sheet-button" type="button">
+              Fiches
+            </Button>
+          </NavLink>
+          <Chat />
         </div>
       </Container>
       <Footer />
