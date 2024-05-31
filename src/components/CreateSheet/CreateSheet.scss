@@ -1,92 +1,108 @@
 @use '../../styles/variables' as v;
 
-.create-sheet {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-  max-height: 100vh;
+.ui.icon.button.create-sheet-caracteristic-btn {
+  margin-bottom: 1rem;
+  color: v.$color;
+  background-color: v.$color-primary-ultra-light;
 }
-
-.ui.segment {
-  background-image: url(../../../public/paper-1074131_1280.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+.ui.button.create-sheet-caracteristic-add-btn {
+  color: v.$color;
+  background-color: v.$color-primary;
 }
-
-h2.sheet-title {
-  text-align: center;
-  font-size: 3rem;
-}
-
-.left-section {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  text-align: center;
-}
-
-.avatar-preview {
-  display: flex;
-  justify-content: center;
-}
-
-.avatar-preview img {
-  max-width: 100px; /* Ajustez la taille de l'avatar selon vos besoins */
-  max-height: 100px; /* Ajustez la taille de l'avatar selon vos besoins */
-  margin-top: 5rem;
-}
-
-.right-section {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  text-align: center;
-}
-
-.grid.column {
-  display: flex;
-  justify-content: center;
-}
-
-.ui.input {
-  margin: 1.5rem;
-}
-
-.ui.primary.button {
-  color: white;
-  background-color: #b55923;
-}
-.ui.primary.button:hover {
-  background-color: #5a332f;
-}
-
-.valider-btn {
-  display: flex;
-  justify-content: center;
-}
-
-.inventory-item {
-  display: flex;
-  align-items: center;
+.ui.button.create-sheet-inventory-btn {
+  color: v.$color;
+  background-color: v.$color-primary-ultra-light;
   margin-bottom: 1rem;
 }
-
-.item-input {
-  flex: 1;
-  margin-right: 1px;
+.ui.button.create-sheet-inventory-add-btn {
+  color: v.$color;
+  background-color: v.$color-primary;
+  margin-bottom: 2rem;
+}
+.ui.button.create-sheet-submit-btn {
+  font-size: 1.25rem;
+  background-color: v.$color-primary-light;
+  color: v.$color;
+  font-weight: bold;
 }
 
-.inventory-item Button {
-  margin-left: 1px;
-}
-
-label {
-  font-weight: 600;
-  font-size: larger;
-}
-
-.FormField {
-  font-weight: 600;
-  font-size: larger;
+.create-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  &-game {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    background-color: v.$color-primary-light;
+    color: v.$color;
+    &-name {
+      margin-left: 1rem;
+    }
+  }
+  &-title {
+    font-size: 3rem;
+    padding: 1rem;
+    color: v.$color-primary;
+  }
+  &-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-subtitle {
+    font-size: 2rem;
+    color: v.$color-primary;
+  }
+  &-form {
+    flex-grow: 1;
+    width: 80%;
+  }
+  &-input {
+    margin-bottom: 1rem;
+    &-value {
+      width: 20%;
+    }
+    &-quantity {
+      width: 20%;
+    }
+  }
+  &-avatar {
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    background-color: v.$color-primary-light;
+    padding: 0.5rem;
+    color: v.$color;
+    font-weight: bold;
+    &-preview {
+      margin: auto;
+      display: flex;
+      justify-content: center;
+    }
+    &-img {
+      width: 50%;
+      clip-path: ellipse(50% 33%);
+    }
+  }
+  &-caracteristic {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: auto;
+  }
+  &-inventory-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &-inventory-quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
 }
