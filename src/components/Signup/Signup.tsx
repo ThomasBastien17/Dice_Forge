@@ -80,16 +80,6 @@ function Signup() {
       <Header />
       <h1 className="signup-title">Inscription</h1>
       <Form className="signup-form" onSubmit={handleSubmit}>
-      <input
-            className="signup-input"
-            type="file"
-            onChange={handleAvatarChange}
-          />
-          {avatarPreview && (
-            <div className="avatar-preview">
-              <img src={avatarPreview} alt="Avatar Preview" />
-            </div>
-          )}
         <FormInput
           className="signup-input"
           icon="user"
@@ -135,7 +125,7 @@ function Signup() {
           onChange={(event) => handleChange(event, 'confirmPassword')}
         />
 
-        <Button content="Valider" type="submit" color="red" />
+        <Button content="Valider" type="submit" className="signup-form-btn" />
       </Form>
       <Footer />
     </div>
