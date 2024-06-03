@@ -1,5 +1,17 @@
 @use '../../styles/variables' as v;
 
+.ui.icon.right.labeled.button.home-btn-creategame {
+  color: v.$color;
+  background-color: v.$color-primary-light;
+}
+.ui.button.home-btn-login {
+  color: v.$color;
+  background-color: v.$color-primary-light;
+}
+.ui.button.home-btn-signup {
+  color: v.$color;
+  background-color: v.$color-primary-ultra-light;
+}
 .home {
   display: flex;
   flex-direction: column;
