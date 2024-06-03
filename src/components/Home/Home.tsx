@@ -65,19 +65,21 @@ function Home() {
       <div className="home-group-btn">
         {isLogged ? (
           <NavLink to="/api/creategame">
-            <Button className="home-btn" icon labelPosition="right" color="red">
-              Créer une partie
-              <Icon name="arrow right" />
-            </Button>
+            <Button
+              className="home-btn-creategame"
+              icon="right arrow"
+              labelPosition="right"
+              content="Créer une partie"
+            />
           </NavLink>
         ) : (
           <ButtonGroup>
             <NavLink to="/api/login">
-              <Button color="black">Connectez-vous</Button>
+              <Button className="home-btn-login" content="Connectez-vous" />
             </NavLink>
             <ButtonOr text="/" />
             <NavLink to="/api/signup">
-              <Button color="grey">Inscrivez-vous</Button>
+              <Button className="home-btn-signup" content="Inscrivez-vous" />
             </NavLink>
           </ButtonGroup>
         )}
