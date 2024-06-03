@@ -64,9 +64,6 @@ function Profile() {
                 <Button
                   className="profile-game-btn"
                   content="Crée une partie"
-                  color="red"
-                  compact
-                  size="mini"
                 />
               </NavLink>
             </h2>
@@ -86,7 +83,7 @@ function Profile() {
                     <Icon size="large" name="trash" />
                   </button>
                   <NavLink to="/api/game">
-                    <p>{game.name}</p>
+                    <p className="profile-game-name">{game.name}</p>
                   </NavLink>
                 </div>
               ))
