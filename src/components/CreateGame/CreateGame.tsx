@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Dropdown, Form, Input } from 'semantic-ui-react';
+import { Button, Dropdown, Form, FormInput, Input } from 'semantic-ui-react';
 import { ILicenceOption } from '../../@Types/game';
 import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
@@ -73,56 +73,65 @@ function CreateGame() {
   };
 
   return (
-    <div className="create">
+    <div className="create-game">
       <Header />
-      <div className="create-content">
-        <h1 className="create-title">Créer ta partie</h1>
-        <div className="create-form">
+      <div className="create-game-content">
+        <h1 className="create-game-title">Créer ta partie</h1>
+        <div className="create-game-form">
           <Form>
-            <Form.Field>
-              <Input
-                placeholder="Titre"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </Form.Field>
-            <Form.Field>
+            <FormInput
+              className="create-game-input"
+              label="Nom de la partie"
+              placeholder="Nom de la partie"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              icon="game"
+              iconPosition="left"
+            />
+            <label className="create-game-licences">
+              Licences
               <Dropdown
+                className="create-game-licences-input"
                 placeholder="Licence"
-                fluid
                 selection
                 options={licenseOptions}
                 value={licences}
                 onChange={(e, { value }) => setLicences(value as string)}
               />
-            </Form.Field>
+            </label>
             {players.map((player, index) => (
-              <Form.Field key={index}>
-                <Input
+              <Form.Field key={index} className="create-game-form-field">
+                <FormInput
+                  className="create-game-input"
+                  label="Ajouter un joueur"
                   placeholder="Ajouter un joueur"
                   value={player}
                   onChange={(e) => handlePlayerChange(index, e.target.value)}
                   icon="at"
+                  iconPosition="left"
                 />
                 {index > 0 && (
                   <Button
+                    className="create-game-delete-player-btn"
                     onClick={() => handleRemovePlayer(index)}
                     icon="minus"
-                    negative
-                    compact
                   />
                 )}
               </Form.Field>
             ))}
+            <Button
+              onClick={handleAddPlayer}
+              icon="plus"
+              className="create-game-add-player-btn"
+            />
+            <div className="submit-container">
+              <Button
+                onClick={handleSubmit}
+                className="create-game-submit-btn"
+                content="Valider"
+              />
+            </div>
           </Form>
-          <Button onClick={handleAddPlayer} primary>
-            +
-          </Button>
-          <div className="submit-container">
-            <Button onClick={handleSubmit} primary>
-              Valider
-            </Button>
-          </div>
         </div>
       </div>
       <Footer />
