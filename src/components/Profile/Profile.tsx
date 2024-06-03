@@ -85,10 +85,9 @@ function Profile() {
                   </button>
 
                   <NavLink to={`/api/game/:${game.id}`}>
-                    <p>{game.name}</p>
-
+                    <p className="profile-game-name">{game.name}</p>
                   </NavLink>
-                  <p>
+                  <p className="profile-game-link">
                     http://localhost:5173/api/game/:
                     {game.id}
                   </p>
