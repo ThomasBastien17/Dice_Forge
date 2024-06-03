@@ -1,41 +1,32 @@
+import { useState, ChangeEvent } from 'react';
+import { Button, Form, FormInput, FormTextArea } from 'semantic-ui-react';
 import axios from 'axios';
-import { useState } from 'react';
-import {
-  Button,
-  Input,
-  Icon,
-  Segment,
-  Grid,
-  Divider,
-  Form,
-  FormField,
-  TextArea,
-} from 'semantic-ui-react';
+import { v4 as uuidv4 } from 'uuid';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './CreateSheet.scss';
+import { Characteristic, Item } from '../../@Types/sheet';
+import axiosInstance from '../../axios/axios';
+import { sortUserPlugins } from 'vite';
 
 function CreateSheet() {
-  const [characteristics, setCharacteristics] = useState([
-    { name: '', value: '' },
+  const [characteristics, setCharacteristics] = useState<Characteristic[]>([
+    { id: uuidv4(), name: '', value: '' },
   ]);
-  const [items, setItems] = useState([
-    { name: '', description: '', quantity: 1 },
+  const [items, setItems] = useState<Item[]>([
+    { id: uuidv4(), name: '', description: '', quantity: 1 },
   ]);
-  const [characterName, setCharacterName] = useState('');
-  const [className, setClassName] = useState('');
-  const [level, setLevel] = useState(1);
-  const [gameId, setGameId] = useState('');
-  const [license, setLicense] = useState('');
-  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [characterName, setCharacterName] = useState<string>('');
+  const [className, setClassName] = useState<string>('');
+  const [level, setLevel] = useState<number>(1);
+  const [gameId, setGameId] = useState<string>('');
+  const [license, setLicense] = useState<string>('');
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
-  const postUserCreateSheet = async (formData) => {
+  const postUserCreateSheet = async (formData: FormData) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/sheet',
-        formData
-      );
+      const response = await axiosInstance.post('sheet', formData);
       console.log('Success:', response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -43,257 +34,239 @@ function CreateSheet() {
   };
 
   const handleAddCharacteristic = () => {
-    setCharacteristics([...characteristics, { name: '', value: '' }]);
+    setCharacteristics([
+      ...characteristics,
+      { id: uuidv4(), name: '', value: '' },
+    ]);
   };
 
-  const handleRemoveCharacteristic = (index) => {
-    const updatedCharacteristics = [...characteristics];
-    updatedCharacteristics.splice(index, 1);
-    setCharacteristics(updatedCharacteristics);
+  const handleRemoveCharacteristic = (id: string) => {
+    setCharacteristics(characteristics.filter((char) => char.id !== id));
   };
 
   const handleAddItem = () => {
-    setItems([...items, { name: '', description: '', quantity: 1 }]);
+    setItems([
+      ...items,
+      { id: uuidv4(), name: '', description: '', quantity: 1 },
+    ]);
   };
 
-  const handleRemoveItem = (index) => {
-    const updatedItems = [...items];
-    updatedItems.splice(index, 1);
-    setItems(updatedItems);
+  const handleRemoveItem = (id: string) => {
+    setItems(items.filter((item) => item.id !== id));
   };
 
-  const handleCharacteristicNameChange = (index, value) => {
-    const updatedCharacteristics = [...characteristics];
-    updatedCharacteristics[index].name = value;
-    setCharacteristics(updatedCharacteristics);
+  const handleCharacteristicChange = (
+    id: string,
+    key: keyof Characteristic,
+    value: string
+  ) => {
+    setCharacteristics(
+      characteristics.map((char) =>
+        char.id === id ? { ...char, [key]: value } : char
+      )
+    );
   };
 
-  const handleCharacteristicValueChange = (index, value) => {
-    const updatedCharacteristics = [...characteristics];
-    updatedCharacteristics[index].value = value;
-    setCharacteristics(updatedCharacteristics);
+  const handleItemChange = (
+    id: string,
+    key: keyof Item,
+    value: string | number
+  ) => {
+    setItems(
+      items.map((item) => (item.id === id ? { ...item, [key]: value } : item))
+    );
   };
 
-  const handleItemChange = (index, key, value) => {
-    const updatedItems = [...items];
-    updatedItems[index][key] = value;
-    setItems(updatedItems);
-  };
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatarPreview(reader.result);
+        setAvatarPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleCharacterNameChange = (e) => {
-    setCharacterName(e.target.value);
-  };
-
-  const handleClassNameChange = (e) => {
-    setClassName(e.target.value);
-  };
-
-  const handleLevelChange = (e) => {
-    setLevel(e.target.value);
-  };
-
-  const handleGameIdChange = (e) => {
-    setGameId(e.target.value);
-  };
-
-  const handleLicenseChange = (e) => {
-    setLicense(e.target.value);
-  };
-
   const handleSubmit = () => {
-    const data = {
-      name: characterName,
-      image: avatarPreview,
-      class: className,
-      level,
-      game_id: gameId,
-      characteristics,
-      items,
-    };
-    postUserCreateSheet(data);
+    const formData = new FormData();
+    formData.append('name', characterName);
+    if (avatarPreview) formData.append('image', avatarPreview);
+    formData.append('class', className);
+    formData.append('level', level.toString());
+    formData.append('game_id', gameId);
+    formData.append('license', license);
+    characteristics.forEach((char, index) => {
+      formData.append(`characteristics[${index}][name]`, char.name);
+      formData.append(`characteristics[${index}][value]`, char.value);
+    });
+    items.forEach((item, index) => {
+      formData.append(`items[${index}][name]`, item.name);
+      formData.append(`items[${index}][description]`, item.description);
+      formData.append(`items[${index}][quantity]`, item.quantity.toString());
+    });
+    postUserCreateSheet(formData);
   };
 
   return (
-    <>
+    <div className="create-sheet">
       <Header />
-      <h2 className="sheet-title">Création de Fiche</h2>
-      <Segment>
-        <Grid columns={2} relaxed="very">
-          <Grid.Column>
-            <div className="create-sheet">
-              <div className="left-section">
-                <h2>Fiche Personnage</h2>
-                <div>
-                  <Form>
-                    <FormField>
-                      <div>
-                        <label htmlFor="characterNameInput">
-                          Nom de votre personnage :
-                        </label>
-                        <input
-                          id="characterNameInput"
-                          placeholder="Nom de votre personnage"
-                          value={characterName}
-                          onChange={handleCharacterNameChange}
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="classNameInput">Classe :</label>
-                        <input
-                          id="classNameInput"
-                          placeholder="Classe"
-                          value={className}
-                          onChange={handleClassNameChange}
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="levelInput">Niveau :</label>
-                        <input
-                          id="levelInput"
-                          type="number"
-                          placeholder="Niveau"
-                          value={level}
-                          onChange={handleLevelChange}
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="gameIdInput">ID du Jeu :</label>
-                        <input
-                          id="gameIdInput"
-                          type="number"
-                          placeholder="ID du Jeu"
-                          value={gameId}
-                          onChange={handleGameIdChange}
-                          style={{ marginBottom: '1rem', marginTop: '1rem' }}
-                        />
-                      </div>
-                    </FormField>
-                  </Form>
-                  <span>Importer un avatar </span>
-                  <input type="file" onChange={handleAvatarChange} />
-                  {avatarPreview && (
-                    <div className="avatar-preview">
-                      <img src={avatarPreview} alt="Avatar Preview" />
-                    </div>
-                  )}
+      <h1 className="create-sheet-title">Création de Fiche</h1>
+      <div className="create-sheet-content">
+        <h2 className="create-sheet-subtitle">Fiche Personnage</h2>
+        <Form className="create-sheet-form">
+          <div>
+            <div>
+              <div className="create-sheet-game">
+                <span className="create-sheet-game-name">La partie</span>
+              </div>
+              <FormInput
+                label="Nom du personnage"
+                className="create-sheet-input"
+                placeholder="Nom de votre personnage"
+                value={characterName}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setCharacterName(e.target.value)
+                }
+              />
+              <FormInput
+                label="Classe:"
+                className="create-sheet-input"
+                placeholder="Classe"
+                value={className}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setClassName(e.target.value)
+                }
+              />
+              <FormInput
+                label="Niveau:"
+                className="create-sheet-input"
+                type="number"
+                placeholder="Niveau"
+                value={level}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setLevel(Number(e.target.value))
+                }
+              />
+            </div>
+
+            <div className="create-sheet-avatar">
+              <span>Importer un avatar </span>
+              <input type="file" onChange={handleAvatarChange} />
+              {avatarPreview && (
+                <div className="create-sheet-avatar-preview">
+                  <img
+                    className="create-sheet-avatar-img"
+                    src={avatarPreview}
+                    alt="Avatar Preview"
+                  />
                 </div>
-                {characteristics.map((characteristic, index) => (
-                  <div
-                    key={index}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    <label>Choix des caractéristiques :</label>
-                    <Input
-                      placeholder="Nom de la caractéristique"
-                      value={characteristic.name}
-                      onChange={(e) =>
-                        handleCharacteristicNameChange(index, e.target.value)
-                      }
-                      style={{ marginRight: '10px' }}
-                    />
-                    <Input
-                      type="number"
-                      placeholder="Valeur"
-                      value={characteristic.value}
-                      onChange={(e) =>
-                        handleCharacteristicValueChange(index, e.target.value)
-                      }
-                      style={{ marginRight: '10px' }}
-                    />
-                    <Button
-                      icon="minus"
-                      onClick={() => handleRemoveCharacteristic(index)}
-                    />
-                  </div>
-                ))}
-                <Button onClick={handleAddCharacteristic} primary>
-                  +
-                </Button>
+              )}
+            </div>
+          </div>
+          {characteristics.map((characteristic) => (
+            <div className="create-sheet-caracteristic" key={characteristic.id}>
+              <FormInput
+                className="create-sheet-input"
+                label="Choix des caractéristiques :"
+                placeholder="Nom de la caractéristique"
+                value={characteristic.name}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleCharacteristicChange(
+                    characteristic.id,
+                    'name',
+                    e.target.value
+                  )
+                }
+              />
+              <FormInput
+                label="Valeur :"
+                className="create-sheet-input-value"
+                type="number"
+                placeholder="Valeur"
+                value={characteristic.value}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleCharacteristicChange(
+                    characteristic.id,
+                    'value',
+                    e.target.value
+                  )
+                }
+              />
+              <Button
+                className="create-sheet-caracteristic-btn"
+                icon="minus"
+                onClick={() => handleRemoveCharacteristic(characteristic.id)}
+              />
+            </div>
+          ))}
+          <Button
+            className="create-sheet-caracteristic-add-btn"
+            onClick={handleAddCharacteristic}
+            icon="plus"
+          />
+
+          <h2 className="create-sheet-subtitle">Inventaire</h2>
+          {items.map((item) => (
+            <div className="create-sheet-inventory-content">
+              <FormInput
+                className="create-sheet-input"
+                label="Nom de l'objet :"
+                placeholder="Nom de l'objet"
+                value={item.name}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleItemChange(item.id, 'name', e.target.value)
+                }
+              />
+              <FormTextArea
+                className="create-sheet-input"
+                label="Description"
+                placeholder="Entrez ici la description de votre objet"
+                value={item.description}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                  handleItemChange(item.id, 'description', e.target.value)
+                }
+              />
+              <div className="create-sheet-inventory-quantity">
+                <FormInput
+                  className="create-sheet-input-quantity"
+                  label="Quantité :"
+                  placeholder="Quantité"
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleItemChange(
+                      item.id,
+                      'quantity',
+                      Number(e.target.value)
+                    )
+                  }
+                />
+                <Button
+                  className="create-sheet-inventory-btn"
+                  icon="minus"
+                  onClick={() => handleRemoveItem(item.id)}
+                />
               </div>
             </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div className="right-section create-sheet">
-              <h2>Inventaire</h2>
-              <Grid columns={3}>
-                {items.map((item, index) => (
-                  <Grid.Row key={index} className="inventory-item">
-                    <Grid.Column>
-                      <label htmlFor={`item-name-${index}`}>
-                        Nom de l'objet:
-                      </label>
-                      <Input
-                        id={`item-name-${index}`}
-                        placeholder="Nom de l'objet"
-                        value={item.name}
-                        onChange={(e) =>
-                          handleItemChange(index, 'name', e.target.value)
-                        }
-                      />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <label htmlFor={`item-description-${index}`}>
-                        Description:
-                      </label>
-                      <TextArea
-                        id={`item-description-${index}`}
-                        placeholder="Entrez ici la description de votre objet"
-                        value={item.description}
-                        onChange={(e) =>
-                          handleItemChange(index, 'description', e.target.value)
-                        }
-                      />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <label htmlFor={`item-quantity-${index}`}>
-                        Quantité:
-                      </label>
-                      <Input
-                        id={`item-quantity-${index}`}
-                        placeholder="Quantité"
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          handleItemChange(index, 'quantity', e.target.value)
-                        }
-                      />
-                      <Button
-                        icon="minus"
-                        onClick={() => handleRemoveItem(index)}
-                      />
-                    </Grid.Column>
-                  </Grid.Row>
-                ))}
-              </Grid>
-              <Button onClick={handleAddItem} primary>
-                +
-              </Button>
-            </div>
-          </Grid.Column>
-        </Grid>
-        <Divider vertical />
-      </Segment>
-      <div className="valider-btn">
-        <Button primary icon labelPosition="right" onClick={handleSubmit}>
-          Valider <Icon name="right arrow" />
-        </Button>
+          ))}
+          <Button
+            className="create-sheet-inventory-add-btn"
+            onClick={handleAddItem}
+            icon="plus"
+          />
+          <div className="submit-btn">
+            <Button
+              className="create-sheet-submit-btn"
+              type="submit"
+              content="Valider"
+              onClick={handleSubmit}
+            />
+          </div>
+        </Form>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

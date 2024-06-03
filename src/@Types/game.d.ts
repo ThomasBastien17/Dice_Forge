@@ -9,3 +9,12 @@ export interface ILicenceOption {
   id: number;
   name: string;
 }
+
+export interface IGames {
+  id: number;
+  name: string;
+  music: string | null;
+  note: string | null;
+  event: string | null;
+  license_name: string;
+}

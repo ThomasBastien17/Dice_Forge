@@ -1,15 +1,12 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
 import { IResponseData } from '../../@Types/response.data';
 import { IUserLogin } from '../../@Types/user';
-import { useAppSelector } from '../../hooks/hooks';
-import {
-  actionGetUserToken,
-  actionIsLogged,
-} from '../../store/reducers/userReducer';
+import axiosInstance, { addTokenJwtToAxiosInstance } from '../../axios/axios';
+import { actionIsLogged } from '../../store/reducers/userReducer';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Login.scss';
@@ -26,21 +23,18 @@ function Login() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
-  const token = useAppSelector((state) => state.user.token);
-
   const postUser = async (formData: IUserLogin) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/login',
-        formData
-      );
+      const response = await axiosInstance.post('/login', formData);
 
       if (response.status === 200) {
         setSuccessMessage(response.data.message);
         setErrorMessage('');
         setIsHidden(false);
+        addTokenJwtToAxiosInstance(response.data.accessToken);
+        sessionStorage.setItem('accessToken', response.data.accessToken);
+        sessionStorage.setItem('refreshToken', response.data.refreshToken);
         dispatch(actionIsLogged(response.data.user));
-        dispatch(actionGetUserToken(response.data.token));
         navigate('/');
       }
       console.log(response);
@@ -63,9 +57,9 @@ function Login() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    postUser(userLoginData);
+    await postUser(userLoginData);
   };
 
   const handleChange = (

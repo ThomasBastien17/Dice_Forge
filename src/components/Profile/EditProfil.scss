@@ -1,10 +1,19 @@
 @use '../../styles/variables' as v;
 
-.signup {
+
+.editprofile{
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+
+  &-page {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   &-title {
     font-size: 4rem;
@@ -22,15 +31,9 @@
 
   &-input {
     margin-bottom: 1rem;
-    background: transparent;
+    width: 100%;
   }
 }
-.field {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-}
-input.signup-input{
-  background: transparent;
-
+img{
+  margin: 1rem;
 }

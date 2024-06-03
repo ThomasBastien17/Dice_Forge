@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Button, Form, FormInput } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { IUser } from '../../@Types/user';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Signup.scss';
+import axiosInstance from '../../axios/axios';
 
 function Signup() {
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [userFormData, setUserFormData] = useState<IUser>({
     lastname: '',
     firstname: '',
@@ -25,10 +27,7 @@ function Signup() {
    requête POST à http://localhost:5000/api/signup en utilisant Axios.
   */
   const postUser = async (formData: IUser) => {
-    const response = await axios.post(
-      'http://localhost:5000/api/signup',
-      formData
-    );
+    const response = await axiosInstance.post('/signup', formData);
     console.log(response);
   };
 
@@ -44,6 +43,7 @@ function Signup() {
     event.preventDefault();
     console.log(userFormData);
     postUser(userFormData);
+    navigate('/api/login');
   };
 
   /**
@@ -64,12 +64,32 @@ function Signup() {
       [inputName]: event.target.value,
     }));
   };
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="signup">
       <Header />
       <h1 className="signup-title">Inscription</h1>
       <Form className="signup-form" onSubmit={handleSubmit}>
+      <input
+            className="signup-input"
+            type="file"
+            onChange={handleAvatarChange}
+          />
+          {avatarPreview && (
+            <div className="avatar-preview">
+              <img src={avatarPreview} alt="Avatar Preview" />
+            </div>
+          )}
         <FormInput
           className="signup-input"
           icon="user"

@@ -1,34 +1,29 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
+import { removeTokenJwtFromAxiosInstance } from '../../axios/axios';
 
 export interface UserState {
-  id: number;
+  userId: number;
   lastname: string;
   firstname: string;
   image: string;
   isLogged: boolean;
-  token: string;
 }
 
 export const initialState: UserState = {
-  id: 0,
+  userId: 0,
   lastname: '',
   firstname: '',
   image: '',
   isLogged: false,
-  token: '',
 };
-
-export const actionClearUser = createAction('CLEAR_USER');
 
 export const actionIsLogged = createAction<{
   isLogged: boolean;
-  id: number;
+  userId: number;
   lastname: string;
   firstname: string;
   image: string;
 }>('IS_LOGGED');
-
-export const actionGetUserToken = createAction<string>('GET_USER_TOKEN');
 
 export const actionUserLogOut = createAction('USER_LOGOUT');
 
@@ -36,11 +31,11 @@ const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actionIsLogged, (state, action) => {
       console.log('je suis l action :', action.payload);
-      console.log('je suis le state :', state);
+      console.log('je suis le state reducer :', state);
 
       if (action.payload) {
         state.isLogged = true;
-        state.id = action.payload.id;
+        state.userId = action.payload.userId;
         state.lastname = action.payload.lastname;
         state.firstname = action.payload.firstname;
         state.image = action.payload.image;
@@ -49,16 +44,14 @@ const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(actionUserLogOut, (state) => {
       state.isLogged = false;
-      state.id = 0;
+      state.userId = 0;
       state.lastname = '';
       state.firstname = '';
       state.image = '';
       sessionStorage.removeItem('user');
-      sessionStorage.removeItem('token');
-    })
-    .addCase(actionGetUserToken, (state, action) => {
-      state.token = action.payload;
-      sessionStorage.setItem('token', action.payload);
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('refreshToken');
+      removeTokenJwtFromAxiosInstance();
     });
 });
 export default userReducer;

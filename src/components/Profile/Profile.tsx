@@ -1,10 +1,45 @@
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, Icon, Image } from 'semantic-ui-react';
-import { NavLink } from 'react-router-dom';
+import { IGames } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
+import { useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
 
 function Profile() {
+  const userId = useAppSelector((state) => state.user.userId);
+  const lastname = useAppSelector((state) => state.user.lastname);
+  const firstname = useAppSelector((state) => state.user.firstname);
+  const [games, setGames] = useState<IGames[]>([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log(userId);
+
+  useEffect(() => {
+    const getGame = async () => {
+      try {
+        const response = await axiosInstance.get(`/game/${userId}`);
+        console.log(response);
+        setGames(response.data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    getGame();
+  }, [dispatch, userId]);
+
+  const deleteGame = async (gameId: number) => {
+    try {
+      await axiosInstance.delete(`/game/${gameId}`);
+      setGames((prevGames) => prevGames.filter((game) => game.id !== gameId));
+    } catch (error) {
+      console.log('Erreur lors de la suppression de la partie', error);
+    }
+  };
+
   return (
     <div className="profile">
       <Header />
@@ -17,8 +52,8 @@ function Profile() {
             className="profile-avatar"
           />
           <div className="profile-user-name">
-            <p>Dupont</p>
-            <p>Bernard</p>
+            <p>{lastname}</p>
+            <p>{firstname}</p>
           </div>
         </div>
         <div className="game-session">
@@ -35,42 +70,45 @@ function Profile() {
                 />
               </NavLink>
             </h2>
-            <div className="profile-game-edit">
-              <Icon size="large" name="pencil" />
-              <Icon size="large" name="trash" />
-              <p>Partie 1</p>
-            </div>
-            <div className="profile-game-edit">
-              <Icon size="large" name="pencil" />
-              <Icon size="large" name="trash" />
-              <p>Partie 2</p>
-            </div>
-            <div className="profile-game-edit">
-              <Icon size="large" name="pencil" />
-              <Icon size="large" name="trash" />
-              <p>Partie 3</p>
-            </div>
+            {games && games.length > 0 ? (
+              games.map((game) => (
+                <div className="profile-game-edit" key={game.id}>
+                  <NavLink to="/api/edit-game">
+                    <button type="button" className="profile-game-edit-btn">
+                      <Icon size="large" name="pencil" />
+                    </button>
+                  </NavLink>
+                  <button
+                    type="button"
+                    className="profile-game-edit-btn"
+                    onClick={() => deleteGame(game.id)}
+                  >
+                    <Icon size="large" name="trash" />
+                  </button>
+                  <NavLink to="/api/game">
+                    <p>{game.name}</p>
+                  </NavLink>
+                </div>
+              ))
+            ) : (
+              <p className="profile-game-edit-message">Aucune partie</p>
+            )}
           </div>
           <div className="profile-session">
             <h2 className="profile-session-title">Session à venir :</h2>
-            <div className="profile-session-edit">
-              <Button content="-" size="mini" compact />
-              <p className="profile-session-edit-date">
-                partie 1 : Prochaine session le 22/05/24
-              </p>
-            </div>
-            <div className="profile-session-edit">
-              <Button content="+" size="mini" compact />
-              <p className="profile-session-edit-date">
-                partie 2 : Pas de session programmés
-              </p>
-            </div>
-            <div className="profile-session-edit">
-              <Button content="+" size="mini" compact />
-              <p className="profile-session-edit-date">
-                partie 3 : Pas de session programmés
-              </p>
-            </div>
+            {games && games.length > 0 ? (
+              games.map((game) => (
+                <div key={game.id} className="profile-session-edit">
+                  <p className="profile-session-edit-date">
+                    <div className="profile-session-edit-date-session">
+                      {game.name}: {game.event}
+                    </div>
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p className="profile-game-edit-message">Aucune session</p>
+            )}
           </div>
         </div>
       </div>
