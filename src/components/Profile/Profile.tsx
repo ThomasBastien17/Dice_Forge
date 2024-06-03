@@ -14,6 +14,7 @@ function Profile() {
   const lastname = useAppSelector((state) => state.user.lastname);
   const firstname = useAppSelector((state) => state.user.firstname);
   const [games, setGames] = useState<IGames[]>([]);
+  const gameId = useAppSelector((state) => state.game.gameId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log(userId);
@@ -22,7 +23,7 @@ function Profile() {
     const getGame = async () => {
       try {
         const response = await axiosInstance.get(`/game/${userId}`);
-        console.log(response);
+        console.log('je suis la reponse du get de profile', response);
         setGames(response.data);
       } catch (error) {
         console.log('error', error);
@@ -85,9 +86,13 @@ function Profile() {
                   >
                     <Icon size="large" name="trash" />
                   </button>
-                  <NavLink to="/api/game">
+                  <NavLink to={`/api/game/:${game.id}`}>
                     <p>{game.name}</p>
                   </NavLink>
+                  <p>
+                    http://localhost:5173/api/game/:
+                    {game.id}
+                  </p>
                 </div>
               ))
             ) : (

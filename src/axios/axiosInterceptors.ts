@@ -18,9 +18,8 @@ const setupInterceptors = (navigate: (patch: string) => void) => {
       const originalRequest = error.config;
 
       if (
-        error.response &&
-        error.response.status === 401 &&
-        !originalRequest.isRetry
+        (error.response && error.response.status === 401) ||
+        (error.response.status === 403 && !originalRequest.isRetry)
       ) {
         originalRequest.isRetry = true;
         try {

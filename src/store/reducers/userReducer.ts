@@ -9,7 +9,7 @@ export interface UserState {
   isLogged: boolean;
 }
 
-export const initialState: UserState = {
+export const userInitialState: UserState = {
   userId: 0,
   lastname: '',
   firstname: '',
@@ -27,7 +27,7 @@ export const actionIsLogged = createAction<{
 
 export const actionUserLogOut = createAction('USER_LOGOUT');
 
-const userReducer = createReducer(initialState, (builder) => {
+const userReducer = createReducer(userInitialState, (builder) => {
   builder
     .addCase(actionIsLogged, (state, action) => {
       console.log('je suis l action :', action.payload);
