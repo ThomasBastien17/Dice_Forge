@@ -10,20 +10,23 @@ import Binder from '../Binder/Binder';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
 import ForgotPassword from '../Forgot-password/Forgot-password';
+import EditGame from '../Game/EditGame';
 import Game from '../Game/Game';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
+import EditProfile from '../Profile/EditProfile';
 import Profile from '../Profile/Profile';
 import ResetPassword from '../Reset-password/Reset-password';
 import Sheet from '../Sheet/Sheet';
 import Signup from '../Signup/Signup';
 import './App.scss';
-import EditProfile from '../Profile/EditProfile';
-import EditGame from '../Game/EditGame';
 
 function App() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+  const gameId = useAppSelector((state) => state.game.gameId);
+  console.log('je suis le state de gameId :', gameId);
+
   console.log('je suis le state de app :', user);
   const navigate = useNavigate();
 
@@ -54,15 +57,15 @@ function App() {
         <Route path="/api/login" element={<Login />} />
         <Route path="/api/signup" element={<Signup />} />
         <Route path="/api/creategame" element={<CreateGame />} />
-        <Route path="/api/game" element={<Game />} />
+        <Route path={`/api/game/:${gameId}`} element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/sheet" element={<Sheet />} />
         <Route path="/api/binder" element={<Binder />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
         <Route path="/api/reset-password" element={<ResetPassword />} />
-        <Route path='/api/edit-profile' element={<EditProfile />} />
-        <Route path='/api/edit-game' element={<EditGame />} />
+        <Route path="/api/edit-profile" element={<EditProfile />} />
+        <Route path="/api/edit-game" element={<EditGame />} />
       </Routes>
     </div>
   );

@@ -1,31 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Dropdown, DropdownProps, Modal } from 'semantic-ui-react';
 import io, { Socket } from 'socket.io-client';
+import { useAppSelector } from '../../hooks/hooks';
 import './Chat.scss';
-
 
 interface Message {
   sender: string;
   content: string;
 }
 
-function Chat() {
+function Chat({ gameUrl }: { gameUrl: string }) {
   const [messages, setMessages] = useState<{ [key: string]: Message[] }>({
     Chatbox: [],
     Notes: [],
     MJ: [],
     '...': [],
   });
+
   const [input, setInput] = useState('');
   const [tabs, setTabs] = useState(['Chatbox', 'Notes', 'MJ', '...']);
   const [activeTab, setActiveTab] = useState('Chatbox');
   const [modalOpen, setModalOpen] = useState(false);
   const [newTabType, setNewTabType] = useState('');
+
+  const userName = useAppSelector((state) => state.user.firstname);
+
   const socket = useRef<Socket | null>(null);
 
   useEffect(() => {
     socket.current = io('http://localhost:5000');
 
+    /* This part of the code is setting up an event listener on the socket
+    connection for the event named 'message'. When the socket receives a
+    'message' event, it triggers the callback function that takes the incoming
+    message of type `Message` as a parameter. */
     socket.current.on('message', (message: Message) => {
       setMessages((prevMessages) => ({
         ...prevMessages,
@@ -38,11 +46,11 @@ function Chat() {
         socket.current.disconnect();
       }
     };
-  }, [activeTab]);
+  }, [activeTab, gameUrl]);
 
   const sendMessage = () => {
     if (input.trim() && socket.current) {
-      const message: Message = { sender: 'User', content: input };
+      const message: Message = { sender: userName, content: input };
       socket.current.emit('message', message);
       setMessages({
         ...messages,
@@ -114,7 +122,15 @@ function Chat() {
           />
         ) : (
           messages[activeTab].map((msg) => (
-            <div key={uuid()} className="chat-message">
+            <div /* The `key={uuid()}` in the component's rendering is generating a
+            unique identifier for each element in the list. In React, when
+            rendering a list of elements, each element should have a unique
+            `key` prop assigned to it. This helps React efficiently update
+            the UI by identifying which items have changed, are added, or
+            are removed. */
+              key={uuid()}
+              className="chat-message"
+            >
               <strong>{msg.sender}: </strong>
               {msg.content}
             </div>

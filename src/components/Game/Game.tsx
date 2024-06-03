@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Checkbox,
-  Container,
-  Dropdown,
-  Grid,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  ButtonGroup,
-  Icon,
-} from 'semantic-ui-react';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { actionSetGameUrl } from '../../store/reducers/gameReducer';
 import Chat from '../Chat/Chat';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
 import './Sablier.scss';
-import { NavLink } from 'react-router-dom';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -45,17 +35,13 @@ function Game() {
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
-  const [showCharacterSheet, setShowCharacterSheet] = useState(true);
-  const [showCharacterSheetButton, setShowCharacterSheetButton] =
-    useState(false);
+  const gameUrl = useAppSelector((state) => state.game.gameUrl);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const handleResize = () => {
-      setShowCharacterSheetButton(window.innerWidth < 768);
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    const url = window.location.href;
+    dispatch(actionSetGameUrl({ gameUrl: url }));
   }, []);
 
   useEffect(() => {
@@ -96,10 +82,6 @@ function Game() {
       seconds < 10 ? `0${seconds}` : seconds
     }`;
   }
-
-  const toggleCharacterSheet = () => {
-    setShowCharacterSheet(!showCharacterSheet);
-  };
 
   return (
     <div className="game-container">
@@ -156,7 +138,7 @@ function Game() {
               Fiches
             </Button>
           </NavLink>
-          <Chat />
+          <Chat gameUrl={gameUrl} />
         </div>
       </Container>
       <Footer />

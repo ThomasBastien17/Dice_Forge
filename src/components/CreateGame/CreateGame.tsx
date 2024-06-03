@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Dropdown, Form, FormInput, Input } from 'semantic-ui-react';
 import { ILicenceOption } from '../../@Types/game';
 import axiosInstance from '../../axios/axios';
+import { useAppDispatch } from '../../hooks/hooks';
+import { actionSetGameId } from '../../store/reducers/gameReducer';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './CreateGame.scss';
@@ -12,6 +14,8 @@ function CreateGame() {
   const [licences, setLicences] = useState<string>('');
   const [players, setPlayers] = useState<string[]>(['']);
   const [licenseOptions, setLicenseOptions] = useState<ILicenceOption[]>([]);
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +44,9 @@ function CreateGame() {
       const response = await axiosInstance.post('/game', formData);
 
       console.log('Success:', response.data);
-      navigate('/api/profile');
+      const gameId = response.data.id;
+      dispatch(actionSetGameId({ gameId }));
+      navigate(`/api/game/:${gameId}`);
     } catch (error) {
       console.error('Error:', error);
     }
