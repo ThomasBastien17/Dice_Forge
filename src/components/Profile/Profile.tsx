@@ -14,15 +14,13 @@ function Profile() {
   const lastname = useAppSelector((state) => state.user.lastname);
   const firstname = useAppSelector((state) => state.user.firstname);
   const [games, setGames] = useState<IGames[]>([]);
-  const gameId = useAppSelector((state) => state.game.gameId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(userId);
 
   useEffect(() => {
     const getGame = async () => {
       try {
-        const response = await axiosInstance.get(`/game/${userId}`);
+        const response = await axiosInstance.get(`/profile/${userId}`);
         console.log('je suis la reponse du get de profile', response);
         setGames(response.data);
       } catch (error) {
@@ -56,6 +54,9 @@ function Profile() {
             <p>{lastname}</p>
             <p>{firstname}</p>
           </div>
+          <NavLink to="/api/edit-profile">
+            <Button content="Modifier le profil" className="profile-user-btn" />
+          </NavLink>
         </div>
         <div className="game-session">
           <div className="profile-game">
@@ -84,11 +85,11 @@ function Profile() {
                     <Icon size="large" name="trash" />
                   </button>
 
-                  <NavLink to={`/api/game/:${game.id}`}>
+                  <NavLink to={`/api/game/${game.id}`}>
                     <p className="profile-game-name">{game.name}</p>
                   </NavLink>
                   <p className="profile-game-link">
-                    http://localhost:5173/api/game/:
+                    http://localhost:5173/api/game/
                     {game.id}
                   </p>
                 </div>
