@@ -1,16 +1,40 @@
-import { useState, ChangeEvent } from 'react';
-import { Button, Form, FormInput, FormTextArea } from 'semantic-ui-react';
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import './CreateSheet.scss';
+import { Button, Form, FormInput, FormTextArea } from 'semantic-ui-react';
+import { v4 as uuidv4 } from 'uuid';
+import { IGames } from '../../@Types/game';
 import { Characteristic, Item } from '../../@Types/sheet';
 import axiosInstance from '../../axios/axios';
-import { sortUserPlugins } from 'vite';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import './CreateSheet.scss';
+
+interface SheetData {
+  name: string;
+  image: string | null;
+  class: string;
+  level: number;
+  game_id: number;
+  user_id: number;
+  license: string;
+  characteristics: {
+    name: string;
+    value: string;
+  }[];
+  items: {
+    name: string;
+    description: string;
+    quantity: number;
+  }[];
+}
 
 function CreateSheet() {
+  const location = useLocation();
+  const { urlGameId } = location.state;
+  console.log('urlGameId Navlink', urlGameId);
+
   const [characteristics, setCharacteristics] = useState<Characteristic[]>([
     { id: uuidv4(), name: '', value: '' },
   ]);
@@ -19,14 +43,32 @@ function CreateSheet() {
   ]);
   const [characterName, setCharacterName] = useState<string>('');
   const [className, setClassName] = useState<string>('');
+  const [games, setGames] = useState<IGames[]>([]);
   const [level, setLevel] = useState<number>(1);
-  const [gameId, setGameId] = useState<string>('');
+  const [selectedGameId, setSelectedGameId] = useState<number>(urlGameId);
   const [license, setLicense] = useState<string>('');
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
-  const postUserCreateSheet = async (formData: FormData) => {
+  const userId = useAppSelector((state) => state.user.userId);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const getGame = async () => {
+      try {
+        const response = await axiosInstance.get(`/game/${userId}`);
+        console.log('je suis la reponse du get de profile', response);
+        setGames(response.data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    getGame();
+  }, [dispatch, userId]);
+
+  const postUserCreateSheet = async (datas: SheetData) => {
     try {
-      const response = await axiosInstance.post('sheet', formData);
+      const response = await axiosInstance.post('sheet', datas);
       console.log('Success:', response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -67,6 +109,10 @@ function CreateSheet() {
     );
   };
 
+  const handleGameChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedGameId(Number(event.target.value));
+  };
+
   const handleItemChange = (
     id: string,
     key: keyof Item,
@@ -89,23 +135,28 @@ function CreateSheet() {
   };
 
   const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append('name', characterName);
-    if (avatarPreview) formData.append('image', avatarPreview);
-    formData.append('class', className);
-    formData.append('level', level.toString());
-    formData.append('game_id', gameId);
-    formData.append('license', license);
-    characteristics.forEach((char, index) => {
-      formData.append(`characteristics[${index}][name]`, char.name);
-      formData.append(`characteristics[${index}][value]`, char.value);
-    });
-    items.forEach((item, index) => {
-      formData.append(`items[${index}][name]`, item.name);
-      formData.append(`items[${index}][description]`, item.description);
-      formData.append(`items[${index}][quantity]`, item.quantity.toString());
-    });
-    postUserCreateSheet(formData);
+    const datas = {
+      name: characterName,
+      image: avatarPreview,
+      class: className,
+      level: level,
+      game_id: selectedGameId,
+      user_id: userId,
+      license: license,
+      characteristics: characteristics.map((char) => ({
+        name: char.name,
+        value: char.value,
+      })),
+      items: items.map((item) => ({
+        name: item.name,
+        description: item.description,
+        quantity: item.quantity,
+      })),
+    };
+
+    console.log('Form data:', datas);
+    JSON.stringify(datas);
+    postUserCreateSheet(datas);
   };
 
   return (
@@ -118,7 +169,21 @@ function CreateSheet() {
           <div>
             <div>
               <div className="create-sheet-game">
-                <span className="create-sheet-game-name">La partie</span>
+                <select
+                  id="game-select"
+                  className="create-sheet-game-name"
+                  value={selectedGameId}
+                  onChange={handleGameChange}
+                >
+                  <option value="" disabled>
+                    Choisissez une partie
+                  </option>
+                  {games.map((game) => (
+                    <option key={game.id} value={game.id}>
+                      {game.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <FormInput
                 label="Nom du personnage"

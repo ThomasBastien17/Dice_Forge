@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { actionSetGameUrl } from '../../store/reducers/gameReducer';
@@ -30,19 +30,24 @@ const diceMaxValue: { [key: string]: number } = {
 };
 
 function Game() {
+  const urlGameId = useParams();
+
   const [timerRunning, setTimerRunning] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(60);
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
+
   const gameUrl = useAppSelector((state) => state.game.gameUrl);
+  const gameId = useAppSelector((state) => state.game.gameId);
+  console.log('gameId', gameId);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const url = window.location.href;
     dispatch(actionSetGameUrl({ gameUrl: url }));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     let interval: number;
@@ -133,7 +138,7 @@ function Game() {
           </div>
         </div>
         <div className="content-section">
-          <NavLink to="/api/binder">
+          <NavLink to={`/api/binder/${gameId}`}>
             <Button className="sheet-button" type="button">
               Fiches
             </Button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -11,6 +11,7 @@ import {
   Container,
   Icon,
 } from 'semantic-ui-react';
+import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Binder.scss';
@@ -23,7 +24,13 @@ interface Sheet {
   level: number;
 }
 
-const CardItem: React.FC<Sheet> = ({ id, name, image, class: className, level }) => (
+const CardItem: React.FC<Sheet> = ({
+  id,
+  name,
+  image,
+  class: className,
+  level,
+}) => (
   <Card>
     <CardContent>
       <CardHeader>{name}</CardHeader>
@@ -42,22 +49,25 @@ const CardItem: React.FC<Sheet> = ({ id, name, image, class: className, level })
   </Card>
 );
 
-const Binder: React.FC = () => {
+function Binder() {
+  const { urlGameId } = useParams();
   const [sheets, setSheets] = useState<Sheet[]>([]);
 
   useEffect(() => {
-    fetch('/api/binder', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    const getSheets = async () => {
+      try {
+        console.log('Je suis dans le getSheets', axiosInstance);
+
+        const response = await axiosInstance.get(
+          'http://localhost:5000/api/binder'
+        );
+        console.log('response de sheets', response);
+        setSheets(response.data);
+      } catch (error) {
+        console.log('Erreur lors de la récupération des fiches', error);
       }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setSheets(data);
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des données:', error);
-      });
+    };
+    getSheets();
   }, []);
 
   return (
@@ -66,12 +76,12 @@ const Binder: React.FC = () => {
       <h1 className="binder-title">Classeur de fiches</h1>
       <Container>
         <CardGroup>
-          {sheets.map(sheet => (
+          {sheets.map((sheet) => (
             <CardItem key={sheet.id} {...sheet} />
           ))}
         </CardGroup>
       </Container>
-      <NavLink to="/api/createsheet">
+      <NavLink to="/api/createsheet" state={{ urlGameId: urlGameId }}>
         <Button className="binder-btn-createsheet" content="Créer une fiche" />
       </NavLink>
       <NavLink to="/api/game">

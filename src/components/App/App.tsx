@@ -24,8 +24,10 @@ import './App.scss';
 function App() {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+  const gameReducer = useAppSelector((state) => state.game);
   const gameId = useAppSelector((state) => state.game.gameId);
   console.log('je suis le state de gameId :', gameId);
+  console.log('je suis le state de gameReducer :', gameReducer);
 
   console.log('je suis le state de app :', user);
   const navigate = useNavigate();
@@ -57,10 +59,10 @@ function App() {
         <Route path="/api/login" element={<Login />} />
         <Route path="/api/signup" element={<Signup />} />
         <Route path="/api/creategame" element={<CreateGame />} />
-        <Route path={`/api/game/:${gameId}`} element={<Game />} />
+        <Route path="/api/game/urlGameId" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/sheet" element={<Sheet />} />
-        <Route path="/api/binder" element={<Binder />} />
+        <Route path="/api/binder/:urlGameId" element={<Binder />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
         <Route path="/api/reset-password" element={<ResetPassword />} />
