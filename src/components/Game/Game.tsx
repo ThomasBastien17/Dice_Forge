@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { actionSetGameUrl } from '../../store/reducers/gameReducer';
@@ -8,6 +8,8 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
 import './Sablier.scss';
+import { IGames } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -36,6 +38,8 @@ function Game() {
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
   const gameUrl = useAppSelector((state) => state.game.gameUrl);
+  const { gameId } = useParams();
+  const [game, setGame] = useState<IGames>();
 
   const dispatch = useAppDispatch();
 
@@ -43,6 +47,25 @@ function Game() {
     const url = window.location.href;
     dispatch(actionSetGameUrl({ gameUrl: url }));
   }, []);
+
+  useEffect(() => {
+    console.log('Valeur de gameId:', gameId);
+
+    const getGameById = async () => {
+      try {
+        const response = await axiosInstance.get(`/game/${gameId}`);
+        if (response.status === 200) {
+          setGame(response.data);
+          console.log('reponse du axios game', response);
+        }
+      } catch (error) {
+        console.error('erreur lors de la récupération du jeu', error);
+      }
+    };
+    if (gameId) {
+      getGameById();
+    }
+  }, [gameId]);
 
   useEffect(() => {
     let interval: number;
@@ -87,7 +110,10 @@ function Game() {
     <div className="game-container">
       <Header />
       <Container className="main-content">
-        <h1 className="create-title">Partie</h1>
+        <div className="create-div-title">
+          <h1 className="create-title">{game?.name}</h1>
+          <h2 className="create-subtitle">{game?.license_name}</h2>
+        </div>
         <div className="timer-section">
           <div className="timer-controls">
             <Button
@@ -138,7 +164,7 @@ function Game() {
               Fiches
             </Button>
           </NavLink>
-          <Chat gameUrl={gameUrl} />
+          <Chat gameUrl={gameUrl} game={game} />
         </div>
       </Container>
       <Footer />

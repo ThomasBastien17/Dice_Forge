@@ -9,6 +9,11 @@
   background-color: v.$color-primary-light;
   padding: 0.65rem;
 }
+.ui.button.profile-user-btn {
+  color: v.$color;
+  background-color: v.$color-primary;
+  padding: 0.25rem;
+}
 
 .profile {
   display: flex;

@@ -3,13 +3,14 @@ import { Button, Dropdown, DropdownProps, Modal } from 'semantic-ui-react';
 import io, { Socket } from 'socket.io-client';
 import { useAppSelector } from '../../hooks/hooks';
 import './Chat.scss';
+import { IGames } from '../../@Types/game';
 
 interface Message {
   sender: string;
   content: string;
 }
 
-function Chat({ gameUrl }: { gameUrl: string }) {
+function Chat({ gameUrl, game }: { gameUrl: string; game: IGames }) {
   const [messages, setMessages] = useState<{ [key: string]: Message[] }>({
     Chatbox: [],
     Notes: [],
