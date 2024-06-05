@@ -65,7 +65,9 @@ function Binder() {
         );
 
         setSheets(response.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log('Erreur lors de la récupération des fiches', error);
+      }
     };
     getSheets();
   }, []);
