@@ -32,8 +32,8 @@ interface SheetData {
 
 function CreateSheet() {
   const location = useLocation();
-  const { urlGameId } = location.state;
-  console.log('urlGameId Navlink', urlGameId);
+  const gameId = location.state;
+  console.log('urlGameId Navlink', gameId);
 
   const [characteristics, setCharacteristics] = useState<Characteristic[]>([
     { id: uuidv4(), name: '', value: '' },
@@ -45,18 +45,19 @@ function CreateSheet() {
   const [className, setClassName] = useState<string>('');
   const [games, setGames] = useState<IGames[]>([]);
   const [level, setLevel] = useState<number>(1);
-  const [selectedGameId, setSelectedGameId] = useState<number>(urlGameId);
+  const [selectedGameId, setSelectedGameId] = useState<number>(gameId);
   const [license, setLicense] = useState<string>('');
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
   const userId = useAppSelector((state) => state.user.userId);
+  console.log('je suis le userId', userId);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getGame = async () => {
       try {
-        const response = await axiosInstance.get(`/game/${userId}`);
+        const response = await axiosInstance.get(`/profile/${userId}`);
         console.log('je suis la reponse du get de profile', response);
         setGames(response.data);
       } catch (error) {

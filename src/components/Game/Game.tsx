@@ -33,6 +33,7 @@ const diceMaxValue: { [key: string]: number } = {
 
 function Game() {
   const { gameId } = useParams();
+
   const [timerRunning, setTimerRunning] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(60);
   const [selectedDice, setSelectedDice] = useState('d6');
@@ -160,7 +161,7 @@ function Game() {
           </div>
         </div>
         <div className="content-section">
-          <NavLink to={`/api/binder/${gameId}`}>
+          <NavLink to={`/api/binder/${gameId}`} state={gameId}>
             <Button className="sheet-button" type="button">
               Fiches
             </Button>
