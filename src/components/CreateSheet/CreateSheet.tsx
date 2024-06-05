@@ -152,7 +152,6 @@ function CreateSheet() {
       })),
     };
 
-    console.log('Form data:', datas);
     JSON.stringify(datas);
     postUserCreateSheet(datas);
   };

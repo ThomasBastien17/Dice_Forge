@@ -14,7 +14,7 @@ function ForgotPassword() {
     event.preventDefault();
     try {
       const response = await axiosInstance.post('forgot-password', { email });
-      console.log(response);
+
       if (response.status === 200) {
         setMessage(response.data.message);
         setError(null);
