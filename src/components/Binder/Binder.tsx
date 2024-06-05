@@ -78,6 +78,20 @@ function Binder() {
       <Header />
       <div className="binder-main-container">
         <h1 className="binder-title">Classeur de fiches</h1>
+        <div className="binder-btn-group">
+          <NavLink to="/api/createsheet" state={gameId}>
+            <Button
+              className="binder-btn-createsheet"
+              content="Créer une fiche"
+            />
+          </NavLink>
+          <NavLink to="/api/game/">
+            <Button
+              className="binder-btn-backToGame"
+              content="Retour à la partie"
+            />
+          </NavLink>
+        </div>
         <Container
           className={sheets ? 'binder-container-hidden' : 'binder-container'}
         >
@@ -87,18 +101,6 @@ function Binder() {
             ))}
           </CardGroup>
         </Container>
-        <NavLink to="/api/createsheet" state={gameId}>
-          <Button
-            className="binder-btn-createsheet"
-            content="Créer une fiche"
-          />
-        </NavLink>
-        <NavLink to="/api/game/">
-          <Button
-            className="binder-btn-backToGame"
-            content="Retour à la partie"
-          />
-        </NavLink>
       </div>
       <Footer />
     </div>

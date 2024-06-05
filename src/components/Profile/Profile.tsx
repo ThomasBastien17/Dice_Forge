@@ -55,7 +55,7 @@ function Profile() {
             <p>{firstname}</p>
           </div>
           <NavLink to="/api/edit-profile">
-            <Button content="Modifier le profil" className="profile-user-btn" />
+            <Button content="Editer le profil" className="profile-user-btn" />
           </NavLink>
         </div>
         <div className="game-session">

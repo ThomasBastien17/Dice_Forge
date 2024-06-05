@@ -44,7 +44,11 @@ function ForgotPassword() {
             className="forgot-password-input"
             onChange={(event) => setEmail(event.target.value)}
           />
-          <Button type="submit" content="Envoyer" color="grey" />
+          <Button
+            type="submit"
+            content="Envoyer"
+            className="forgot-password-submit-btn"
+          />
         </Form>
       </div>
       <Footer />

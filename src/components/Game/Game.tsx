@@ -114,7 +114,6 @@ function Game() {
       <Container className="main-content">
         <div className="create-div-title">
           <h1 className="create-title">{game?.name}</h1>
-          <h2 className="create-subtitle">{game?.license_name}</h2>
         </div>
         <div className="timer-section">
           <div className="timer-controls">
@@ -146,6 +145,7 @@ function Game() {
           </div>
           <div className="dice-section-result">
             <Checkbox
+              className="dice-section-checkbox"
               label="Afficher le résultat aux autres joueurs"
               checked={showDiceResult}
               onChange={() => setShowDiceResult(!showDiceResult)}
