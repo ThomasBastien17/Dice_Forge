@@ -261,7 +261,7 @@ function CreateSheet() {
               />
               <Button
                 className="create-sheet-caracteristic-btn"
-                icon="minus"
+                icon="close"
                 onClick={() => handleRemoveCharacteristic(characteristic.id)}
               />
             </div>
@@ -310,7 +310,7 @@ function CreateSheet() {
                 />
                 <Button
                   className="create-sheet-inventory-btn"
-                  icon="minus"
+                  icon="close"
                   onClick={() => handleRemoveItem(item.id)}
                 />
               </div>

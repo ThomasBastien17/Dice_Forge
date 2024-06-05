@@ -55,7 +55,7 @@ function Profile() {
             <p>{firstname}</p>
           </div>
           <NavLink to="/api/edit-profile">
-            <Button content="Modifier le profil" className="profile-user-btn" />
+            <Button content="Editer le profil" className="profile-user-btn" />
           </NavLink>
         </div>
         <div className="game-session">
@@ -74,7 +74,7 @@ function Profile() {
                 <div className="profile-game-edit" key={game.id}>
                   <NavLink to="/api/edit-game">
                     <button type="button" className="profile-game-edit-btn">
-                      <Icon size="large" name="pencil" />
+                      <Icon size="large" name="pencil" color="grey" />
                     </button>
                   </NavLink>
                   <button
@@ -82,16 +82,18 @@ function Profile() {
                     className="profile-game-edit-btn"
                     onClick={() => deleteGame(game.id)}
                   >
-                    <Icon size="large" name="trash" />
+                    <Icon size="large" name="trash" color="grey" />
                   </button>
 
                   <NavLink to={`/api/game/${game.id}`}>
                     <p className="profile-game-name">{game.name}</p>
                   </NavLink>
-                  <p className="profile-game-link">
-                    http://localhost:5173/api/game/
-                    {game.id}
-                  </p>
+                  <div className="profile-game-url">
+                    <p className="profile-game-link">
+                      http://localhost:5173/api/game/
+                      {game.id}
+                    </p>
+                  </div>
                 </div>
               ))
             ) : (
