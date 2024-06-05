@@ -34,8 +34,6 @@ const diceMaxValue: { [key: string]: number } = {
 function Game() {
   const { gameId } = useParams();
 
-  console.log('Je suis le gameId de GAME', gameId);
-
   const [timerRunning, setTimerRunning] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(60);
   const [selectedDice, setSelectedDice] = useState('d6');
