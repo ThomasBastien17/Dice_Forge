@@ -58,8 +58,6 @@ function Binder() {
   useEffect(() => {
     const getSheets = async () => {
       try {
-        console.log('Je suis dans le getSheets', axiosInstance);
-
         const response = await axiosInstance.get(
           'http://localhost:5000/api/binder'
         );
