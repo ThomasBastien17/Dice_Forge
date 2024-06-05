@@ -1,5 +1,10 @@
 @use '../../styles/variables' as v;
 
+.ui.button.signup-form-btn {
+  color: v.$color;
+  background-color: v.$color-primary-light;
+}
+
 .signup {
   display: flex;
   flex-direction: column;
@@ -24,13 +29,4 @@
     margin-bottom: 1rem;
     background: transparent;
   }
-}
-.field {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-}
-input.signup-input{
-  background: transparent;
-
 }

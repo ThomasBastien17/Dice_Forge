@@ -59,7 +59,7 @@ function App() {
         <Route path="/api/login" element={<Login />} />
         <Route path="/api/signup" element={<Signup />} />
         <Route path="/api/creategame" element={<CreateGame />} />
-        <Route path="/api/game/urlGameId" element={<Game />} />
+        <Route path="/api/game/:gameId" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/sheet" element={<Sheet />} />
         <Route path="/api/binder/:urlGameId" element={<Binder />} />

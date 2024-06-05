@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
+import { IGames } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { actionSetGameUrl } from '../../store/reducers/gameReducer';
 import Chat from '../Chat/Chat';
@@ -30,8 +32,7 @@ const diceMaxValue: { [key: string]: number } = {
 };
 
 function Game() {
-  const urlGameId = useParams();
-
+  const gameId = useParams();
   const [timerRunning, setTimerRunning] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(60);
   const [selectedDice, setSelectedDice] = useState('d6');
@@ -39,15 +40,33 @@ function Game() {
   const [diceResult, setDiceResult] = useState<number | null>(null);
 
   const gameUrl = useAppSelector((state) => state.game.gameUrl);
-  const gameId = useAppSelector((state) => state.game.gameId);
-  console.log('gameId', gameId);
+  const [game, setGame] = useState<IGames>();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const url = window.location.href;
     dispatch(actionSetGameUrl({ gameUrl: url }));
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    console.log('Valeur de gameId:', gameId);
+
+    const getGameById = async () => {
+      try {
+        const response = await axiosInstance.get(`/game/${gameId}`);
+        if (response.status === 200) {
+          setGame(response.data);
+          console.log('reponse du axios game', response);
+        }
+      } catch (error) {
+        console.error('erreur lors de la récupération du jeu', error);
+      }
+    };
+    if (gameId) {
+      getGameById();
+    }
+  }, [gameId]);
 
   useEffect(() => {
     let interval: number;
@@ -92,7 +111,10 @@ function Game() {
     <div className="game-container">
       <Header />
       <Container className="main-content">
-        <h1 className="create-title">Partie</h1>
+        <div className="create-div-title">
+          <h1 className="create-title">{game?.name}</h1>
+          <h2 className="create-subtitle">{game?.license_name}</h2>
+        </div>
         <div className="timer-section">
           <div className="timer-controls">
             <Button
