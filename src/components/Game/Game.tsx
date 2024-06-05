@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { Button, Checkbox, Container, Dropdown } from 'semantic-ui-react';
+import { IGames } from '../../@Types/game';
+import axiosInstance from '../../axios/axios';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { actionSetGameUrl } from '../../store/reducers/gameReducer';
 import Chat from '../Chat/Chat';
@@ -8,8 +10,6 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Game.scss';
 import './Sablier.scss';
-import { IGames } from '../../@Types/game';
-import axiosInstance from '../../axios/axios';
 
 const diceOptions = [
   { key: 'd4', text: 'Dé de 4', value: 'd4' },
@@ -32,13 +32,14 @@ const diceMaxValue: { [key: string]: number } = {
 };
 
 function Game() {
+  const gameId = useParams();
   const [timerRunning, setTimerRunning] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(60);
   const [selectedDice, setSelectedDice] = useState('d6');
   const [showDiceResult, setShowDiceResult] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
+
   const gameUrl = useAppSelector((state) => state.game.gameUrl);
-  const { gameId } = useParams();
   const [game, setGame] = useState<IGames>();
 
   const dispatch = useAppDispatch();
@@ -159,12 +160,12 @@ function Game() {
           </div>
         </div>
         <div className="content-section">
-          <NavLink to="/api/binder">
+          <NavLink to={`/api/binder/${gameId}`}>
             <Button className="sheet-button" type="button">
               Fiches
             </Button>
           </NavLink>
-          <Chat gameUrl={gameUrl} game={game} />
+          <Chat gameUrl={gameUrl} />
         </div>
       </Container>
       <Footer />

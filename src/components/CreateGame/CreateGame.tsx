@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Dropdown, Form, FormInput, Input } from 'semantic-ui-react';
+import { Button, Dropdown, Form, FormInput } from 'semantic-ui-react';
 import { ILicenceOption } from '../../@Types/game';
 import axiosInstance from '../../axios/axios';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -46,7 +46,7 @@ function CreateGame() {
       console.log('Success:', response.data);
       const gameId = response.data.id;
       dispatch(actionSetGameId({ gameId }));
-      navigate(`/api/game/:${gameId}`);
+      navigate(`/api/game/${gameId}`);
     } catch (error) {
       console.error('Error:', error);
     }
