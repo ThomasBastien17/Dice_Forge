@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -50,7 +50,10 @@ const CardItem: React.FC<Sheet> = ({
 );
 
 function Binder() {
-  const { urlGameId } = useParams();
+  const location = useLocation();
+  const gameId = Number(location.state);
+  console.log('Je suis le urlGameId', gameId);
+
   const [sheets, setSheets] = useState<Sheet[]>([]);
 
   useEffect(() => {
@@ -81,10 +84,10 @@ function Binder() {
           ))}
         </CardGroup>
       </Container>
-      <NavLink to="/api/createsheet" state={{ urlGameId: urlGameId }}>
+      <NavLink to="/api/createsheet" state={gameId}>
         <Button className="binder-btn-createsheet" content="Créer une fiche" />
       </NavLink>
-      <NavLink to="/api/game">
+      <NavLink to="/api/game/">
         <Button content="Retour à la partie" />
       </NavLink>
       <Footer />
