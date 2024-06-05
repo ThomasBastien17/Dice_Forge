@@ -62,7 +62,7 @@ function App() {
         <Route path="/api/game/:gameId" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
         <Route path="/api/sheet" element={<Sheet />} />
-        <Route path="/api/binder/:urlGameId" element={<Binder />} />
+        <Route path="/api/binder/:gameId" element={<Binder />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />
         <Route path="/api/reset-password" element={<ResetPassword />} />
