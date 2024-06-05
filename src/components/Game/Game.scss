@@ -11,8 +11,9 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 1rem;
   justify-content: space-between;
+  margin: 0.5rem;
 }
 
 .create-title {
@@ -25,6 +26,9 @@
   text-align: center;
   font-size: 1rem;
   margin: 0;
+}
+.create-div-title {
+  margin-bottom: 1rem;
 }
 .timer-section {
   display: flex;
@@ -46,9 +50,9 @@
   color: v.$color;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  position: absolute;
-  top: 16rem;
-  left: 5.5rem;
+  position: relative;
+  top: 5rem;
+  right: 5rem;
 }
 
 .timer-controls {
