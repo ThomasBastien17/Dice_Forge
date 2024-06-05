@@ -76,20 +76,30 @@ function Binder() {
   return (
     <div className="binder">
       <Header />
-      <h1 className="binder-title">Classeur de fiches</h1>
-      <Container>
-        <CardGroup>
-          {sheets.map((sheet) => (
-            <CardItem key={sheet.id} {...sheet} />
-          ))}
-        </CardGroup>
-      </Container>
-      <NavLink to="/api/createsheet" state={gameId}>
-        <Button className="binder-btn-createsheet" content="Créer une fiche" />
-      </NavLink>
-      <NavLink to="/api/game/">
-        <Button content="Retour à la partie" />
-      </NavLink>
+      <div className="binder-main-container">
+        <h1 className="binder-title">Classeur de fiches</h1>
+        <Container
+          className={sheets ? 'binder-container-hidden' : 'binder-container'}
+        >
+          <CardGroup>
+            {sheets.map((sheet) => (
+              <CardItem key={sheet.id} {...sheet} />
+            ))}
+          </CardGroup>
+        </Container>
+        <NavLink to="/api/createsheet" state={gameId}>
+          <Button
+            className="binder-btn-createsheet"
+            content="Créer une fiche"
+          />
+        </NavLink>
+        <NavLink to="/api/game/">
+          <Button
+            className="binder-btn-backToGame"
+            content="Retour à la partie"
+          />
+        </NavLink>
+      </div>
       <Footer />
     </div>
   );
