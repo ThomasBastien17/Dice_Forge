@@ -21,7 +21,6 @@ function Profile() {
     const getGame = async () => {
       try {
         const response = await axiosInstance.get(`/profile/${userId}`);
-        console.log('je suis la reponse du get de profile', response);
         setGames(response.data);
       } catch (error) {
         console.log('error', error);

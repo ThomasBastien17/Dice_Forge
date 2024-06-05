@@ -30,9 +30,6 @@ export const actionUserLogOut = createAction('USER_LOGOUT');
 const userReducer = createReducer(userInitialState, (builder) => {
   builder
     .addCase(actionIsLogged, (state, action) => {
-      console.log('je suis l action :', action.payload);
-      console.log('je suis le state reducer :', state);
-
       if (action.payload) {
         state.isLogged = true;
         state.userId = action.payload.userId;

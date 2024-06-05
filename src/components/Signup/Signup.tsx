@@ -1,12 +1,11 @@
-import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
-import { Button, Form, FormInput } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
+import { Button, Form, FormInput } from 'semantic-ui-react';
 import { IUser } from '../../@Types/user';
+import axiosInstance from '../../axios/axios';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Signup.scss';
-import axiosInstance from '../../axios/axios';
 
 function Signup() {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -28,7 +27,6 @@ function Signup() {
   */
   const postUser = async (formData: IUser) => {
     const response = await axiosInstance.post('/signup', formData);
-    console.log(response);
   };
 
   /**
@@ -41,7 +39,6 @@ function Signup() {
    */
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(userFormData);
     postUser(userFormData);
     navigate('/api/login');
   };
@@ -64,6 +61,7 @@ function Signup() {
       [inputName]: event.target.value,
     }));
   };
+
   const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {

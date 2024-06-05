@@ -52,7 +52,6 @@ const CardItem: React.FC<Sheet> = ({
 function Binder() {
   const location = useLocation();
   const gameId = Number(location.state);
-  console.log('Je suis le urlGameId', gameId);
 
   const [sheets, setSheets] = useState<Sheet[]>([]);
 
@@ -64,7 +63,7 @@ function Binder() {
         const response = await axiosInstance.get(
           'http://localhost:5000/api/binder'
         );
-        console.log('response de sheets', response);
+
         setSheets(response.data);
       } catch (error) {
         console.log('Erreur lors de la récupération des fiches', error);

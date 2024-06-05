@@ -9,7 +9,7 @@ import axiosInstance, {
  * @param navigate - The `navigate` parameter is a function that takes a `patch`
  * (string) as an argument and is used to redirect the user to a different page or
  * route in the application. In the provided code snippet, it is used to navigate
- * the user to the '/login' page when a 401
+ * the user to the '/login' page when a 401 (Pas complètement fonctionnel)
  */
 const setupInterceptors = (navigate: (patch: string) => void) => {
   axiosInstance.interceptors.response.use(
@@ -27,7 +27,6 @@ const setupInterceptors = (navigate: (patch: string) => void) => {
           const response = await axiosInstance.post('/api/refresh-token', {
             token: refreshToken,
           });
-          console.log('Refresh token response:', response.data);
 
           const { accessToken } = response.data;
           sessionStorage.setItem('accessToken', accessToken);

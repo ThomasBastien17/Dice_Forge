@@ -37,8 +37,6 @@ function Login() {
         dispatch(actionIsLogged(response.data.user));
         navigate('/');
       }
-      console.log(response);
-      console.log(response.data.message);
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response) {
