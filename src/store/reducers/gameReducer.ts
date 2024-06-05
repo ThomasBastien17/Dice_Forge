@@ -21,17 +21,11 @@ export const actionSetGameUrl = createAction<{ gameUrl: string }>(
 const gameReducer = createReducer(gameInitialState, (builder) => {
   builder
     .addCase(actionSetGameId, (state, action) => {
-      console.log('je suis l action :', action.payload);
-      console.log('je suis le state reducer :', state);
-
       if (action.payload) {
         state.gameId = action.payload.gameId;
       }
     })
     .addCase(actionSetGameUrl, (state, action) => {
-      console.log('je suis l action :', action.payload);
-      console.log('je suis le state reducer :', state);
-
       if (action.payload) {
         state.gameUrl = action.payload.gameUrl;
       }

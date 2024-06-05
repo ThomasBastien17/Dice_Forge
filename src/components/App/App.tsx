@@ -26,10 +26,7 @@ function App() {
   const user = useAppSelector((state) => state.user);
   const gameReducer = useAppSelector((state) => state.game);
   const gameId = useAppSelector((state) => state.game.gameId);
-  console.log('je suis le state de gameId :', gameId);
-  console.log('je suis le state de gameReducer :', gameReducer);
 
-  console.log('je suis le state de app :', user);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -23,7 +23,6 @@ function CreateGame() {
       .get('license')
       .then((response) => {
         const { data } = response;
-        console.log('Licences:', data);
 
         if (data) {
           const options = data.map((license: ILicenceOption) => ({
@@ -43,7 +42,6 @@ function CreateGame() {
     try {
       const response = await axiosInstance.post('/game', formData);
 
-      console.log('Success:', response.data);
       const gameId = response.data.id;
       dispatch(actionSetGameId({ gameId }));
       navigate(`/api/game/${gameId}`);
@@ -73,7 +71,6 @@ function CreateGame() {
       license_name: licences,
       email: email,
     };
-    console.log('Form data:', formData);
 
     postGame(formData);
   };
