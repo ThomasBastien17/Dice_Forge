@@ -2,15 +2,15 @@
 
 .ui.icon.right.labeled.button.home-btn-creategame {
   color: v.$color;
-  background-color: v.$color-primary-light;
+  background-color: v.$color-orange;
 }
 .ui.button.home-btn-login {
   color: v.$color;
-  background-color: v.$color-primary-light;
+  background-color: v.$color-orange;
 }
 .ui.button.home-btn-signup {
   color: v.$color;
-  background-color: v.$color-primary-ultra-light;
+  background-color: v.$color-orange-light;
 }
 .home {
   display: flex;
@@ -20,7 +20,8 @@
 
   &-container {
     margin: 2rem;
-    background-color: rgba(181, 142, 98, 0.4);
+    color: v.$color;
+    background-color: v.$color-primary;
     padding: 2rem;
     border-radius: 1rem;
     text-shadow: 0 1px 0 black;
