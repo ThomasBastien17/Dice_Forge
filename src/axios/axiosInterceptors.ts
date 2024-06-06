@@ -24,6 +24,10 @@ const setupInterceptors = (navigate: (patch: string) => void) => {
         originalRequest.isRetry = true;
         try {
           const refreshToken = sessionStorage.getItem('refreshToken');
+          if (!refreshToken) {
+            throw new Error('No refresh token available');
+          }
+
           const response = await axiosInstance.post('/api/refresh-token', {
             token: refreshToken,
           });
@@ -31,15 +35,21 @@ const setupInterceptors = (navigate: (patch: string) => void) => {
           const { accessToken } = response.data;
           sessionStorage.setItem('accessToken', accessToken);
           addTokenJwtToAxiosInstance(accessToken);
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-          return await axiosInstance(originalRequest);
+
+          // Update the Authorization header for the original request
+          originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+
+          // Retry the original request with the new token
+          return axiosInstance(originalRequest);
         } catch (err) {
+          console.error('Failed to refresh token', err);
           sessionStorage.removeItem('accessToken');
           sessionStorage.removeItem('refreshToken');
           removeTokenJwtFromAxiosInstance();
           navigate('/api/login');
         }
       }
+
       return Promise.reject(error);
     }
   );

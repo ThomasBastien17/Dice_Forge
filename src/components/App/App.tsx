@@ -31,6 +31,11 @@ function App() {
 
   useEffect(() => {
     setupInterceptors(navigate);
+
+    const token = sessionStorage.getItem('accessToken');
+    if (token) {
+      addTokenJwtToAxiosInstance(token);
+    }
   }, [navigate]);
 
   /* The `useEffect` hook in the provided code snippet is responsible for checking
