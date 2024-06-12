@@ -1,11 +1,11 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
-import setupInterceptors from '../../axios/axiosInterceptors';
-import { useAppSelector } from '../../hooks/hooks';
-import { actionIsLogged } from '../../store/reducers/userReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import {
+  actionIsLogged
+} from '../../store/reducers/authReducer';
 import Binder from '../Binder/Binder';
 import CreateGame from '../CreateGame/CreateGame';
 import CreateSheet from '../CreateSheet/CreateSheet';
@@ -22,19 +22,22 @@ import Signup from '../Signup/Signup';
 import './App.scss';
 
 function App() {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
-  const gameReducer = useAppSelector((state) => state.game);
-  const gameId = useAppSelector((state) => state.game.gameId);
-  console.log('je suis le state de gameId :', gameId);
-  console.log('je suis le state de gameReducer :', gameReducer);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const isLogged = useAppSelector((state) => state.auth.isLogged);
+  // const gameReducer = useAppSelector((state) => state.game);
+  // const gameId = useAppSelector((state) => state.game.games);
+  // console.log('je suis le state de gameId :', gameId);
+  // console.log('je suis le state de gameReducer :', gameReducer);
 
   console.log('je suis le state de app :', user);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setupInterceptors(navigate);
-  }, [navigate]);
+  // async function refresh() {
+  //   await dispatch(actionRefreshToken());
+  // }
+
+ 
 
   /* The `useEffect` hook in the provided code snippet is responsible for checking
   if a token is stored in the session storage. If a token is found, it adds the
@@ -43,14 +46,14 @@ function App() {
     const token = sessionStorage.getItem('accessToken');
     if (token) {
       addTokenJwtToAxiosInstance(token);
-      if (!user.isLogged) {
+      if (!isLogged) {
         const userData = sessionStorage.getItem('user');
         if (userData) {
           dispatch(actionIsLogged(JSON.parse(userData)));
         }
       }
     }
-  }, [dispatch, user.isLogged]);
+  }, [dispatch, isLogged]);
 
   return (
     <div className="App">

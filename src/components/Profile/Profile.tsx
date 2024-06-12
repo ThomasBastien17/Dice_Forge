@@ -1,43 +1,50 @@
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Button, Icon, Image } from 'semantic-ui-react';
-import { IGames } from '../../@Types/game';
-import axiosInstance from '../../axios/axios';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { actionResetCurrentGame, actionSetGameId } from '../../store/reducers/gameReducer';
+import {
+  actionDeleteGame,
+  actionSearchGames,
+} from '../../store/thunks/gameThunks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Profile.scss';
 
 function Profile() {
-  const userId = useAppSelector((state) => state.user.userId);
-  const lastname = useAppSelector((state) => state.user.lastname);
-  const firstname = useAppSelector((state) => state.user.firstname);
-  const [games, setGames] = useState<IGames[]>([]);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const games = useAppSelector((state) => state.game.games);
+  // const [games, setGames] = useState<IGames[]>([]);
+  // const navigate = useNavigate();
 
   useEffect(() => {
-    const getGame = async () => {
-      try {
-        const response = await axiosInstance.get(`/profile/${userId}`);
-        console.log('je suis la reponse du get de profile', response);
-        setGames(response.data);
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-    getGame();
-  }, [dispatch, userId]);
+    dispatch(actionSearchGames());
+    dispatch(actionResetCurrentGame());
+    
+  }, []);
 
-  const deleteGame = async (gameId: number) => {
-    try {
-      await axiosInstance.delete(`/game/${gameId}`);
-      setGames((prevGames) => prevGames.filter((game) => game.id !== gameId));
-    } catch (error) {
-      console.log('Erreur lors de la suppression de la partie', error);
-    }
-  };
+  // useEffect(() => {
+  //   const getGame = async () => {
+  //     try {
+  //       const response = await axiosInstance.get(`/profile/${user.userId}`);
+  //       console.log('je suis la reponse du get de profile', response);
+  //       setGames(response.data);
+  //     } catch (error) {
+  //       console.log('error', error);
+  //     }
+  //   };
+  //   getGame();
+  // }, [user]);
+
+  // const deleteGame = async (gameId: number) => {
+  //   try {
+  //     await axiosInstance.delete(`/game/${gameId}`);
+  //     setGames((prevGames) => prevGames.filter((game) => game.id !== gameId));
+  //   } catch (error) {
+  //     console.log('Erreur lors de la suppression de la partie', error);
+  //   }
+  // };
 
   return (
     <div className="profile">
@@ -51,8 +58,8 @@ function Profile() {
             className="profile-avatar"
           />
           <div className="profile-user-name">
-            <p>{lastname}</p>
-            <p>{firstname}</p>
+            <p>{user.lastname}</p>
+            <p>{user.firstname}</p>
           </div>
           <NavLink to="/api/edit-profile">
             <Button content="Modifier le profil" className="profile-user-btn" />
@@ -80,12 +87,20 @@ function Profile() {
                   <button
                     type="button"
                     className="profile-game-edit-btn"
-                    onClick={() => deleteGame(game.id)}
+                    onClick={async () => {
+                      dispatch(actionSetGameId(game.id));
+                      await dispatch(actionDeleteGame());
+                    }}
                   >
                     <Icon size="large" name="trash" />
                   </button>
 
-                  <NavLink to={`/api/game/${game.id}`}>
+                  <NavLink
+                    to={`/api/game/${game.id}`}
+                    onClick={() => {
+                      dispatch(actionSetGameId(game.id));
+                    }}
+                  >
                     <p className="profile-game-name">{game.name}</p>
                   </NavLink>
                   <p className="profile-game-link">
