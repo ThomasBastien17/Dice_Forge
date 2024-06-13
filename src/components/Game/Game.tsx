@@ -151,6 +151,7 @@ function Game() {
           </div>
           <div className="dice-section-result">
             <Checkbox
+              className="dice-section-checkbox"
               label="Afficher le résultat aux autres joueurs"
               checked={showDiceResult}
               onChange={() => setShowDiceResult(!showDiceResult)}

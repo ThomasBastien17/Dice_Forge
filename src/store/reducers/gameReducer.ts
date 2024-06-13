@@ -113,9 +113,6 @@ const gameReducer = createReducer(gameInitialState, (builder) => {
       console.log('je suis le state reducer :', state.currentGame);
     })
     .addCase(actionSetGameUrl, (state, action) => {
-      console.log('je suis l action :', action.payload);
-      console.log('je suis le state reducer :', state);
-
       if (action.payload) {
         // state.gameUrl = action.payload.gameUrl;
       }

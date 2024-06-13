@@ -15,6 +15,7 @@ function CardItem({ id, name, image, level, class: className }: ISheet) {
   const dispatch = useAppDispatch();
   return (
     <Card
+      className="card-container"
       onClick={() => {
         dispatch(actionSetSheetName(name));
       }}

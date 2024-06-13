@@ -2,16 +2,16 @@
 
 .ui.icon.button.create-game-add-player-btn {
   color: v.$color;
-  background-color: v.$color-primary;
+  background-color: v.$color-orange-light;
   margin-bottom: 2rem;
 }
 .ui.icon.button.create-game-delete-player-btn {
   color: v.$color;
-  background-color: v.$color-primary-ultra-light;
+  background-color: red;
 }
 .ui.button.create-game-submit-btn {
   color: v.$color;
-  background-color: v.$color-primary-light;
+  background-color: v.$color-orange;
 }
 
 .create-game {
@@ -19,10 +19,6 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  &-licences {
-    display: flex;
-    flex-direction: column;
-  }
 
   &-content {
     flex-grow: 1;
@@ -32,12 +28,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 2rem;
   }
 
   &-title {
-    font-size: 3rem;
-    padding: 2rem;
-    color: v.$color-primary;
+    font-size: 2rem;
+    padding: 0.75rem 1.5rem;
+    color: v.$color-blue;
+    background-color: v.$color;
+    border-radius: 1.5rem;
+    border: 5px solid v.$color-blue;
   }
 
   &-input {
@@ -45,9 +45,12 @@
     width: 100%;
   }
   &-licences {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 1rem;
     width: 100%;
     font-weight: bold;
+    color: v.$color;
     &-input {
       font-weight: normal;
     }

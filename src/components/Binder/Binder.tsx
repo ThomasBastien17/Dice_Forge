@@ -73,10 +73,10 @@ function Binder() {
   return (
     <div className="binder">
       <Header />
-      <h1>{sheetName}</h1>
+      <h1 className="binder-title-sheet">{sheetName}</h1>
       <h1 className="binder-title">Classeur de fiches</h1>
       <Container>
-        <CardGroup>
+        <CardGroup className="binder-card-container">
           {sheets.map((sheet) => (
             <CardItem key={sheet.id} {...sheet} />
           ))}
@@ -86,7 +86,10 @@ function Binder() {
         <Button className="binder-btn-createsheet" content="Créer une fiche" />
       </NavLink>
       <NavLink to="/api/game/">
-        <Button content="Retour à la partie" />
+        <Button
+          className="binder-btn-backToGame"
+          content="Retour à la partie"
+        />
       </NavLink>
       <Footer />
     </div>
