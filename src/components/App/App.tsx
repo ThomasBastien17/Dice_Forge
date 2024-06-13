@@ -17,7 +17,7 @@ import Login from '../Login/Login';
 import EditProfile from '../Profile/EditProfile';
 import Profile from '../Profile/Profile';
 import ResetPassword from '../Reset-password/Reset-password';
-import Sheet from '../Sheet/Sheet';
+// import Sheet from '../Sheet/Sheet';
 import Signup from '../Signup/Signup';
 import './App.scss';
 
@@ -64,7 +64,7 @@ function App() {
         <Route path="/api/creategame" element={<CreateGame />} />
         <Route path="/api/game/:gameId" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
-        <Route path="/api/sheet" element={<Sheet />} />
+        {/* <Route path="/api/sheet" element={<Sheet />} /> */}
         <Route path="/api/binder/:gameId" element={<Binder />} />
         <Route path="/api/profile" element={<Profile />} />
         <Route path="/api/forgot-password" element={<ForgotPassword />} />

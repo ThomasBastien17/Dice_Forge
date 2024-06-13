@@ -1,6 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
 import './Sheet.scss';
 
 interface Sheet {
@@ -11,31 +8,31 @@ interface Sheet {
   level: number;
 }
 
-function SheetInfo() {
-  const dispatch = useDispatch();
-  const { sheets } = useSelector;
+// function SheetInfo() {
+//   const dispatch = useDispatch();
+//   const { sheets } = useSelector;
 
-  return (
-    <div>
-      <Header />
-      <h1>Fiche Personnage</h1>
-      <div>
-        {error ? (
-          <p>{error}</p>
-        ) : sheet ? (
-          <div className="sheet">
-            <h2>{sheet.name}</h2>
-            <img src={sheet.image} alt={sheet.name} />
-            <p>Classe: {sheet.class}</p>
-            <p>Niveau: {sheet.level}</p>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-      <Footer />
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <Header />
+//       <h1>Fiche Personnage</h1>
+//       <div>
+//         {error ? (
+//           <p>{error}</p>
+//         ) : sheet ? (
+//           <div className="sheet">
+//             <h2>{sheet.name}</h2>
+//             <img src={sheet.image} alt={sheet.name} />
+//             <p>Classe: {sheet.class}</p>
+//             <p>Niveau: {sheet.level}</p>
+//           </div>
+//         ) : (
+//           <p>Loading...</p>
+//         )}
+//       </div>
+//       <Footer />
+//     </div>
+//   );
+// }
 
-export default SheetInfo;
+// export default SheetInfo;

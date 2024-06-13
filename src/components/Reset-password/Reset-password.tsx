@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, FormInput, Message } from 'semantic-ui-react';
+import { useAppDispatch } from '../../hooks/hooks';
 import { actionChangePassword } from '../../store/reducers/authReducer';
 import { actionResetPassword } from '../../store/thunks/authThunks';
 import Footer from '../Footer/Footer';
@@ -9,7 +9,7 @@ import Header from '../Header/Header';
 import './Reset-password.scss';
 
 function ResetPassword() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   
