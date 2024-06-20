@@ -18,6 +18,7 @@ import EditProfile from '../Profile/EditProfile';
 import Profile from '../Profile/Profile';
 import ResetPassword from '../Reset-password/Reset-password';
 // import Sheet from '../Sheet/Sheet';
+import { actionRefreshToken } from '../../store/thunks/authThunks';
 import Signup from '../Signup/Signup';
 import './App.scss';
 
@@ -32,9 +33,9 @@ function App() {
 
   const navigate = useNavigate();
 
-  // async function refresh() {
-  //   await dispatch(actionRefreshToken());
-  // }
+  async function refresh() {
+    await dispatch(actionRefreshToken());
+  }
 
  
 
