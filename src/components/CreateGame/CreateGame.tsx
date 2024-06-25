@@ -71,7 +71,7 @@ function CreateGame() {
       license_name: licences,
       email: email,
     };
-
+    navigate('/api/profile');
     postGame(formData);
   };
 
