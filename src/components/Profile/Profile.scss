@@ -5,12 +5,12 @@
 }
 
 .ui.button.profile-game-btn {
-  color: v.$color;
+  color: v.$color-white;
   background-color: v.$color-orange;
   padding: 0.65rem;
 }
 .ui.button.profile-user-btn {
-  color: v.$color;
+  color: v.$color-white;
   background-color: v.$color-orange;
   padding: 0.5rem;
 }
@@ -27,7 +27,7 @@
     width: 90%;
     margin: auto;
     color: v.$color;
-    background-color: v.$color-primary;
+    background-color: v.$color-blue-night-ultra-light;
     border-radius: 2rem;
   }
 
@@ -55,7 +55,7 @@
     margin-bottom: 2rem;
     padding: 1rem;
     &-name {
-      color: v.$color;
+      color: v.$color-white;
       background-color: v.$color-blue;
       padding: 0.25rem 1rem;
       border-radius: 0.5rem;
@@ -70,7 +70,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 3px solid v.$color;
+      border-bottom: 3px solid v.$color-white;
       padding-bottom: 0.5rem;
     }
 
@@ -80,7 +80,7 @@
       flex-wrap: wrap;
       justify-content: flex-start;
       align-items: center;
-      border-bottom: 1px solid v.$color;
+      border-bottom: 1px solid v.$color-white;
       margin-bottom: 0.5rem;
       padding-bottom: 0.5rem;
 
@@ -104,14 +104,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 3px solid v.$color;
+      border-bottom: 3px solid v.$color-white;
       padding-bottom: 0.5rem;
     }
 
     &-edit {
       display: flex;
       flex-direction: row;
-      border-bottom: 1px solid v.$color;
+      border-bottom: 1px solid v.$color-white;
       margin-bottom: 0.5rem;
       padding-bottom: 0.5rem;
 

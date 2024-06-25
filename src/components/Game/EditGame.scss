@@ -10,7 +10,7 @@
     font-size: 2rem;
     padding: 0.75rem 1.5rem;
     color: v.$color-blue;
-    background-color: v.$color;
+    background-color: v.$color-white;
     border-radius: 1.5rem;
     border: 5px solid v.$color-blue;
   }
@@ -39,19 +39,19 @@ div.field {
   width: 100%;
 }
 label {
-  color: v.$color;
+  color: v.$color-white;
   font-weight: bold;
   margin-bottom: 2rem;
 }
 .ui.icon.button.edit-game-btn {
-  color: v.$color;
-  background-color: v.$color-primary-ultra-light;
+  color: v.$color-white;
+  background-color: v.$color-orange-light;
 }
 .ui.icon.button.edit-game-close-btn {
-  color: v.$color;
-  background-color: v.$color-orange-light;
+  color: v.$color-white;
+  background-color: v.$color-red-corail;
 }
 .ui.button.edit-game-submit-btn {
   background-color: v.$color-orange;
-  color: v.$color;
+  color: v.$color-white;
 }
