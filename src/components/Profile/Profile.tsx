@@ -81,7 +81,7 @@ function Profile() {
                     className="profile-game-edit-btn"
                     onClick={() => deleteGame(game.id)}
                   >
-                    <Icon size="large" name="trash" color="grey" />
+                    <Icon size="large" name="trash" color="red" />
                   </button>
 
                   <NavLink to={`/api/game/${game.id}`}>

@@ -1,15 +1,15 @@
 @use '../../styles/variables' as v;
 
 .ui.icon.right.labeled.button.home-btn-creategame {
-  color: v.$color;
+  color: v.$color-white;
   background-color: v.$color-orange;
 }
 .ui.button.home-btn-login {
-  color: v.$color;
+  color: v.$color-white;
   background-color: v.$color-orange;
 }
 .ui.button.home-btn-signup {
-  color: v.$color;
+  color: v.$color-white;
   background-color: v.$color-orange-light;
 }
 .home {
@@ -21,10 +21,9 @@
   &-container {
     margin: 2rem;
     color: v.$color;
-    background-color: v.$color-primary;
+    background-color: v.$color-blue-night-ultra-light;
     padding: 2rem;
     border-radius: 1rem;
-    text-shadow: 0 1px 0 black;
   }
   &-group-btn {
     margin-bottom: 1rem;

@@ -1,7 +1,7 @@
 @use '../../styles/variables' as v;
 
 .ui.button.login-form-btn {
-  color: v.$color;
+  color: v.$color-white;
   background-color: v.$color-orange;
   margin: 2.75rem 0;
 }
@@ -21,7 +21,7 @@
     font-size: 2rem;
     padding: 0.75rem 1.5rem;
     color: v.$color-blue;
-    background-color: v.$color;
+    background-color: v.$color-white;
     border-radius: 1.5rem;
     border: 5px solid v.$color-blue;
   }
