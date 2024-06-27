@@ -102,6 +102,8 @@ export const actionIsLogged = createAction<{
   image: string;
 }>('IS_LOGGED');
 
+export const actionLogin = createAction('USER_LOGIN');
+
 export const actionUserLogOut = createAction('USER_LOGOUT');
 
 export const actionSetForgotPasswordEmail = createAction<string>(
@@ -158,6 +160,10 @@ const authReducer = createReducer(userInitialState, (builder) => {
     .addCase(actionSetUser, (state, action) => {
       state.user = action.payload;
       state.isLogged = true;
+    })
+    .addCase(actionLogin, (state, action) => {
+      state.isLogged = true;
+
     })
     .addCase(actionSetCredentials, (state, action) => {
       state.credentials[action.payload.name] = action.payload.value;

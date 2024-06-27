@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import axios from 'axios';
 import type { RootState } from '..';
 import axiosInstance, { addTokenJwtToAxiosInstance } from '../../axios/axios';
 import { addRefreshTokenToLocalStorage } from '../../localStorage/localStorage';
@@ -29,7 +30,7 @@ const actionRegister = createAsyncThunk(
   'auth/REGISTER',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axiosInstance.post('/signup', {
+    const response = await axios.post('https://dice-forge-4eec83d84796.herokuapp.com/api/signup', {
       lastname: state.auth.newUser.lastname,
       firstname: state.auth.newUser.firstname,
       email: state.auth.newUser.email,

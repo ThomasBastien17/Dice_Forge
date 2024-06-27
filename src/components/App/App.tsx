@@ -1,10 +1,13 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { addTokenJwtToAxiosInstance } from '../../axios/axios';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import {
-  actionIsLogged
+  actionIsLogged,
+  actionLogin,
+  actionSetRefreshToken,
+  actionSetUser
 } from '../../store/reducers/authReducer';
 import Binder from '../Binder/Binder';
 import CreateGame from '../CreateGame/CreateGame';
@@ -24,6 +27,8 @@ import './App.scss';
 
 function App() {
   const dispatch = useAppDispatch();
+  const token = sessionStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken')!;
   const user = useAppSelector((state) => state.auth.user);
   const isLogged = useAppSelector((state) => state.auth.isLogged);
   // const gameReducer = useAppSelector((state) => state.game);
@@ -31,18 +36,28 @@ function App() {
   // console.log('je suis le state de gameId :', gameId);
   // console.log('je suis le state de gameReducer :', gameReducer);
 
-  const navigate = useNavigate();
-
-  async function refresh() {
-    await dispatch(actionRefreshToken());
-  }
+  // const navigate = useNavigate();
 
  
+  useEffect(() => {
+    
+    dispatch(actionSetRefreshToken(refreshToken));
+    if (!token) {
+      dispatch(actionRefreshToken());
+    }
+    
+    
+    dispatch(actionLogin())
+    dispatch(actionSetUser(JSON.parse(localStorage.getItem('user')!)));
+    
+
+  }, []);
 
   /* The `useEffect` hook in the provided code snippet is responsible for checking
   if a token is stored in the session storage. If a token is found, it adds the
   token to the Axios instance using the `addTokenJwtToAxiosInstance` function. */
   useEffect(() => {
+    
     const token = sessionStorage.getItem('accessToken');
     if (token) {
       addTokenJwtToAxiosInstance(token);
@@ -53,7 +68,8 @@ function App() {
         }
       }
     }
-  }, [dispatch, isLogged]);
+  }, [isLogged]);
+
 
   return (
     <div className="App">
