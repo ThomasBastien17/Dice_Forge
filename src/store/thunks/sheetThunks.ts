@@ -6,7 +6,7 @@ const actionGetSheets = createAsyncThunk(
   async () => {
     
     const response = await axiosInstance.get(
-      'http://localhost:5000/api/binder'
+      'https://dice-forge-4eec83d84796.herokuapp.com/api/binder'
     );
     console.log("Je suis la réponse du thunk d'all sheets ",response.data);
     return(response.data);

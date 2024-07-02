@@ -28,7 +28,7 @@ function Chat({ gameUrl }: { gameUrl: string }) {
   const socket = useRef<Socket | null>(null);
 
   useEffect(() => {
-    socket.current = io('http://localhost:5000');
+    socket.current = io('https://dice-forge-4eec83d84796.herokuapp.com');
 
     /* This part of the code is setting up an event listener on the socket
     connection for the event named 'message'. When the socket receives a
