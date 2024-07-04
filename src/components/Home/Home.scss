@@ -1,0 +1,34 @@
+@use '../../styles/variables' as v;
+
+.ui.icon.right.labeled.button.home-btn-creategame {
+  color: v.$color-white;
+  background-color: v.$color-orange;
+}
+.ui.button.home-btn-login {
+  color: v.$color-white;
+  background-color: v.$color-orange;
+}
+.ui.button.home-btn-signup {
+  color: v.$color-white;
+  background-color: v.$color-orange-light;
+}
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+
+  &-container {
+    margin: 2rem;
+    color: v.$color;
+    background-color: v.$color-blue-night-ultra-light;
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+  &-group-btn {
+    margin-bottom: 1rem;
+  }
+}
+.home-logo {
+  clip-path: ellipse(33% 50%);
+}
