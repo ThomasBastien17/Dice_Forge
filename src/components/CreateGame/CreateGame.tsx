@@ -93,7 +93,6 @@ function CreateGame() {
   };
 
   const handleRemovePlayer = (index: number) => {
-<<<<<<< HEAD
     setEmails(emails.filter((_, i) => i !== index));
   }; */
 
@@ -107,20 +106,6 @@ function CreateGame() {
     );
     dispatch(actionChangeGameDatas({ name: 'email', value: email }));
     await dispatch(actionPostGame());
-=======
-    setPlayers(players.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = () => {
-    const email = players;
-    const formData = {
-      name: title,
-      license_name: licences,
-      email: email,
-    };
-    navigate('/api/profile');
-    postGame(formData);
->>>>>>> develop
   };
 
   return (
