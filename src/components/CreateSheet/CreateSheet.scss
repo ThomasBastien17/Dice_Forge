@@ -2,27 +2,27 @@
 
 .ui.icon.button.create-sheet-caracteristic-btn {
   margin-bottom: 1rem;
-  color: v.$color;
-  background-color: v.$color-orange-light;
+  color: v.$color-white;
+  background-color: v.$color-red-corail;
 }
 .ui.button.create-sheet-caracteristic-add-btn {
-  color: v.$color;
-  background-color: v.$color-primary-ultra-light;
+  color: v.$color-white;
+  background-color: v.$color-orange-light;
 }
 .ui.button.create-sheet-inventory-btn {
-  color: v.$color;
-  background-color: v.$color-orange-light;
+  color: v.$color-white;
+  background-color: v.$color-red-corail;
   margin-bottom: 1rem;
 }
 .ui.button.create-sheet-inventory-add-btn {
-  color: v.$color;
-  background-color: v.$color-primary-ultra-light;
+  color: v.$color-white;
+  background-color: v.$color-orange-light;
   margin-bottom: 2rem;
 }
 .ui.button.create-sheet-submit-btn {
   font-size: 1.25rem;
   background-color: v.$color-orange;
-  color: v.$color;
+  color: v.$color-white;
   font-weight: bold;
 }
 
@@ -38,15 +38,15 @@
     display: flex;
     justify-content: center;
     font-weight: bold;
-    background-color: v.$color-primary-light;
-    color: v.$color;
+    background-color: v.$color-blue-night-light;
+    color: v.$color-white;
     margin-bottom: 1.5rem;
   }
   &-title {
     font-size: 3rem;
     padding: 0.75rem 1.5rem;
     color: v.$color-blue;
-    background-color: v.$color;
+    background-color: v.$color-white;
     border-radius: 1.5rem;
     border: 5px solid v.$color-blue;
   }
@@ -75,9 +75,9 @@
   &-avatar {
     margin: 1rem 0;
     border-radius: 0.5rem;
-    background-color: v.$color-primary-light;
+    background-color: v.$color-blue-night-light;
     padding: 0.5rem;
-    color: v.$color;
+    color: v.$color-white;
     font-weight: bold;
     &-preview {
       margin: auto;

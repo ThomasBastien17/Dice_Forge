@@ -92,7 +92,7 @@ function Profile() {
                       await dispatch(actionDeleteGame());
                     }}
                   >
-                    <Icon size="large" name="trash" color="grey" />
+                    <Icon size="large" name="trash" color="red" />
                   </button>
 
                   <NavLink
