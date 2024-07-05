@@ -19,7 +19,11 @@
   "include": [
     "vite.config.ts",
     ".eslintrc.cjs",
-    "src"
-, "src/@Types/MessageTypes.ts"  ],
+    "src",
+    "src/@Types/MessageTypes.ts"  ],
+  "exclude": [
+  "node_modules",
+  "vite.config.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
