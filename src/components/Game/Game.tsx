@@ -75,7 +75,7 @@ function Game() {
   }, []);
 
   useEffect(() => {
-    let interval: number;
+    let interval: number | undefined;
     if (timerRunning && timeElapsed > 0) {
       interval = window.setInterval(() => {
         setTimeElapsed((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
