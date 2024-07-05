@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host thomasbastien17-server.eddi.cloud",
+    "dev": "vite",
     "prebuild": "tsc -p tsconfig.vite.json",
     "build": "tsc && vite build",
     "preview": "vite preview",
