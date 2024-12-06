@@ -30,7 +30,7 @@ const actionRegister = createAsyncThunk(
   'auth/REGISTER',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axios.post('https://dice-forge-4eec83d84796.herokuapp.com/api/signup', {
+    const response = await axios.post('http://localhost:5000/api/signup', {
       lastname: state.auth.newUser.lastname,
       firstname: state.auth.newUser.firstname,
       email: state.auth.newUser.email,
@@ -59,19 +59,23 @@ const actionRefreshToken = createAsyncThunk(
 const actionForgotPassword = createAsyncThunk(
   'auth/FORGOT_PASSWORD',
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState() as RootState;
-    const response = await axiosInstance.post('forgot-password', {
-      email: state.auth.email,
-    });
-    const message = response.data.message;
+    try {
+      const state = thunkAPI.getState() as RootState;
+      const response = await axiosInstance.post('/forgot-password', {
+        email: state.auth.email,
+      });
+      const message = response.data.message;
+      return message;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || 'an error occured');
+    }
 
-    return message;
   }
 );
 
 const actionResetPassword = createAsyncThunk('auth/RESET_PASSWORD', async (_, thunkAPI) => {
   const state = thunkAPI.getState() as RootState;
-  const response = await axiosInstance.post('reset-password', {
+  const response = await axiosInstance.post('/reset-password', {
     token: state.auth.resetPassword.token,
     id: state.auth.resetPassword.id,
     password: state.auth.resetPassword.password,

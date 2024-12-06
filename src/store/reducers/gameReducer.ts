@@ -84,10 +84,10 @@ const gameReducer = createReducer(gameInitialState, (builder) => {
       state.gameDatas[action.payload.name] = action.payload.value;
     })
     .addCase(actionPostGame.fulfilled, (state, action) => {
-      // console.log(
-      //   "bonjour c'est moi le fullfiled de l'action de ses morts.",
-      //   action
-      // );
+       console.log(
+         "bonjour c'est moi le fullfiled de l'action de ses morts.",
+         action
+       );
 
       state.currentGame = action.payload.createdGame;
       // console.log('Je suis le state de currentGame ', state.currentGame);

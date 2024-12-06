@@ -129,7 +129,6 @@ const authReducer = createReducer(userInitialState, (builder) => {
       addAccessTokenToSessionStorage(action.payload);
     })
     .addCase(actionRefreshToken.rejected, (state, action) => {
-      console.log('error');
 
       state.isLogged = false;
       state.user = {

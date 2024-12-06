@@ -44,6 +44,7 @@ function Binder() {
 
   const sheetName = useAppSelector((state) => state.sheet.sheetName);
   const sheets = useAppSelector((state) => state.sheet.sheets);
+  console.log(sheets);
 
   // const [sheets, setSheets] = useState<Sheet[]>([]);
   const gameId = useAppSelector((state) => state.game.currentGame.id);
@@ -73,7 +74,6 @@ function Binder() {
   return (
     <div className="binder">
       <Header />
-      <h1 className="binder-title-sheet">{sheetName}</h1>
       <h1 className="binder-title">Classeur de fiches</h1>
       <Container>
         <CardGroup className="binder-card-container">
@@ -85,7 +85,7 @@ function Binder() {
       <NavLink to="/api/createsheet" /* state={gameId} */>
         <Button className="binder-btn-createsheet" content="Créer une fiche" />
       </NavLink>
-      <NavLink to="/api/game/">
+      <NavLink to="/api/game/gameId">
         <Button
           className="binder-btn-backToGame"
           content="Retour à la partie"
