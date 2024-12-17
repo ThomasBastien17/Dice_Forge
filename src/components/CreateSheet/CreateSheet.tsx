@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Button, Form, FormInput, FormTextArea } from 'semantic-ui-react';
 import { v4 as uuidv4 } from 'uuid';
@@ -322,12 +323,13 @@ function CreateSheet() {
             icon="plus"
           />
           <div className="submit-btn">
-            <Button
-              className="create-sheet-submit-btn"
-              type="submit"
-              content="Valider"
-              onClick={handleSubmit}
-            />
+              <Button
+                className="create-sheet-submit-btn"
+                type="submit"
+                content="Valider"
+                onClick={handleSubmit}
+              />
+            
           </div>
         </Form>
       </div>

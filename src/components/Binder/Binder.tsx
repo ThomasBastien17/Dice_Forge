@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, CardGroup, Container } from 'semantic-ui-react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { actionGetSheets } from '../../store/thunks/sheetThunks';
+import { actionGetSheetByGameId, actionGetSheets } from '../../store/thunks/sheetThunks';
 import CardItem from '../CardItem/CardItem';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -42,8 +42,8 @@ function Binder() {
   // const location = useLocation();
   // const gameId = Number(location.state);
 
-  const sheetName = useAppSelector((state) => state.sheet.sheetName);
   const sheets = useAppSelector((state) => state.sheet.sheets);
+  console.log(sheets);
 
   // const [sheets, setSheets] = useState<Sheet[]>([]);
   const gameId = useAppSelector((state) => state.game.currentGame.id);
@@ -73,7 +73,6 @@ function Binder() {
   return (
     <div className="binder">
       <Header />
-      <h1 className="binder-title-sheet">{sheetName}</h1>
       <h1 className="binder-title">Classeur de fiches</h1>
       <Container>
         <CardGroup className="binder-card-container">
@@ -85,7 +84,7 @@ function Binder() {
       <NavLink to="/api/createsheet" /* state={gameId} */>
         <Button className="binder-btn-createsheet" content="Créer une fiche" />
       </NavLink>
-      <NavLink to="/api/game/">
+      <NavLink to="/api/game/gameId">
         <Button
           className="binder-btn-backToGame"
           content="Retour à la partie"

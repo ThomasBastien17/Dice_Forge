@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import type { RootState } from '..';
 import axiosInstance from "../../axios/axios";
 
 const actionGetSheets = createAsyncThunk(
@@ -6,7 +7,7 @@ const actionGetSheets = createAsyncThunk(
   async () => {
     
     const response = await axiosInstance.get(
-      'https://dice-forge-4eec83d84796.herokuapp.com/api/binder'
+      '/binder'
     );
     console.log("Je suis la réponse du thunk d'all sheets ",response.data);
     return(response.data);
@@ -14,4 +15,36 @@ const actionGetSheets = createAsyncThunk(
   
 );
 
-export { actionGetSheets };
+const actionGetSheetByGameId = createAsyncThunk(
+  'sheet/GET_SHEET_BY_GAME_ID',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    let gameId = state.sheet.currentSheet.game_id;
+
+    const response = await axiosInstance.get(
+      `/binder/${gameId}`
+    );
+    
+    return(response.data);
+  }
+);
+
+const actionGetSheetById = createAsyncThunk(
+  'sheet/GET_SHEET_BY_ID',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    let sheetId = state.sheet.currentSheet.id;
+    
+    if(sheetId === 0){
+      sheetId = state.sheet.sheetId;
+    }
+  const response = await axiosInstance.get(
+    `/sheet/${sheetId}`
+  );
+  const sheetSearched = response.data;
+  console.log(sheetSearched);
+  return sheetSearched;
+  }
+);
+
+export { actionGetSheets, actionGetSheetById, actionGetSheetByGameId };

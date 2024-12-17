@@ -39,13 +39,17 @@ const actionPostGame = createAsyncThunk(
   'game/POST_GAME',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axiosInstance.post('/game', {
-      name: state.game.gameDatas.name,
-      license_name: state.game.gameDatas.license_name,
-      email: state.game.gameDatas.email,
-    });
+    const { name, license_name, email } = state.game.gameDatas;
+
+    const gameData = {
+      name,
+      license_name,
+      ...( email && {email})
+    };
+    const response = await axiosInstance.post('/game', gameData);
     console.log('je suis la reponse du post de game', response);
     const createdGame = { createdGame: response.data };
+    console.log('jes suis response.data', response.data);
     console.log('je suis createdGame :', createdGame);
 
     return createdGame;

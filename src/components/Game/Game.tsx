@@ -119,7 +119,7 @@ function Game() {
       <Container className="main-content">
         <div className="create-div-title">
           <h1 className="create-title">{currentGame.name}</h1>
-          <h2 className="create-subtitle">{currentGame.license_name}</h2>
+          <h2 className="create-subtitle">License: {currentGame.license_name}</h2>
         </div>
         <div className="timer-section">
           <div className="timer-controls">

@@ -120,11 +120,11 @@ function Profile() {
             {games && games.length > 0 ? (
               games.map((game) => (
                 <div key={game.id} className="profile-session-edit">
-                  <p className="profile-session-edit-date">
+                  <div className="profile-session-edit-date">
                     <div className="profile-session-edit-date-session">
                       {game.name}: {game.event}
                     </div>
-                  </p>
+                  </div>
                 </div>
               ))
             ) : (
