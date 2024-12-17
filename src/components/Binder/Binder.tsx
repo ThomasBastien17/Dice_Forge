@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, CardGroup, Container } from 'semantic-ui-react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { actionGetSheets } from '../../store/thunks/sheetThunks';
+import { actionGetSheetByGameId, actionGetSheets } from '../../store/thunks/sheetThunks';
 import CardItem from '../CardItem/CardItem';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -42,7 +42,6 @@ function Binder() {
   // const location = useLocation();
   // const gameId = Number(location.state);
 
-  const sheetName = useAppSelector((state) => state.sheet.sheetName);
   const sheets = useAppSelector((state) => state.sheet.sheets);
   console.log(sheets);
 

@@ -67,7 +67,11 @@ const actionForgotPassword = createAsyncThunk(
       const message = response.data.message;
       return message;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || 'an error occured');
+      let errorMessage = 'An error occurred';
+      if (axios.isAxiosError(error) && error.response) {
+        errorMessage = error.response.data?.message || errorMessage;
+      }
+      return thunkAPI.rejectWithValue(errorMessage);
     }
 
   }

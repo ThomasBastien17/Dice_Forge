@@ -85,7 +85,7 @@ const gameReducer = createReducer(gameInitialState, (builder) => {
     })
     .addCase(actionPostGame.fulfilled, (state, action) => {
        console.log(
-         "bonjour c'est moi le fullfiled de l'action de ses morts.",
+         "bonjour c'est moi le fullfiled de l'action postGame",
          action
        );
 
