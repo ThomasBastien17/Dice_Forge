@@ -3,7 +3,7 @@
 $color: #000;
 $color-blue-night: #2c3e50;
 $color-blue: #3498db;
-$color-orange: #f1c40f;
+$color-orange: #daaf05;
 $color-grey: #bdc3c7;
 $color-red-corail: #e74c3c;
 $color-green-emeraud: #2ecc71;
@@ -12,7 +12,7 @@ $color-white: #fff;
 
 $color-blue-night-light: color.scale($color-blue-night, $lightness: 20%);
 $color-blue-night-ultra-light: color.scale($color-blue-night, $lightness: 60%);
-$color-blue-night-middle-light: color.scale($color-blue-night, $lightness: 40%);
+$color-blue-night-middle-light: color.scale($color-blue-night, $lightness: 30%);
 
 $color-blue-light: color.scale($color-blue, $lightness: 85%);
 $color-orange-light: color.scale($color-orange, $lightness: 20%);

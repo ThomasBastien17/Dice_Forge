@@ -56,6 +56,7 @@ function Profile() {
             circular
             size="small"
             className="profile-avatar"
+            alt="avatar de l'utilisateur"
           />
           <div className="profile-user-name">
             <p>{user.lastname}</p>

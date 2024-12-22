@@ -1,7 +1,7 @@
 @use '../../styles/variables' as v;
 
 .ui.button.signup-form-btn {
-  color: v.$color-white;
+  color: v.$color;
   background-color: v.$color-orange;
 }
 .ui.form .field > label {
