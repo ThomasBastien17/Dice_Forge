@@ -5,6 +5,7 @@ import type { RootState } from '..';
 import axiosInstance, { addTokenJwtToAxiosInstance } from '../../axios/axios';
 import { addRefreshTokenToLocalStorage } from '../../localStorage/localStorage';
 import { addAccessTokenToSessionStorage } from '../../sessionStorage/sessionStorage';
+import { IResponseData } from '../../@Types/response.data';
 // import { addTokenAndPseudoToLocalStorage } from '../../localStorage/localStorage';
 
 const actionCheckLogin = createAsyncThunk(
@@ -30,16 +31,30 @@ const actionRegister = createAsyncThunk(
   'auth/REGISTER',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axios.post('http://localhost:5000/api/signup', {
-      lastname: state.auth.newUser.lastname,
-      firstname: state.auth.newUser.firstname,
-      email: state.auth.newUser.email,
-      password: state.auth.newUser.password,
-      confirmPassword: state.auth.newUser.confirmPassword,
-    });
-    const { message } = response.data;
+    try {
+      const response = await axiosInstance.post('/signup', {
+        lastname: state.auth.newUser.lastname,
+        firstname: state.auth.newUser.firstname,
+        email: state.auth.newUser.email,
+        password: state.auth.newUser.password,
+        confirmPassword: state.auth.newUser.confirmPassword,
+      });
 
-    return { message };
+      const { message } = response.data;
+      return { success: true, message }; // Retour en cas de succès
+    } catch (error) {
+      // Vérifier que l'erreur est une AxiosError
+      if (axios.isAxiosError(error)) {
+        // Assurer que error.response?.data est de type ErrorResponse
+        const errorData = error.response?.data as IResponseData;
+        const errorMessage =
+          errorData?.message || 'Erreur lors de l’inscription';
+        return { success: false, error: errorMessage }; // Retour en cas d'échec
+      } else {
+        // Si ce n'est pas une erreur Axios, gérer une erreur générique
+        return { success: false, error: 'Erreur inconnue' };
+      }
+    }
   }
 );
 
@@ -73,27 +88,28 @@ const actionForgotPassword = createAsyncThunk(
       }
       return thunkAPI.rejectWithValue(errorMessage);
     }
-
   }
 );
 
-const actionResetPassword = createAsyncThunk('auth/RESET_PASSWORD', async (_, thunkAPI) => {
-  const state = thunkAPI.getState() as RootState;
-  const response = await axiosInstance.post('/reset-password', {
-    token: state.auth.resetPassword.token,
-    id: state.auth.resetPassword.id,
-    password: state.auth.resetPassword.password,
-    confirmPassword: state.auth.resetPassword.confirmPassword,
-  });
-  console.log('je suis la reponse du reset password', response);
-  return response.data;
-  
-});
+const actionResetPassword = createAsyncThunk(
+  'auth/RESET_PASSWORD',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const response = await axiosInstance.post('/reset-password', {
+      token: state.auth.resetPassword.token,
+      id: state.auth.resetPassword.id,
+      password: state.auth.resetPassword.password,
+      confirmPassword: state.auth.resetPassword.confirmPassword,
+    });
+    console.log('je suis la reponse du reset password', response);
+    return response.data;
+  }
+);
 
 export {
   actionCheckLogin,
   actionForgotPassword,
   actionRefreshToken,
   actionRegister,
-  actionResetPassword
+  actionResetPassword,
 };

@@ -10,11 +10,13 @@ import {
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './Signup.scss';
+import { IResponseData } from '../../@Types/response.data';
 
 function Signup() {
   const dispatch = useAppDispatch();
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [lastName, setLastName] = useState<string>('');
   const [firstName, setFirstName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -22,8 +24,6 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const navigate = useNavigate();
-
-
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,11 +34,19 @@ function Signup() {
     dispatch(
       actionChangeNewUser({ name: 'confirmPassword', value: confirmPassword })
     );
-    await dispatch(actionRegister());
-    await dispatch(actionCheckLogin());
-    navigate('/');
+    const registerResult = await dispatch(actionRegister());
+    if ((registerResult.payload as IResponseData).success) {
+      await dispatch(actionCheckLogin());
+      navigate('/');
+    } else {
+      console.error(
+        'Erreur lors de l’inscription : ',
+        (registerResult.payload as IResponseData).error
+      );
+      const errorMessage = (registerResult.payload as IResponseData).error;
+      setError(errorMessage)
+    }
   };
-
 
   const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -108,6 +116,7 @@ function Signup() {
 
         <Button content="Valider" type="submit" className="signup-form-btn" />
       </Form>
+      {error && <p className="signup-error">{error}</p>}
       <Footer />
     </div>
   );

@@ -40,4 +40,10 @@
     margin-bottom: 1rem;
     background: transparent;
   }
+  &-error {
+    color: red;
+    font-size: 0.92857143em;
+    font-weight: 700;
+    text-transform: none;
+  }
 }
