@@ -35,7 +35,7 @@ function Header() {
           </NavLink>
         </div>
 
-        <button type="button" className="Header-burger" onClick={toggleMenu}>
+        <button aria-label="burger menu" type="button" className="Header-burger" onClick={toggleMenu}>
           <Icon name="bars" />
         </button>
       </div>

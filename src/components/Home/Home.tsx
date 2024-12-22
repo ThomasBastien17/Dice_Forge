@@ -20,6 +20,7 @@ function Home() {
       <Image
         src="public/LogoDiceForge.jpg"
         size="large"
+        alt="Dice Forge logo"
         className="home-logo"
       />
       <div className="home-container">
