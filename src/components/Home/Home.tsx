@@ -18,7 +18,7 @@ function Home() {
     <div className="home">
       <Header />
       <Image
-        src="public/LogoDiceForge.jpg"
+        src="/LogoDiceForge.jpg"
         size="large"
         alt="Dice Forge logo"
         className="home-logo"

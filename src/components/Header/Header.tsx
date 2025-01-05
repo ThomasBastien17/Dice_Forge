@@ -26,7 +26,7 @@ function Header() {
         <div className="Header-block">
           <img
             className="Header-logo"
-            src="../../../public/d20-7136921_640.png"
+            src="/d20-7136921_640.png"
             alt="Logo Dice Forge"
           />
 
