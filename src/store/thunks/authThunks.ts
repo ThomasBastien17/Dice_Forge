@@ -30,16 +30,25 @@ const actionRegister = createAsyncThunk(
   'auth/REGISTER',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const response = await axios.post('http://localhost:5000/api/signup', {
-      lastname: state.auth.newUser.lastname,
-      firstname: state.auth.newUser.firstname,
-      email: state.auth.newUser.email,
-      password: state.auth.newUser.password,
-      confirmPassword: state.auth.newUser.confirmPassword,
-    });
-    const { message } = response.data;
+    try {
+      const response = await axiosInstance.post('/signup', {
+        lastname: state.auth.newUser.lastname,
+        firstname: state.auth.newUser.firstname,
+        email: state.auth.newUser.email,
+        password: state.auth.newUser.password,
+        confirmPassword: state.auth.newUser.confirmPassword,
+      });
 
-    return { message };
+      return { message: response.data.message };
+
+    } catch (error: any) {
+
+      const { message } =
+        error.response?.data?.message ||
+        error.message ||
+        "Une erreur s'est produite lors de l'inscription.";
+      return thunkAPI.rejectWithValue(message);
+    }
   }
 );
 
@@ -87,7 +96,7 @@ const actionResetPassword = createAsyncThunk('auth/RESET_PASSWORD', async (_, th
   });
   console.log('je suis la reponse du reset password', response);
   return response.data;
-  
+
 });
 
 export {
