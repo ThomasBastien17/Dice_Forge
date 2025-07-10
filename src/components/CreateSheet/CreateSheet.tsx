@@ -1,15 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
-import { Button, Form, FormInput, FormTextArea } from 'semantic-ui-react';
+import { Button, Dropdown, Form, FormInput, FormTextArea } from 'semantic-ui-react';
 import { v4 as uuidv4 } from 'uuid';
 import { IGames } from '../../@Types/game';
+import { IClasse } from '../../@Types/classe';
 import { Characteristic, Item } from '../../@Types/sheet';
 import axiosInstance from '../../axios/axios';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './CreateSheet.scss';
+import axios from 'axios';
+import fr from '../../locales/fr';
 
 interface SheetData {
   name: string;
@@ -49,6 +52,7 @@ function CreateSheet() {
   const [selectedGameId, setSelectedGameId] = useState<number>(gameId);
   const [license, setLicense] = useState<string>('');
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [classesOptions, setClassesOptions] = useState<IClasse[]>([]);
 
   const userId = useAppSelector((state) => state.auth.user.userId);
   console.log('je suis le userId', userId);
@@ -67,6 +71,26 @@ function CreateSheet() {
     };
     getGame();
   }, [dispatch, userId]);
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const response = await axios.get("https://www.dnd5eapi.co/api/2014/classes/");
+        const classes = response.data.results;
+
+        const option = classes.map((classe: { index: string; name:string}) => ({
+          key: classe.index,
+          value: classe.index,
+          text: fr.classes[classe.name as keyof typeof fr.classes] || classe.name,
+        }));
+        console.log('Classes fetched:', option);
+        setClassesOptions(option);
+      } catch (error) {
+        console.error('Error fetching classes:', error);
+      }
+    };
+    fetchClasses();
+  }, []);
 
   const postUserCreateSheet = async (datas: SheetData) => {
     try {
@@ -196,14 +220,13 @@ function CreateSheet() {
                   setCharacterName(e.target.value)
                 }
               />
-              <FormInput
-                label="Classe:"
+              <Dropdown
                 className="create-sheet-input"
-                placeholder="Classe"
+                placeholder="classes"
+                selection
+                options={classesOptions}
                 value={className}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setClassName(e.target.value)
-                }
+                onChange={(e, { value }) => setClassName(value as string)}
               />
               <FormInput
                 label="Niveau:"
