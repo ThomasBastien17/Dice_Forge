@@ -13,6 +13,17 @@ const fr = {
     Warlock: 'Occultiste',
     Wizard: 'Magicien',
   },
+  races: {
+    Dragonborn: 'Drakéide',
+    Dwarf: 'Nain',
+    Elf: 'Elfe',
+    Gnome: 'Gnome',
+    HalfElf: 'Demi-elfe',
+    HalfOrc: 'Demi-orque',
+    Halfling: 'Halfelin',
+    Human: 'Humain',
+    Tiefling: 'Tieffelin',
+  }
 };
 
 export default fr;
