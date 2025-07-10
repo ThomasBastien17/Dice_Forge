@@ -22,6 +22,8 @@ function CharacterHeader({ formData, onChange }: CharacterHeaderProps) {
   const [raceName, setRaceName] = useState<string>('');
   const [raceOptions, setRaceOptions] = useState<IRace[]>([]);
   const [level, setLevel] = useState<number>();
+  const [alignmentsName, setAlignmentsName] = useState<string>('');
+  const [alignmentsOptions, setAlignmentsOptions] = useState<IRace[]>([]);
 
   const levelOptions = useMemo(
     () =>
@@ -73,6 +75,26 @@ function CharacterHeader({ formData, onChange }: CharacterHeaderProps) {
     fetchRaces();
   }, []);
 
+  useEffect(() => {
+    const fetchAlignements = async () => {
+      try {
+        const response = await axios.get("https://www.dnd5eapi.co/api/2014/alignments/");
+        const alignments = response.data.results;
+
+        const optionAlignments = alignments.map((alignment: { index: string; name: string }) => ({
+          key: alignment.index,
+          value: alignment.index,
+          text: fr.alignments[alignment.index as keyof typeof fr.alignments] || alignment.name,
+        }));
+        console.log('Alignments fetched:', optionAlignments);
+        setAlignmentsOptions(optionAlignments);
+      } catch (error) {
+        console.error('Error fetching alignments:', error);
+      }
+    };
+    fetchAlignements();
+  }, []);
+
   return (
     <Form>
       <FormInput label="Nom du personnage" className="create-sheet-input" value={formData.name} onChange={(e) => onChange('name', e.target.value)} />
@@ -105,6 +127,14 @@ function CharacterHeader({ formData, onChange }: CharacterHeaderProps) {
           setLevel(numericLevel);
           onChange('level', numericLevel);
         }}
+      />
+      <Dropdown
+        className='create-sheet-input'
+        placeholder='Alignements'
+        selection
+        options={alignmentsOptions}
+        value={alignmentsName}
+        onChange={(e, { value }) => setAlignmentsName(value as string)}
       />
     </Form>
   );

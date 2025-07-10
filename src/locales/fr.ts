@@ -23,6 +23,17 @@ const fr = {
     Halfling: 'Halfelin',
     Human: 'Humain',
     Tiefling: 'Tieffelin',
+  },
+  alignments: {
+    'chaotic-evil': 'Chaotique Mauvais',
+    "chaotic-good": "Chaotique Bon",
+    "chaotic-neutral": "Chaotique Neutre",
+    "lawful-evil": "Loyal Mauvais",
+    "lawful-good": "Loyal Bon",
+    "lawful-neutral": "Loyal Neutre",
+    "neutral": "Neutre",
+    "neutral-evil": "Neutre Mauvais",
+    "neutral-good": "Neutre Bon"
   }
 };
 
