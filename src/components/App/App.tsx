@@ -24,6 +24,8 @@ import ResetPassword from '../Reset-password/Reset-password';
 import { actionRefreshToken } from '../../store/thunks/authThunks';
 import Signup from '../Signup/Signup';
 import './App.scss';
+import CreateSheetDnd5 from '../CreateSheet/CreateSheetDnd5';
+import CreateSheetDnd2024 from '../CreateSheet/CreateSheetDnd2024';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -38,18 +40,18 @@ function App() {
 
   // const navigate = useNavigate();
 
- 
+
   useEffect(() => {
-    
+
     dispatch(actionSetRefreshToken(refreshToken));
     if (!token) {
       dispatch(actionRefreshToken());
     }
-    
-    
+
+
     dispatch(actionLogin())
     dispatch(actionSetUser(JSON.parse(localStorage.getItem('user')!)));
-    
+
 
   }, []);
 
@@ -57,7 +59,7 @@ function App() {
   if a token is stored in the session storage. If a token is found, it adds the
   token to the Axios instance using the `addTokenJwtToAxiosInstance` function. */
   useEffect(() => {
-    
+
     const token = sessionStorage.getItem('accessToken');
     if (token) {
       addTokenJwtToAxiosInstance(token);
@@ -80,6 +82,8 @@ function App() {
         <Route path="/api/creategame" element={<CreateGame />} />
         <Route path="/api/game/:gameId" element={<Game />} />
         <Route path="/api/createsheet" element={<CreateSheet />} />
+        <Route path="/api/createsheetDnd5" element={<CreateSheetDnd5 />} />
+        <Route path="/api/createsheetDnd2024" element={<CreateSheetDnd2024 />} />
         {/* <Route path="/api/sheet" element={<Sheet />} /> */}
         <Route path="/api/binder/:gameId" element={<Binder />} />
         <Route path="/api/profile" element={<Profile />} />
